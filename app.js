@@ -3,5 +3,5 @@ const port = process.env.PORT || 3000
 const app = express()
 
 app.listen(port, () => {
-    console.log('Up and running')
+    console.log('Up and running at port', port)
 })
