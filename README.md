@@ -13,3 +13,6 @@ Required Software :
 5. commit the changes using  git commit -m 'Your message'
 6. Push the changes to your forked repo using git push commmand
 7. Now compare and create a pull request using github.com
+
+
+During the development period the website will be deployed/updated at https://coeproject.herokuapp.com/
