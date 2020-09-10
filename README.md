@@ -5,6 +5,7 @@ An Educational Website
 1. Git
 2. NodeJs
 3. A Code Editor e.g vs code
+
 ## Steps to contribute in this Project:
 1. Fork this repository as your own repo.
 2. Clone the forked repo to your computer using git clone 'url of your repo'
