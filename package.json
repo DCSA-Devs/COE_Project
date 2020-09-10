@@ -20,6 +20,7 @@
   "homepage": "https://github.com/DCSA-Devs/COE_Project#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "mongodb": "^3.6.1"
+    "mongodb": "^3.6.1",
+    "request": "^2.88.2"
   }
 }
