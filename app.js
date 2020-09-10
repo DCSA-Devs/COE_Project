@@ -1,6 +1,4 @@
 const express = require('express')
-const request = require('request')
-const url = 'https://programming-quotes-api.herokuapp.com/quotes/random'
 
 const port = process.env.PORT || 3000
 const app = express()
