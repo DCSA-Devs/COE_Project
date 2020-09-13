@@ -5,7 +5,7 @@
 2. [NodeJs](https://nodejs.org/en/)
 3. A Code Editor e.g [VS Code](https://code.visualstudio.com/)
 
-## Running the program :# This branch is meant for testing backend
+## Running the program :
 1. Clone the repository using `git clone https://github.com/DCSA-Devs/COE_Project.git`
 2. Checkout the backend branch by typing `git checkout backend`
 3. Run command `npm install` to download missing modules
