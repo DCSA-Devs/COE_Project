@@ -12,5 +12,5 @@
 4. Finally run `node app.js` or `npm run start` to run the application
 5. Your application will run at **http://localhost:3000/**
 
-## Still Confused 😕?
+## Still Confused 🤔?
 This article will help you understand git concepts. Click [here](https://dev.to/unseenwizzard/learn-git-concepts-not-commands-4gjc)
