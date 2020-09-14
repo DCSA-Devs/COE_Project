@@ -35,6 +35,6 @@ const Student = mongoose.model('Student', {
         type: Date,
         default: Date.now()
     }
-});
+})
 
 module.exports = Student

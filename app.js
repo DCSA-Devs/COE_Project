@@ -1,5 +1,7 @@
 const express = require('express')
 const path = require('path')
+const bcrypt = require('bcryptjs')
+
 
 require('./mongoose/mongoose')
 
@@ -16,7 +18,9 @@ app.use(express.static(publicDirectoryPath))
 
 
 app.post('/', async (req, res) => {
-
+    // Hashing the password
+    const hash = bcrypt.hashSync(req.body.user.password, 8)
+    req.body.user.password = hash
     const student = new Student(req.body.user)
     try {
         await student.save()
