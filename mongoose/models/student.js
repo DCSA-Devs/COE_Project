@@ -3,13 +3,33 @@ const validator = require('validator')
 
 //student model
 const Student = mongoose.model('Student', {
-    name: {
+    firstName: {
         type: String,
         required: true,
         trim: true,
+        uppercase: true,
         validate(value) {
             if (!validator.isAlpha(value)) {
                 throw new Error('Name is not valid')
+            }
+        }
+    },
+    lastName: {
+        type: String,
+        required: true,
+        trim: true,
+        uppercase: true,
+        validate(value) {
+            if (!validator.isAlpha(value)) {
+                throw new Error('Name is not valid')
+            }
+        }
+    },
+    mobile: {
+        type: Number,
+        validate(value) {
+            if (!validator.isMobilePhone(value)) {
+                throw new Error('Invalid Phone No')
             }
         }
     },
@@ -25,6 +45,11 @@ const Student = mongoose.model('Student', {
                 throw new Error('Password must be strong')
             }
         }
+    },
+    department: {
+        type: String,
+        required: true,
+        lowercase: true
     },
     email: {
         type: String,

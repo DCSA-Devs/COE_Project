@@ -3,10 +3,22 @@ const validator = require('validator')
 
 //teacher model
 const Teacher = mongoose.model('Teacher', {
-    name: {
+    firstName: {
         type: String,
         required: true,
         trim: true,
+        uppercase: true,
+        validate(value) {
+            if (!validator.isAlpha(value)) {
+                throw new Error('Name is not valid')
+            }
+        }
+    },
+    lastName: {
+        type: String,
+        required: true,
+        trim: true,
+        uppercase: true,
         validate(value) {
             if (!validator.isAlpha(value)) {
                 throw new Error('Name is not valid')
@@ -18,7 +30,13 @@ const Teacher = mongoose.model('Teacher', {
         type: String,
         required: true,
         trim: true,
-        minlength: 8
+        minlength: 8,
+        validate(value) {
+            const strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})")
+            if (!strongRegex.test(value)) {
+                throw new Error('Password must be strong')
+            }
+        }
     },
     email: {
         type: String,
@@ -26,9 +44,8 @@ const Teacher = mongoose.model('Teacher', {
         trim: true,
         lowercase: true,
         validate(value) {
-            const strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})")
-            if (!strongRegex.test(value)) {
-                throw new Error('Password must be strong')
+            if (!validator.isEmail(value)) {
+                throw new Error('Email address is not valid')
             }
         }
     },

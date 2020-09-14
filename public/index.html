@@ -22,10 +22,20 @@
 
 <body>
     <form method="POST" ,action="/">
-        Name <input name="user[name]" type="text" id="name"><br>
-        Department <input name="user[dept]" id="dept"><br>
-        Email <input name="user[email]" type="email" id="email"><br>
-        Password <input name="user[password]" type="password" id="pass"><br>
+        First Name
+        <input name="user[firstName]" type="text"><br>
+        Last Name
+        <input name="user[lastName]" type="text"><br>
+        Department
+        <select name=user[department]>
+            <option value="Dcsa">DCSA</option>
+            <option value="Law">Law</option>
+            <option value="Physics">Physics</option>
+        </select><br>
+        Email
+        <input name="user[email]" type="email"><br>
+        Password
+        <input name="user[password]" type="password"><br>
         <button>Submit</button>
     </form>
 
