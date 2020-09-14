@@ -26,8 +26,9 @@ const Teacher = mongoose.model('Teacher', {
         trim: true,
         lowercase: true,
         validate(value) {
-            if (!validator.isEmail(value)) {
-                throw new Error('Email address is not valid')
+            const strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})")
+            if (!strongRegex.test(value)) {
+                throw new Error('Password must be strong')
             }
         }
     },

@@ -18,7 +18,13 @@ const Student = mongoose.model('Student', {
         type: String,
         required: true,
         trim: true,
-        minlength: 8
+        minlength: 8,
+        validate(value) {
+            const strongRegex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})")
+            if (!strongRegex.test(value)) {
+                throw new Error('Password must be strong')
+            }
+        }
     },
     email: {
         type: String,
