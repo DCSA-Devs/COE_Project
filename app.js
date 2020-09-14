@@ -7,7 +7,7 @@ require('./mongoose/mongoose')
 const hbs = require('hbs')
 // import mongoose models
 const Student = require('./mongoose/models/student')
-
+const port = process.env.PORT || 3000
 // setup jwt
 const jwtKey = "coeProject"
 const tokenExpirySeconds = 300
@@ -92,6 +92,6 @@ app.post('/register', async (req, res) => {
     }
 });
 
-app.listen(3000, () => {
-    console.log('Running at port 3000');
+app.listen(port, () => {
+    console.log('Running at port', port);
 })
