@@ -1,8 +1,8 @@
-const mongoose = require('mongoose')
+const { model } = require('mongoose')
 const validator = require('validator')
 
 //student model
-const Student = mongoose.model('Student', {
+const Student = model('Student', {
     firstName: {
         type: String,
         required: true,
