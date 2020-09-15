@@ -44,7 +44,7 @@ router.post('/login', async (req, res) => {
         const user = await Student.findOne({ email })
         if (!user)
             res.render('index', {
-                errorMessage: 'Incorrect credentials'
+                message: 'Incorrect credentials'
             })
         else if (bcrypt.compareSync(password, user.password)) {
             console.log(user);
@@ -60,7 +60,7 @@ router.post('/login', async (req, res) => {
         }
         else
             res.render('index', {
-                errorMessage: 'Incorrect credentials'
+                message: 'Incorrect credentials'
             })
     }
     catch (e) {
