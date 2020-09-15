@@ -22,7 +22,7 @@ router.get('', async (req, res) => {
             console.log(e);
         }
     }
-    res.render('index')
+    res.render('index', { message: 'No Cookie Detected ' })
 })
 
 router.get('/login', async (req, res) => {
@@ -33,14 +33,17 @@ router.get('/login', async (req, res) => {
 router.get('/register', async (req, res) => {
     res.render('register')
 })
-
+router.get('/viewall', async (req, res) => {
+    const users = await Student.find({})
+    res.status(200).send(users)
+})
 router.post('/login', async (req, res) => {
     const { email, password } = req.body
 
     try {
         const user = await Student.findOne({ email })
         if (!user)
-            res.render('error', {
+            res.render('index', {
                 errorMessage: 'Incorrect credentials'
             })
         else if (bcrypt.compareSync(password, user.password)) {
@@ -56,7 +59,7 @@ router.post('/login', async (req, res) => {
             res.render('index', { message: JSON.stringify(user) })
         }
         else
-            res.render('error', {
+            res.render('index', {
                 errorMessage: 'Incorrect credentials'
             })
     }
@@ -69,6 +72,11 @@ router.post('/register', async (req, res) => {
     const user = req.body.user
     if (!user) {
         return res.status(500).send('Error registering user')
+    }
+
+    const emailCheck = await Student.findOne({ email: user.email })
+    if (emailCheck) {
+        return res.render('index', { message: 'Register Failed : Email Already Registered' })
     }
     // Hashing the password
     const hash = bcrypt.hashSync(user.password, 8)
