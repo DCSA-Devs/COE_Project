@@ -1,5 +1,6 @@
 const express = require('express')
 const cookieParser = require('cookie-parser')
+const session = require('express-session')
 //connecting to database
 require('./mongoose/mongoose')
 
@@ -12,8 +13,9 @@ const port = process.env.PORT || 3000
 const app = express()
 app.set('view engine', 'hbs')
 app.use(cookieParser())
-app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(session({ secret: 'sssshhhhh', saveUninitialized: true, resave: false }))
 app.use(studentRouter)
 
 app.listen(port, () => {

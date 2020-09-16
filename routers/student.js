@@ -2,12 +2,16 @@ const express = require('express')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const multer = require('multer')
+const chalk = require('chalk')
 // import mongoose models
 const Student = require('../mongoose/models/student')
+
 const router = express.Router()
+
 //config jwt
 const jwtKey = "coeProject"
 const jwtExpirySeconds = 30000
+
 //config multer
 const upload = multer({
     limits: {
@@ -24,24 +28,22 @@ const upload = multer({
 
 // auth middleware
 const auth = async (req, res, next) => {
-    if (!req.cookies.token) {
-
-    }
-    else {
+    // Check if token is available in cookie, if yes move forward
+    if (req.cookies.token) {
         const token = req.cookies.token
-        console.log(token);
-        if (token) {
-            try {
-                const { username: email } = jwt.verify(token, jwtKey)
-                console.log(email)
-                const user = await Student.findOne({ email })
-                req.user = user
-            }
-            catch (e) {
-                res.send(e)
-            }
+        console.log(chalk.black.bgYellow(' Token \n'), token);
+        try {
+            const payload = jwt.verify(token, jwtKey)
+            console.log(chalk.black.bgYellow(' JWT Payload \n'), payload)
+            const user = await Student.findOne({ email: payload.username })
+            req.user = user
+            req.session.user = user
+        }
+        catch (e) {
+            res.send(e)
         }
     }
+    console.log(chalk.black.bgYellow(' Session \n'), req.session)
     next()
 }
 
@@ -73,24 +75,27 @@ router.get('/upload-avatar', (req, res) => {
 
 router.post('/login', async (req, res) => {
     const { email, password } = req.body
+    // Check if provided email id exists in database or not
+    // If valid save Student data in user constant variable, else render error message
     try {
         const user = await Student.findOne({ email })
         if (!user)
             res.render('index', {
                 message: 'Incorrect credentials'
             })
+        // Email id is valid now check if password matches or not
+        // If matches log-in user 
         else if (bcrypt.compareSync(password, user.password)) {
-            console.log(user);
-            console.log(user.firstName + ' ' + user.lastName);
+            console.log(chalk.black.bgYellow(' Login Success \n'), user);
             const token = jwt.sign({ username: user.email }, jwtKey, {
                 algorithm: "HS256",
                 expiresIn: jwtExpirySeconds
             })
-            console.log('Token:', token);
-
+            console.log(chalk.black.bgYellow(' Token \n'), token);
             res.cookie('token', token, { maxAge: jwtExpirySeconds * 1000, httpOnly: true })
             res.render('index', { message: 'Login Successfull' })
         }
+        // If password matching failed render error message
         else
             res.render('index', {
                 message: 'Incorrect credentials'
@@ -104,7 +109,6 @@ router.post('/login', async (req, res) => {
 
 router.post('/register', async (req, res) => {
     const user = req.body
-    console.log(user);
     if (!user) {
         return res.status(500).send('Error registering user')
     }
@@ -121,7 +125,7 @@ router.post('/register', async (req, res) => {
     const student = new Student(user)
     try {
         await student.save()
-        console.log(student);
+        console.log(chalk.black.bgYellow(' User Created \n'), student)
         res.render('index', {
             message: 'Account Created Successfully'
         })
@@ -133,25 +137,26 @@ router.post('/register', async (req, res) => {
 });
 
 router.post('/upload-avatar', [auth, upload.single('avatar')], async (req, res) => {
+    //check if auth failed, if failed that means user is not signed in
     if (!req.user) {
         return res.render('login', { message: 'Plz login before file upload' })
     }
-    console.log(req.file)
+    console.log(chalk.black.bgYellow(' File Recieved \n'), req.file)
     try {
         req.user.avatar = req.file.buffer
         await req.user.save()
     } catch (e) {
-        return res.send(e)
+        return res.status(500).send(e)
     }
     res.render('upload', { message: 'File Uploaded Sucessfully' })
 })
 
 router.post('/get-avatar', auth, async (req, res) => {
-    console.log(req.user);
+    //check if auth failed, if failed that means user is not signed in
     if (!req.user) {
         return res.render('login', { message: 'Plz login before file upload' })
     }
-    console.log(req.user.avatar);
+    console.log(chalk.black.bgYellow(' File Buffer \n'), req.user.avatar.buffer)
     res.set('Content-Type', 'image/jpg')
     res.send(req.user.avatar)
 })
