@@ -65,7 +65,8 @@ const Student = model('Student', {
     dateJoined: {
         type: Date,
         default: Date.now()
-    }
+    },
+    avatar: Buffer
 })
 
 module.exports = Student

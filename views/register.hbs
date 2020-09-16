@@ -23,19 +23,19 @@
 <body>
     <form method="POST" ,action="/register">
         <label fpr="fnameInput">Name</label>
-        <input name="user[firstName]" type="text" id="fnameInput"><br>
+        <input name="firstName" type="text" id="fnameInput"><br>
         <label>Last Name</label>
-        <input name="user[lastName]" type="text" id="lnameInput"><br>
+        <input name="lastName" type="text" id="lnameInput"><br>
         <label for="deptInput">Department</label>
-        <select name=user[department] id="deptInput">
+        <select name="department" id="deptInput">
             <option value="Dcsa">DCSA</option>
             <option value="Law">Law</option>
             <option value="Physics">Physics</option>
         </select><br>
         <label for="emailInput">Email</label>
-        <input name="user[email]" type="email" id="emailInput"><br>
+        <input name="email" type="email" id="emailInput"><br>
         <label for="passInput">Password</label>
-        <input name="user[password]" type="password" id="passInput"><br>
+        <input name="password" type="password" id="passInput"><br>
         <button type="submit">Submit</button>
     </form>
 
