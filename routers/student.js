@@ -3,6 +3,7 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const multer = require('multer')
 const chalk = require('chalk')
+const path = require('path')
 // import mongoose models
 const Student = require('../mongoose/models/student')
 
@@ -13,7 +14,20 @@ const jwtKey = "coeProject"
 const jwtExpirySeconds = 30000
 
 //config multer
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'avatars/')
+    },
+    filename: function (req, file, cb) {
+        if (req.session.user)
+            cb(null, req.session.user._id + '.jpg')
+        else
+            cb('Login before uploading', null)
+    }
+})
 const upload = multer({
+    storage: storage
+    ,
     limits: {
         fileSize: 102400
     },
@@ -29,14 +43,13 @@ const upload = multer({
 // auth middleware
 const auth = async (req, res, next) => {
     // Check if token is available in cookie, if yes move forward
-    if (req.cookies.token) {
+    if (req.cookies.token && !req.session.user) {
         const token = req.cookies.token
         console.log(chalk.black.bgYellow(' Token \n'), token);
         try {
             const payload = jwt.verify(token, jwtKey)
             console.log(chalk.black.bgYellow(' JWT Payload \n'), payload)
             const user = await Student.findOne({ email: payload.username })
-            req.user = user
             req.session.user = user
         }
         catch (e) {
@@ -50,10 +63,10 @@ const auth = async (req, res, next) => {
 
 
 router.get('', auth, async (req, res) => {
-    if (!req.user) {
+    if (!req.session.user) {
         return res.render('index', { message: 'No cookie found' })
     }
-    res.render('index', { message: `Welcome ${req.user.firstName}` })
+    res.render('index', { message: `Welcome ${req.session.user.firstName}` })
 })
 
 router.get('/login', async (req, res) => {
@@ -138,27 +151,21 @@ router.post('/register', async (req, res) => {
 
 router.post('/upload-avatar', [auth, upload.single('avatar')], async (req, res) => {
     //check if auth failed, if failed that means user is not signed in
-    if (!req.user) {
-        return res.render('login', { message: 'Plz login before file upload' })
-    }
-    console.log(chalk.black.bgYellow(' File Recieved \n'), req.file)
-    try {
-        req.user.avatar = req.file.buffer
-        await req.user.save()
-    } catch (e) {
-        return res.status(500).send(e)
-    }
+    // if (!req.user) {
+    //     return res.render('login', { message: 'Plz login before file upload' })
+    // }
+
     res.render('upload', { message: 'File Uploaded Sucessfully' })
 })
 
 router.post('/get-avatar', auth, async (req, res) => {
     //check if auth failed, if failed that means user is not signed in
-    if (!req.user) {
+    if (!req.session.user) {
         return res.render('login', { message: 'Plz login before file upload' })
     }
-    console.log(chalk.black.bgYellow(' File Buffer \n'), req.user.avatar.buffer)
-    res.set('Content-Type', 'image/jpg')
-    res.send(req.user.avatar)
+
+    const imgPath = path.join(__dirname, '../avatars')
+    res.sendFile(imgPath + '\\' + req.session.user._id + '.jpg')
 })
 
 module.exports = router
