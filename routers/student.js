@@ -85,7 +85,10 @@ router.get('/viewall', async (req, res) => {
 router.get('/upload-avatar', (req, res) => {
     res.render('upload')
 })
-
+router.get('/logout', (req, res) => {
+    res.clearCookie('token')
+    res.redirect('..')
+})
 router.post('/login', async (req, res) => {
     const { email, password } = req.body
     // Check if provided email id exists in database or not
@@ -149,23 +152,23 @@ router.post('/register', async (req, res) => {
     }
 });
 
-router.post('/upload-avatar', [auth, upload.single('avatar')], async (req, res) => {
-    //check if auth failed, if failed that means user is not signed in
-    // if (!req.user) {
-    //     return res.render('login', { message: 'Plz login before file upload' })
-    // }
+// router.post('/upload-avatar', [auth, upload.single('avatar')], async (req, res) => {
+//     //check if auth failed, if failed that means user is not signed in
+//     // if (!req.user) {
+//     //     return res.render('login', { message: 'Plz login before file upload' })
+//     // }
 
-    res.render('upload', { message: 'File Uploaded Sucessfully' })
-})
+//     res.render('upload', { message: 'File Uploaded Sucessfully' })
+// })
 
-router.post('/get-avatar', auth, async (req, res) => {
-    //check if auth failed, if failed that means user is not signed in
-    if (!req.session.user) {
-        return res.render('login', { message: 'Plz login before file upload' })
-    }
+// router.post('/get-avatar', auth, async (req, res) => {
+//     //check if auth failed, if failed that means user is not signed in
+//     if (!req.session.user) {
+//         return res.render('login', { message: 'Plz login before file upload' })
+//     }
 
-    const imgPath = path.join(__dirname, '../avatars')
-    res.sendFile(imgPath + '\\' + req.session.user._id + '.jpg')
-})
+//     const imgPath = path.join(__dirname, '../avatars')
+//     res.sendFile(imgPath + '\\' + req.session.user._id + '.jpg')
+// })
 
 module.exports = router
