@@ -4,11 +4,61 @@ const jwt = require('jsonwebtoken')
 const multer = require('multer')
 const chalk = require('chalk')
 const path = require('path')
+const keys = require("../config/keys")
+const cookieSession = require("cookie-session");
+const passport = require("passport");
 // import mongoose models
 const Student = require('../mongoose/models/student')
 
 const router = express.Router()
+router.use(cookieSession({
+    // milliseconds of a day
+    maxAge: 24 * 60 * 60 * 1000,
+    keys: [keys.session.cookieKey]
+}));
+router.use(passport.initialize());
+router.use(passport.session());
 
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
+passport.use(
+    new GoogleStrategy(
+        {
+            clientID: keys.google.clientID,
+            clientSecret: keys.google.clientSecret,
+            callbackURL: "/login/google/redirect"
+        },
+        async (accessToken, refreshToken, profile, done) => {
+            try {
+                var user = await Student.findOne({ googleID: profile.id })
+                if (user) {
+                    console.log(chalk.black.bgGreen('User Already Exists'));
+                }
+                else {
+                    user = new Student({
+                        googleID: profile.id,
+                        email: profile._json.email,
+                        firstName: profile.name.givenName,
+                        lastName: profile.name.familyName
+                    })
+                    await user.save()
+                    console.log(chalk.black.bgGreen('New User Created'));
+                }
+            }
+            catch (e) {
+                done(e, null)
+            }
+            console.log(user)
+            done(null, user)
+        })
+);
+passport.serializeUser((user, done) => {
+    done(null, user._id)
+})
+passport.deserializeUser((id, done) => {
+    Student.findById(id).then(user => {
+        done(null, user);
+    })
+})
 //config jwt
 const jwtKey = "coeProject"
 const jwtExpirySeconds = 30000
@@ -89,6 +139,12 @@ router.get('/logout', (req, res) => {
     res.clearCookie('token')
     res.redirect('..')
 })
+router.get("/google", passport.authenticate("google", {
+    scope: ["profile", "email"],
+}));
+router.get("/login/google/redirect", passport.authenticate("google"), (req, res) => {
+    res.send(req.user);
+});
 router.post('/login', async (req, res) => {
     const { email, password } = req.body
     // Check if provided email id exists in database or not

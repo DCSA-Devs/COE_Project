@@ -25,9 +25,10 @@ const Student = model('Student', {
             }
         }
     },
+    googleID: String,
     mobile: {
         type: Number,
-        validate(value) {
+        valiDate(value) {
             if (!validator.isMobilePhone(value)) {
                 throw new Error('Invalid Phone No')
             }
@@ -36,7 +37,6 @@ const Student = model('Student', {
     password:
     {
         type: String,
-        required: true,
         trim: true,
         minlength: 8,
         validate(value) {
@@ -48,7 +48,6 @@ const Student = model('Student', {
     },
     department: {
         type: String,
-        required: true,
         lowercase: true
     },
     email: {
