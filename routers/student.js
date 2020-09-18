@@ -60,7 +60,7 @@ passport.deserializeUser((id, done) => {
     })
 })
 //config jwt
-const jwtKey = "coeProject"
+const jwtKey = keys.jwt.jwtKey
 const jwtExpirySeconds = 30000
 
 //config multer

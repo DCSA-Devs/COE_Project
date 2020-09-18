@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const chalk = require('chalk')
-
-mongoose.connect("mongodb+srv://pymongo:123@cluster0.htr68.gcp.mongodb.net/database?retryWrites=true&w=majority", { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true })
+const keys = require('../config/keys')
+mongoose.connect(keys.mongodb.dbURI, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true })
     .then(() => {
         console.log(chalk.black.bgGreen('Connected to Database Sucessfully'))
     })
