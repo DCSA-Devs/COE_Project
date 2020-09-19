@@ -1,12 +1,12 @@
 const express = require('express')
 const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
 const multer = require('multer')
 const chalk = require('chalk')
 const path = require('path')
 const keys = require("../config/keys")
 const cookieSession = require("cookie-session");
 const passport = require("passport");
+
 // import mongoose models
 const Student = require('../mongoose/models/student')
 
@@ -16,6 +16,7 @@ router.use(cookieSession({
     maxAge: 24 * 60 * 60 * 1000,
     keys: [keys.session.cookieKey]
 }));
+
 router.use(passport.initialize());
 router.use(passport.session());
 
@@ -29,7 +30,7 @@ passport.use(
         },
         async (accessToken, refreshToken, profile, done) => {
             try {
-                var user = await Student.findOne({ googleID: profile.id })
+                var user = await Student.findOne({ googleID: profile.id }, { __v: 0 })
                 if (user) {
                     console.log(chalk.black.bgGreen('User Already Exists'));
                 }
@@ -55,13 +56,10 @@ passport.serializeUser((user, done) => {
     done(null, user._id)
 })
 passport.deserializeUser((id, done) => {
-    Student.findById(id).then(user => {
+    Student.findById(id, { __v: 0 }).then(user => {
         done(null, user);
     })
 })
-//config jwt
-const jwtKey = keys.jwt.jwtKey
-const jwtExpirySeconds = 30000
 
 //config multer
 var storage = multer.diskStorage({
@@ -69,12 +67,13 @@ var storage = multer.diskStorage({
         cb(null, 'avatars/')
     },
     filename: function (req, file, cb) {
-        if (req.session.user)
-            cb(null, req.session.user._id + '.jpg')
+        if (req.user)
+            cb(null, req.user._id + '.jpg')
         else
             cb('Login before uploading', null)
     }
 })
+
 const upload = multer({
     storage: storage
     ,
@@ -90,33 +89,11 @@ const upload = multer({
     }
 })
 
-// auth middleware
-const auth = async (req, res, next) => {
-    // Check if token is available in cookie, if yes move forward
-    if (req.cookies.token && !req.session.user) {
-        const token = req.cookies.token
-        console.log(chalk.black.bgYellow(' Token \n'), token);
-        try {
-            const payload = jwt.verify(token, jwtKey)
-            console.log(chalk.black.bgYellow(' JWT Payload \n'), payload)
-            const user = await Student.findOne({ email: payload.username })
-            req.session.user = user
-        }
-        catch (e) {
-            res.send(e)
-        }
-    }
-    console.log(chalk.black.bgYellow(' Session \n'), req.session)
-    next()
-}
-
-
-
 router.get('', async (req, res) => {
     if (!req.user) {
         return res.render('index', { message: 'No cookie found' })
     }
-    res.render('index', { message: `Welcome ${req.user.firstName}` })
+    res.render('index', { message: `Welcome ${req.user.firstName} ${req.user.lastName}` })
 })
 
 router.get('/login', async (req, res) => {
@@ -128,7 +105,7 @@ router.get('/register', async (req, res) => {
 })
 
 router.get('/viewall', async (req, res) => {
-    const users = await Student.find({})
+    const users = await Student.find({}, { __v: 0 })
     res.status(200).send(users)
 })
 
@@ -139,18 +116,21 @@ router.get('/logout', (req, res) => {
     req.logout()
     res.redirect('..')
 })
+
 router.get("/google", passport.authenticate("google", {
     scope: ["profile", "email"],
 }));
+
 router.get("/login/google/redirect", passport.authenticate("google"), (req, res) => {
-    res.render('index', { message: 'Login Sucessfull' });
+    res.redirect('../../..');
 });
+
 router.post('/login', async (req, res) => {
     const { email, password } = req.body
     // Check if provided email id exists in database or not
     // If valid save Student data in user constant variable, else render error message
     try {
-        const user = await Student.findOne({ email })
+        const user = await Student.findOne({ email }, { __v: 0 })
         if (!user)
             res.render('index', {
                 message: 'Incorrect credentials'
@@ -159,12 +139,6 @@ router.post('/login', async (req, res) => {
         // If matches log-in user 
         else if (bcrypt.compareSync(password, user.password)) {
             console.log(chalk.black.bgYellow(' Login Success \n'), user);
-            const token = jwt.sign({ username: user.email }, jwtKey, {
-                algorithm: "HS256",
-                expiresIn: jwtExpirySeconds
-            })
-            console.log(chalk.black.bgYellow(' Token \n'), token);
-            res.cookie('token', token, { maxAge: jwtExpirySeconds * 1000, httpOnly: true })
             res.render('index', { message: 'Login Successfull' })
         }
         // If password matching failed render error message
@@ -185,7 +159,7 @@ router.post('/register', async (req, res) => {
         return res.status(500).send('Error registering user')
     }
     //check whether user is already registered or not
-    const emailCheck = await Student.findOne({ email: user.email })
+    const emailCheck = await Student.findOne({ email: user.email }, { __v: 0 })
     if (emailCheck) {
         return res.render('index', {
             message: 'Register Failed : Email Already Registered'

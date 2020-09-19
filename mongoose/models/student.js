@@ -25,7 +25,7 @@ const Student = model('Student', {
             }
         }
     },
-    googleID: String,
+    googleID: Number,
     mobile: {
         type: Number,
         valiDate(value) {
