@@ -112,11 +112,11 @@ const auth = async (req, res, next) => {
 
 
 
-router.get('', auth, async (req, res) => {
-    if (!req.session.user) {
+router.get('', async (req, res) => {
+    if (!req.user) {
         return res.render('index', { message: 'No cookie found' })
     }
-    res.render('index', { message: `Welcome ${req.session.user.firstName}` })
+    res.render('index', { message: `Welcome ${req.user.firstName}` })
 })
 
 router.get('/login', async (req, res) => {
@@ -136,14 +136,14 @@ router.get('/upload-avatar', (req, res) => {
     res.render('upload')
 })
 router.get('/logout', (req, res) => {
-    res.clearCookie('token')
+    req.logout()
     res.redirect('..')
 })
 router.get("/google", passport.authenticate("google", {
     scope: ["profile", "email"],
 }));
 router.get("/login/google/redirect", passport.authenticate("google"), (req, res) => {
-    res.send(req.user);
+    res.render('index', { message: 'Login Sucessfull' });
 });
 router.post('/login', async (req, res) => {
     const { email, password } = req.body
