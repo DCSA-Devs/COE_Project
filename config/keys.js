@@ -8,8 +8,5 @@ module.exports = {
     },
     mongodb: {
         dbURI: 'mongodb+srv://pymongo:123@cluster0.htr68.gcp.mongodb.net/database?retryWrites=true&w=majority'
-    },
-    jwt: {
-        jwtKey: 'coeProject'
     }
 }
