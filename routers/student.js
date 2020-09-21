@@ -1,12 +1,15 @@
+// import modules
 const express = require('express')
 const bcrypt = require('bcryptjs')
 const multer = require('multer')
 const chalk = require('chalk')
 const path = require('path')
-const keys = require("../config/keys")
 const cookieSession = require("cookie-session");
-const passport = require("passport");
 
+// import passport config
+const passport = require('../auth/passport');
+// import config keys
+const keys = require("../config/keys")
 // import mongoose models
 const Student = require('../mongoose/models/student')
 
@@ -14,80 +17,39 @@ const router = express.Router()
 router.use(cookieSession({
     // milliseconds of a day
     maxAge: 24 * 60 * 60 * 1000,
-    keys: [keys.session.cookieKey]
+    secret: keys.session.cookieKey
 }));
 
 router.use(passport.initialize());
 router.use(passport.session());
 
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
-passport.use(
-    new GoogleStrategy(
-        {
-            clientID: keys.google.clientID,
-            clientSecret: keys.google.clientSecret,
-            callbackURL: "/login/google/redirect"
-        },
-        async (accessToken, refreshToken, profile, done) => {
-            try {
-                var user = await Student.findOne({ googleID: profile.id }, { __v: 0 })
-                if (user) {
-                    console.log(chalk.black.bgGreen('User Already Exists'));
-                }
-                else {
-                    user = new Student({
-                        googleID: profile.id,
-                        email: profile._json.email,
-                        firstName: profile.name.givenName,
-                        lastName: profile.name.familyName
-                    })
-                    await user.save()
-                    console.log(chalk.black.bgGreen('New User Created'));
-                }
-            }
-            catch (e) {
-                done(e, null)
-            }
-            console.log(user)
-            done(null, user)
-        })
-);
-passport.serializeUser((user, done) => {
-    done(null, user._id)
-})
-passport.deserializeUser((id, done) => {
-    Student.findById(id, { __v: 0 }).then(user => {
-        done(null, user);
-    })
-})
-
 //config multer
-var storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, 'avatars/')
-    },
-    filename: function (req, file, cb) {
-        if (req.user)
-            cb(null, req.user._id + '.jpg')
-        else
-            cb('Login before uploading', null)
-    }
-})
+// var storage = multer.diskStorage({
+//     destination: function (req, file, cb) {
+//         cb(null, 'avatars/')
+//     },
+//     filename: function (req, file, cb) {
+//         if (req.user)
+//             cb(null, req.user._id + '.jpg')
+//         else
+//             cb('Login before uploading', null)
+//     }
+// })
 
-const upload = multer({
-    storage: storage
-    ,
-    limits: {
-        fileSize: 102400
-    },
-    fileFilter(res, file, cb) {
-        if (file.originalname.match(/\.(jpg|png)$/)) {
-            cb(null, true)
-        }
-        else
-            cb(new Error('File format not supported'))
-    }
-})
+// const upload = multer({
+//     storage: storage
+//     ,
+//     limits: {
+//         fileSize: 102400
+//     },
+//     fileFilter(res, file, cb) {
+//         if (file.originalname.match(/\.(jpg|png)$/)) {
+//             cb(null, true)
+//         }
+//         else
+//             cb(new Error('File format not supported'))
+//     }
+// })
 
 router.get('', async (req, res) => {
     if (!req.user) {
@@ -118,12 +80,10 @@ router.get('/logout', (req, res) => {
 })
 
 router.get("/google", passport.authenticate("google", {
-    scope: ["profile", "email"],
+    scope: ["profile", "email"], failureRedirect: './login'
 }));
 
-router.get("/login/google/redirect", passport.authenticate("google"), (req, res) => {
-    res.redirect('../../..');
-});
+router.get("/login/google/redirect", passport.authenticate("google", { failureRedirect: '/login', successRedirect: '../../..' }));
 
 router.post('/login', async (req, res) => {
     const { email, password } = req.body

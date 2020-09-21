@@ -16,7 +16,6 @@ app.set('view engine', 'hbs')
 app.use(cookieParser())
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-// app.use(session({ secret: 'sssshhhhh', saveUninitialized: true, resave: false }))
 app.use(studentRouter)
 
 app.listen(port, () => {
