@@ -8,5 +8,9 @@ module.exports = {
     },
     mongodb: {
         dbURI: 'mongodb+srv://pymongo:123@cluster0.htr68.gcp.mongodb.net/database?retryWrites=true&w=majority'
+    },
+    streamtape: {
+        login: 'bdec87c583f1acf16949',
+        key: 'AloGmk4eerTvmQ'
     }
 }

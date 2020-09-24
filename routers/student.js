@@ -5,6 +5,16 @@ const multer = require('multer')
 const chalk = require('chalk')
 const path = require('path')
 const cookieSession = require("cookie-session");
+const request = require('request')
+let videos = []
+
+request.get({ url: 'https://api.streamtape.com/file/listfolder?login=bdec87c583f1acf16949&key=AloGmk4eerTvmQ', json: true }, (err, { body }) => {
+
+    videos = body.result.files
+
+
+})
+
 
 // import passport config
 const passport = require('../auth/passport');
@@ -84,7 +94,14 @@ router.get("/google", passport.authenticate("google", {
 }));
 
 router.get("/login/google/redirect", passport.authenticate("google", { failureRedirect: '/login', successRedirect: '../../..' }));
-
+router.get('/videos', (req, res) => {
+    videos.forEach((element) => {
+        element.link = element.link.replace('/v/', '/e/')
+    })
+    res.render('videos', {
+        videos: videos
+    })
+})
 router.post('/login', async (req, res) => {
     const { email, password } = req.body
     /* Check if provided email id exists in database or not

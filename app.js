@@ -3,7 +3,7 @@ const cookieParser = require('cookie-parser')
 // const session = require('express-session')
 
 //connecting to database
-require('./mongoose/mongoose')
+// require('./mongoose/mongoose')
 
 // import routers
 const studentRouter = require('./routers/student')

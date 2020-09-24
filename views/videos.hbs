@@ -1,0 +1,23 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video</title>
+    <style>
+        ul {
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    {{#videos}}
+    <h3>{{name}}</h3>
+    <iframe src={{link}} width="700" height="400" allowfullscreen allowtransparency scrolling="no"
+        frameborder="0"></iframe>
+    {{/videos}}
+</body>
+
+</html>
