@@ -23,22 +23,36 @@
             border: 2px solid black;
             text-decoration: none;
             color: black;
+
         }
 
         a:hover {
             color: blueviolet;
+        }
+
+        div {
+            width: 100%;
+        }
+
+        img {
+            width: 120;
+            height: 120px;
+            margin-top: 20px
         }
     </style>
 </head>
 
 <body>
     <p>{{message}}</p>
-    <a href="./login">login</a>
-    <a href="./register">Register</a>
-    <a href="./viewall">View All Records</a>
-    {{!-- <a href="./upload-avatar">Upload Image</a> --}}
-    <a href="./logout">Logout</a>
-    <a href="./videos">Videos</a>
+    <div>
+        <a href="./login">login</a>
+        <a href="./register">Register</a>
+        <a href="./viewall">View All Records</a>
+        <a href="./upload-avatar">Upload Image</a>
+        <a href="./logout">Logout</a>
+        <a href="./videos">Videos</a>
+    </div>
+    <img src="{{image}}">
 </body>
 
 </html>

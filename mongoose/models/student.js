@@ -34,6 +34,7 @@ const Student = model('Student', {
             }
         }
     },
+    profilePic: String,
     password:
     {
         type: String,

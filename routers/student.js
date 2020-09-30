@@ -1,6 +1,7 @@
 // import modules
 const express = require('express')
 const bcrypt = require('bcryptjs')
+const fs = require('fs')
 const multer = require('multer')
 const chalk = require('chalk')
 const path = require('path')
@@ -11,8 +12,6 @@ let videos = []
 request.get({ url: 'https://api.streamtape.com/file/listfolder?login=bdec87c583f1acf16949&key=AloGmk4eerTvmQ', json: true }, (err, { body }) => {
 
     videos = body.result.files
-
-
 })
 
 
@@ -22,6 +21,7 @@ const passport = require('../auth/passport');
 const keys = require("../config/keys")
 // import mongoose models
 const Student = require('../mongoose/models/student')
+const { Session } = require('inspector')
 
 const router = express.Router()
 router.use(cookieSession({
@@ -33,42 +33,40 @@ router.use(cookieSession({
 router.use(passport.initialize());
 router.use(passport.session());
 
-//config multer
-// var storage = multer.diskStorage({
-//     destination: function (req, file, cb) {
-//         cb(null, 'avatars/')
-//     },
-//     filename: function (req, file, cb) {
-//         if (req.user)
-//             cb(null, req.user._id + '.jpg')
-//         else
-//             cb('Login before uploading', null)
-//     }
-// })
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, './profilepics')
+    },
+    filename: function (req, file, cb) {
+        cb(null, new Date().getTime() + '-' + file.originalname)
+    }
+})
 
-// const upload = multer({
-//     storage: storage
-//     ,
-//     limits: {
-//         fileSize: 102400
-//     },
-//     fileFilter(res, file, cb) {
-//         if (file.originalname.match(/\.(jpg|png)$/)) {
-//             cb(null, true)
-//         }
-//         else
-//             cb(new Error('File format not supported'))
-//     }
-// })
+const upload = multer({
+    storage,
+    limits: {
+        fileSize: 102400
+    },
+    fileFilter(res, file, cb) {
+        if (file.originalname.match(/\.(jpg|png)$/)) {
+            cb(null, true)
+        }
+        else
+            cb(new Error('File format not supported'))
+    }
+})
 
 router.get('', async (req, res) => {
+
     if (!req.user) {
         return res.render('index', { message: 'No cookie found' })
     }
-    res.render('index', { message: `Welcome ${req.user.firstName} ${req.user.lastName}` })
+    ;
+    res.render('index', { message: `Welcome ${req.user.firstName} ${req.user.lastName}`, image: path.join(__dirname, '../' + req.user.profilePic).replace(new RegExp('\\' + path.sep, 'g'), '/') })
 })
 
 router.get('/login', async (req, res) => {
+
     res.render('login')
 })
 
@@ -94,6 +92,7 @@ router.get("/google", passport.authenticate("google", {
 }));
 
 router.get("/login/google/redirect", passport.authenticate("google", { failureRedirect: '/login', successRedirect: '../../..' }));
+
 router.get('/videos', (req, res) => {
     videos.forEach((element) => {
         element.link = element.link.replace('/v/', '/e/')
@@ -102,7 +101,7 @@ router.get('/videos', (req, res) => {
         videos: videos
     })
 })
-router.post('/login', async (req, res) => {
+router.post('/login', passport.authenticate('local', { failureRedirect: '/login' }), async (req, res) => {
     const { email, password } = req.body
     /* Check if provided email id exists in database or not
     *  If valid save Student data in user constant variable, else render error &*  message */
@@ -159,23 +158,25 @@ router.post('/register', async (req, res) => {
     }
 });
 
-// router.post('/upload-avatar', [auth, upload.single('avatar')], async (req, res) => {
-//     //check if auth failed, if failed that means user is not signed in
-//     // if (!req.user) {
-//     //     return res.render('login', { message: 'Plz login before file upload' })
-//     // }
+router.post('/upload-avatar', upload.single('avatar'), async (req, res) => {
 
-//     res.render('upload', { message: 'File Uploaded Sucessfully' })
-// })
+    console.log(req.file);
 
-// router.post('/get-avatar', auth, async (req, res) => {
-//     //check if auth failed, if failed that means user is not signed in
-//     if (!req.session.user) {
-//         return res.render('login', { message: 'Plz login before file upload' })
-//     }
+    await Student.updateOne({ _id: req.user._id }, {
+        $set: {
+            profilePic: req.file.path
+        }
+    })
+    //res.file
+    res.render('upload', { message: 'File Uploaded Sucessfully' })
+})
 
-//     const imgPath = path.join(__dirname, '../avatars')
-//     res.sendFile(imgPath + '\\' + req.session.user._id + '.jpg')
-// })
+router.post('/get-avatar', async (req, res) => {
+    //check if auth failed, if failed that means user is not signed in
+    if (!req.user) {
+        return res.render('login', { message: 'Plz login before file upload' })
+    }
+
+})
 
 module.exports = router
