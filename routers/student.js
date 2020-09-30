@@ -21,7 +21,7 @@ const passport = require('../auth/passport');
 const keys = require("../config/keys")
 // import mongoose models
 const Student = require('../mongoose/models/student')
-const { Session } = require('inspector')
+// const { Session } = require('inspector')
 
 const router = express.Router()
 router.use(cookieSession({
@@ -35,7 +35,7 @@ router.use(passport.session());
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, './profilepics')
+        cb(null, 'public/profilepics')
     },
     filename: function (req, file, cb) {
         cb(null, new Date().getTime() + '-' + file.originalname)
@@ -160,12 +160,16 @@ router.post('/register', async (req, res) => {
 
 router.post('/upload-avatar', upload.single('avatar'), async (req, res) => {
 
-    console.log(req.file);
-
+    const oldFile = path.join(__dirname, '../public/' + req.user.profilePic)
     await Student.updateOne({ _id: req.user._id }, {
         $set: {
-            profilePic: req.file.path
+            profilePic: req.file.path.replace('public\\', '')
         }
+    })
+    fs.unlink(oldFile, (err) => {
+        console.log(oldFile);
+        if (err)
+            console.log("error deleting old profile pic ");
     })
     //res.file
     res.render('upload', { message: 'File Uploaded Sucessfully' })
