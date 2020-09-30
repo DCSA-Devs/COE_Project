@@ -9,10 +9,10 @@ const cookieSession = require("cookie-session");
 const request = require('request')
 let videos = []
 
-request.get({ url: 'https://api.streamtape.com/file/listfolder?login=bdec87c583f1acf16949&key=AloGmk4eerTvmQ', json: true }, (err, { body }) => {
+// request.get({ url: 'https://api.streamtape.com/file/listfolder?login=bdec87c583f1acf16949&key=AloGmk4eerTvmQ', json: true }, (err, { body }) => {
 
-    videos = body.result.files
-})
+//     videos = body.result.files
+// })
 
 
 // import passport config
@@ -61,8 +61,8 @@ router.get('', async (req, res) => {
     if (!req.user) {
         return res.render('index', { message: 'No cookie found' })
     }
-    ;
-    res.render('index', { message: `Welcome ${req.user.firstName} ${req.user.lastName}`, image: path.join(__dirname, '../' + req.user.profilePic).replace(new RegExp('\\' + path.sep, 'g'), '/') })
+    // res.render('index', { message: `Welcome ${req.user.firstName} ${req.user.lastName}`, image: path.join(__dirname, '../' + req.user.profilePic).replace(new RegExp('\\' + path.sep, 'g'), '/') })
+    res.render('index', { message: `Welcome ${req.user.firstName} ${req.user.lastName}`, image: req.user.profilePic })
 })
 
 router.get('/login', async (req, res) => {

@@ -15,9 +15,9 @@ const port = process.env.PORT || 3000
 const app = express()
 app.set('view engine', 'hbs')
 // app.use(cookieParser())
-const imgPath = path.join(__dirname, 'profilepics')
+const imgPath = path.join(__dirname, 'public')
 console.log(imgPath);
-app.use(express.static('imgPath'))
+app.use(express.static(imgPath))
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(studentRouter)
