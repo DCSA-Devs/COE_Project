@@ -2,12 +2,9 @@
 const express = require('express')
 const bcrypt = require('bcryptjs')
 const fs = require('fs')
-const multer = require('multer')
 const chalk = require('chalk')
 const path = require('path')
 const cookieSession = require("cookie-session");
-const request = require('request')
-
 
 // import passport config
 const passport = require('../auth/passport');
@@ -35,31 +32,9 @@ const auth = (req, res, next) => {
         res.render('login', { message: 'Login in order to upload' })
 }
 
-var storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        if (file.originalname.match(/\.(mp4|mkv|avi)$/))
-            cb(null, 'public/videos')
-        else
-            cb(null, 'public/profilepics')
-    },
-    filename: function (req, file, cb) {
-        cb(null, new Date().getTime() + '-' + file.originalname)
-    }
-})
-
-const upload = multer({
-    storage,
-    limits: {
-        fileSize: 102400000
-    },
-    fileFilter(res, file, cb) {
-        if (file.originalname.match(/\.(jpg|png|mp4|mkv|avi)$/)) {
-            cb(null, true)
-        }
-        else
-            cb(new Error('File format not supported'))
-    }
-})
+// import Multer Configs
+const uploadVideo = require('../multer/video')
+const uploadImage = require('../multer/image')
 
 router.get('', async (req, res) => {
     if (!req.user) {
@@ -98,7 +73,7 @@ router.get("/login/google/redirect", passport.authenticate("google", { failureRe
 router.get('/videoUp', auth, (req, res) => {
     res.render('videoUp')
 })
-router.post('/upload-video', upload.single('videoFile'), async (req, res) => {
+router.post('/upload-video', uploadVideo.single('videoFile'), async (req, res) => {
     const filePath = req.file.path
     const VideoObject = new Video({
         path: filePath.replace('public\\', ''),
@@ -186,7 +161,7 @@ router.post('/register', async (req, res) => {
     }
 });
 
-router.post('/upload-avatar', upload.single('avatar'), async (req, res) => {
+router.post('/upload-avatar', uploadImage.single('avatar'), async (req, res) => {
 
     const oldFile = path.join(__dirname, '../public/' + req.user.profilePic)
     // Update oldFilePAth with newFilePath
