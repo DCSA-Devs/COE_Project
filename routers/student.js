@@ -95,14 +95,6 @@ router.get("/google", passport.authenticate("google", {
 
 router.get("/login/google/redirect", passport.authenticate("google", { failureRedirect: '/login', successRedirect: '../../..' }));
 
-router.get('/videos', (req, res) => {
-    videos.forEach((element) => {
-        element.link = element.link.replace('/v/', '/e/')
-    })
-    res.render('videos', {
-        videos: videos
-    })
-})
 router.get('/videoUp', auth, (req, res) => {
     res.render('videoUp')
 })
@@ -123,7 +115,7 @@ router.post('/upload-video', upload.single('videoFile'), async (req, res) => {
         fs.unlink(filePath, (err) => {
             console.log(filePath);
             if (err)
-                console.log("error deleting old profile pic ");
+                console.log("error deleting old profile pic ", err);
             res.render('index', { message: 'Error Uploading video' })
         })
     }

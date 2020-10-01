@@ -1,7 +1,5 @@
 const express = require('express')
 const path = require('path')
-// const cookieParser = require('cookie-parser')
-// const session = require('express-session')
 
 //connecting to database
 require('./mongoose/mongoose')
@@ -14,7 +12,6 @@ const port = process.env.PORT || 3000
 
 const app = express()
 app.set('view engine', 'hbs')
-// app.use(cookieParser())
 const imgPath = path.join(__dirname, 'public')
 console.log(imgPath);
 app.use(express.static(imgPath))
