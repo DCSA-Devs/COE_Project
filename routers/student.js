@@ -7,12 +7,6 @@ const chalk = require('chalk')
 const path = require('path')
 const cookieSession = require("cookie-session");
 const request = require('request')
-let videos = []
-
-// request.get({ url: 'https://api.streamtape.com/file/listfolder?login=bdec87c583f1acf16949&key=AloGmk4eerTvmQ', json: true }, (err, { body }) => {
-
-//     videos = body.result.files
-// })
 
 
 // import passport config
@@ -21,14 +15,18 @@ const passport = require('../auth/passport');
 const keys = require("../config/keys")
 // import mongoose models
 const Student = require('../mongoose/models/student')
-// const { Session } = require('inspector')
 const Video = require('../mongoose/models/videos')
+
 const router = express.Router()
 router.use(cookieSession({
     // milliseconds of a day
     maxAge: 24 * 60 * 60 * 1000,
     secret: keys.session.cookieKey
 }));
+
+router.use(passport.initialize());
+router.use(passport.session());
+
 //auth middleware
 const auth = (req, res, next) => {
     if (req.user)
@@ -36,9 +34,6 @@ const auth = (req, res, next) => {
     else
         res.render('login', { message: 'Login in order to upload' })
 }
-
-router.use(passport.initialize());
-router.use(passport.session());
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -70,7 +65,6 @@ router.get('', async (req, res) => {
     if (!req.user) {
         return res.render('index', { message: 'No cookie found' })
     }
-    // res.render('index', { message: `Welcome ${req.user.firstName} ${req.user.lastName}`, image: path.join(__dirname, '../' + req.user.profilePic).replace(new RegExp('\\' + path.sep, 'g'), '/') })
     res.render('index', { message: `Welcome ${req.user.firstName} ${req.user.lastName}`, image: req.user.profilePic, profileAvailable: req.user.profilePic != undefined ? true : false })
 })
 
@@ -119,6 +113,7 @@ router.post('/upload-video', upload.single('videoFile'), async (req, res) => {
         uploadedBy: req.user._id,
         type: req.body.category
     })
+    // save video metadata to database
     try {
         await VideoObject.save()
         res.send('Update Sucessfull')
@@ -129,16 +124,14 @@ router.post('/upload-video', upload.single('videoFile'), async (req, res) => {
             console.log(filePath);
             if (err)
                 console.log("error deleting old profile pic ");
+            res.render('index', { message: 'Error Uploading video' })
         })
     }
 })
 router.get('/watch', async (req, res) => {
+    // fetch videos list from database
     const videosFetched = await Video.find({}, { path: 1 })
     console.log(videosFetched);
-    // var video = []
-    // videosFetched.forEach((element) => {
-    //     video.push(element.path)
-    // })
     res.render('watch', {
         videos: videosFetched
     })
@@ -167,7 +160,7 @@ router.post('/login', passport.authenticate('local', { failureRedirect: '/login'
     }
     catch (e) {
         console.log(e);
-        res.status(500).send(e)
+        res.status(500).render('index', { message: 'Error connecting to Database' })
     }
 });
 
@@ -187,6 +180,7 @@ router.post('/register', async (req, res) => {
     const hash = bcrypt.hashSync(user.password, 8)
     user.password = hash
     const student = new Student(user)
+    // save user to the Mongo Database
     try {
         await student.save()
         console.log(chalk.black.bgYellow(' User Created \n'), student)
@@ -196,13 +190,14 @@ router.post('/register', async (req, res) => {
     }
     catch (e) {
         console.log(e);
-        res.status(500).send(e)
+        res.status(500).render('index', { message: 'Error registering user' })
     }
 });
 
 router.post('/upload-avatar', upload.single('avatar'), async (req, res) => {
 
     const oldFile = path.join(__dirname, '../public/' + req.user.profilePic)
+    // Update oldFilePAth with newFilePath
     try {
         await Student.updateOne({ _id: req.user._id }, {
             $set: {
