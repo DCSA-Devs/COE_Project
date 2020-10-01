@@ -1,0 +1,36 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        button,
+        a {
+            padding: 8px;
+            border: 2px solid black;
+            text-decoration: none;
+            color: black;
+        }
+    </style>
+</head>
+
+<body>
+    {{message}}
+    <form method="POST" action="./upload-video" enctype="multipart/form-data">
+        <label for="subjectInput">Choose category</label>
+        <select name="category" id="subjectInput" required=true>
+            <option value="ds">Data Structure</option>
+            <option value="co">Computer Organization</option>
+            <option value="">Kuch bhi</option>
+        </select><br><br>
+        <input type="file" id="videoInput" name="videoFile" accept="video/*" required=true />
+        <button type="submit">Upload</button>
+    </form>
+
+
+    <a href="./watch">Watch Uploaded Videos</a>
+
+</body>
+
+</html>

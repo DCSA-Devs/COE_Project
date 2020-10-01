@@ -14,9 +14,7 @@
 <body>
 
     {{#videos}}
-    <h3>{{name}}</h3>
-    <iframe src={{link}} width="700" height="400" allowfullscreen allowtransparency scrolling="no"
-        frameborder="0"></iframe>
+    <video src="{{path}}" width="700" height="400" controls></video>
     {{/videos}}
 </body>
 

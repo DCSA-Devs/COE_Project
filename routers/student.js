@@ -22,20 +22,30 @@ const keys = require("../config/keys")
 // import mongoose models
 const Student = require('../mongoose/models/student')
 // const { Session } = require('inspector')
-
+const Video = require('../mongoose/models/videos')
 const router = express.Router()
 router.use(cookieSession({
     // milliseconds of a day
     maxAge: 24 * 60 * 60 * 1000,
     secret: keys.session.cookieKey
 }));
+//auth middleware
+const auth = (req, res, next) => {
+    if (req.user)
+        next()
+    else
+        res.render('login', { message: 'Login in order to upload' })
+}
 
 router.use(passport.initialize());
 router.use(passport.session());
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'public/profilepics')
+        if (file.originalname.match(/\.(mp4|mkv|avi)$/))
+            cb(null, 'public/videos')
+        else
+            cb(null, 'public/profilepics')
     },
     filename: function (req, file, cb) {
         cb(null, new Date().getTime() + '-' + file.originalname)
@@ -45,10 +55,10 @@ var storage = multer.diskStorage({
 const upload = multer({
     storage,
     limits: {
-        fileSize: 102400
+        fileSize: 102400000
     },
     fileFilter(res, file, cb) {
-        if (file.originalname.match(/\.(jpg|png)$/)) {
+        if (file.originalname.match(/\.(jpg|png|mp4|mkv|avi)$/)) {
             cb(null, true)
         }
         else
@@ -57,16 +67,14 @@ const upload = multer({
 })
 
 router.get('', async (req, res) => {
-
     if (!req.user) {
         return res.render('index', { message: 'No cookie found' })
     }
     // res.render('index', { message: `Welcome ${req.user.firstName} ${req.user.lastName}`, image: path.join(__dirname, '../' + req.user.profilePic).replace(new RegExp('\\' + path.sep, 'g'), '/') })
-    res.render('index', { message: `Welcome ${req.user.firstName} ${req.user.lastName}`, image: req.user.profilePic })
+    res.render('index', { message: `Welcome ${req.user.firstName} ${req.user.lastName}`, image: req.user.profilePic, profileAvailable: req.user.profilePic != undefined ? true : false })
 })
 
 router.get('/login', async (req, res) => {
-
     res.render('login')
 })
 
@@ -79,7 +87,7 @@ router.get('/viewall', async (req, res) => {
     res.status(200).send(users)
 })
 
-router.get('/upload-avatar', (req, res) => {
+router.get('/upload-avatar', auth, (req, res) => {
     res.render('upload')
 })
 router.get('/logout', (req, res) => {
@@ -101,6 +109,40 @@ router.get('/videos', (req, res) => {
         videos: videos
     })
 })
+router.get('/videoUp', auth, (req, res) => {
+    res.render('videoUp')
+})
+router.post('/upload-video', upload.single('videoFile'), async (req, res) => {
+    const filePath = req.file.path
+    const VideoObject = new Video({
+        path: filePath.replace('public\\', ''),
+        uploadedBy: req.user._id,
+        type: req.body.category
+    })
+    try {
+        await VideoObject.save()
+        res.send('Update Sucessfull')
+    }
+    // delete saved video if error in uplading video details
+    catch (err) {
+        fs.unlink(filePath, (err) => {
+            console.log(filePath);
+            if (err)
+                console.log("error deleting old profile pic ");
+        })
+    }
+})
+router.get('/watch', async (req, res) => {
+    const videosFetched = await Video.find({}, { path: 1 })
+    console.log(videosFetched);
+    // var video = []
+    // videosFetched.forEach((element) => {
+    //     video.push(element.path)
+    // })
+    res.render('watch', {
+        videos: videosFetched
+    })
+})
 router.post('/login', passport.authenticate('local', { failureRedirect: '/login' }), async (req, res) => {
     const { email, password } = req.body
     /* Check if provided email id exists in database or not
@@ -115,7 +157,7 @@ router.post('/login', passport.authenticate('local', { failureRedirect: '/login'
         // If matches log-in user 
         else if (bcrypt.compareSync(password, user.password)) {
             console.log(chalk.black.bgYellow(' Login Success \n'), user);
-            res.render('index', { message: 'Login Successfull' })
+            res.redirect('../')
         }
         // If password matching failed render error message
         else
@@ -161,26 +203,32 @@ router.post('/register', async (req, res) => {
 router.post('/upload-avatar', upload.single('avatar'), async (req, res) => {
 
     const oldFile = path.join(__dirname, '../public/' + req.user.profilePic)
-    await Student.updateOne({ _id: req.user._id }, {
-        $set: {
-            profilePic: req.file.path.replace('public\\', '')
-        }
-    })
+    try {
+        await Student.updateOne({ _id: req.user._id }, {
+            $set: {
+                profilePic: req.file.path.replace('public\\', '')
+            }
+        })
+    }
+    // delete saved image if Mongo return error
+    catch (err) {
+        const filePath = path.join(__dirname, req.file.path)
+        fs.unlink(filePath, (err) => {
+            console.log(filePath);
+            if (err)
+                console.log("error deleting old profile pic ");
+        })
+    }
+
+    // delete old image when new image is uploaded successfully
     fs.unlink(oldFile, (err) => {
         console.log(oldFile);
         if (err)
             console.log("error deleting old profile pic ");
     })
-    //res.file
+
     res.render('upload', { message: 'File Uploaded Sucessfully' })
 })
 
-router.post('/get-avatar', async (req, res) => {
-    //check if auth failed, if failed that means user is not signed in
-    if (!req.user) {
-        return res.render('login', { message: 'Plz login before file upload' })
-    }
-
-})
 
 module.exports = router
