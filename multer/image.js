@@ -13,7 +13,7 @@ const storage = multer.diskStorage({
 const uploadImage = multer({
     storage,
     limits: {
-        fileSize: 102400
+        fileSize: 102400  //100 KB
     },
     fileFilter(res, file, cb) {
         if (file.originalname.match(/\.(jpg|png)$/)) {
@@ -23,6 +23,5 @@ const uploadImage = multer({
             cb(new Error('File format not supported'))
     }
 })
-
 
 module.exports = uploadImage

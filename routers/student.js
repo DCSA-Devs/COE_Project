@@ -40,6 +40,11 @@ router.get('', async (req, res) => {
     if (!req.user) {
         return res.render('index', { message: 'No cookie found' })
     }
+    //if no profile pic found set default
+    if (!req.user.profilePic || !fs.existsSync(path.join(__dirname, '..\\public\\' + req.user.profilePic))) {
+        req.user.profilePic = 'https://ui-avatars.com/api/?name=' +
+            encodeURIComponent(req.user.firstName + ' ' + req.user.lastName) + '&background=0D8ABC&color=fff&font-size=0.6bold=true&format=svg'
+    }
     res.render('index', { message: `Welcome ${req.user.firstName} ${req.user.lastName}`, image: req.user.profilePic, profileAvailable: req.user.profilePic != undefined ? true : false })
 })
 
