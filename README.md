@@ -7,7 +7,7 @@ An educational cross platform application developed using react-native.
 3. A Code Editor e.g [VS Code](https://code.visualstudio.com/)
 
 ## Steps to contribute in this Project:
-### Step 1 - Configure you git-scm
+### Step 1 - Configure your git-scm
 1. Open CMD/Terminal 
 2. Windows user set :`git config --global core.autocrlf true`
 3. Linux user set :`git config --global core.autocrlf input`
