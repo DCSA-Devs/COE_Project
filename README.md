@@ -1,5 +1,5 @@
 # COE_Project
-An Educational Website
+An educational cross platform application developed using react-native.
 
 ## Required Software :
 1. [Git](https://git-scm.com/)
@@ -7,6 +7,11 @@ An Educational Website
 3. A Code Editor e.g [VS Code](https://code.visualstudio.com/)
 
 ## Steps to contribute in this Project:
+### Step 1 - Configure you git-scm
+1. Open CMD/Terminal 
+2. Windows user set :`git config --global core.autocrlf true`
+3. Linux user set :`git config --global core.autocrlf input`
+### Step 2 
 1. Fork this repository as your own repo.
 2. Clone the forked repo to your computer using `git clone 'url of your repo'`
 3. Do the neccessary changes

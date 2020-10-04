@@ -1,11 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { Button, StyleSheet, Text, View ,TextInput} from 'react-native';
 
 export default function LoginScreen({navigation}) {
   return (
     <View style={styles.container}>
-      <Text>HomeScreen</Text>
+      <Text>Sign In</Text>
+      <TextInput placeholder={'Username'}/>
+      <TextInput placeholder={'Password'}/>
       <Button title={'Login'} onPress={()=>navigation.push('DepartmentScreen')}/>
       <StatusBar style="auto" />
     </View>

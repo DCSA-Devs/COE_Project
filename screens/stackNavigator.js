@@ -1,4 +1,4 @@
-import React from 'react';
+import React ,{useState} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -9,6 +9,7 @@ import LectureVideo from './LectureVideo';
 import Notes from './Notes';
 const Stack = createStackNavigator();
 export default function StackNavigator() {
+//Minimize the code by generating the stack through map
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName='LoginScreen'
