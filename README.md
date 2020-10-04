@@ -1,6 +1,12 @@
 # COE_Project
 An educational cross platform application developed using react-native.
-
+## Our App Execution stack (For Now)
+### app.js -> stackNavigatior.js -> LoginScreen.js -> DepartmentScreen.js
+## Note:Follow the project structure
+1. If you are adding a new screen , put your screen.js file in /screen directory and update the stackNavigatior.js file.
+2. If you are adding a component or supporting function file ,place it in the /component directory.
+3. For adding multimedia resources like images ,icons,fonts ,place it in the asset diretory.
+4. Try not make any changes to app.js.(For Now)
 ## Required Software :
 1. [Git](https://git-scm.com/)
 2. [NodeJs](https://nodejs.org/en/)
