@@ -11,7 +11,7 @@ export default function SignUp() {
     const [value, setValue] = React.useState('student');
     //validations
     const reviewformschema = yup.object({
-        firstname: yup.string()
+        Firstname: yup.string()
             .required()
             .min(4),
         lastname: yup.string()
@@ -45,7 +45,7 @@ export default function SignUp() {
 
 
                 <Formik
-                        initialValues={{ firstname: '', lastname: '', email: '', mobile: '', password: '', confirm_password: '' }}
+                        initialValues={{ Firstname: '', lastname: '', email: '', mobile: '', password: '', confirm_password: '' }}
                         validationSchema={reviewformschema}
                         onSubmit={(values, actions) => {
                             console.log(values);
@@ -67,11 +67,11 @@ export default function SignUp() {
                                 <TextInput
                                     style={styles.input}
                                     placeholder='Enter First name'
-                                    onChangeText={props.handleChange('firstname')}
-                                    value={props.values.firstname}
-                                    onBlur={props.handleBlur('firstname')}
+                                    onChangeText={props.handleChange('Firstname')}
+                                    value={props.values.Firstname}
+                                    onBlur={props.handleBlur('Firstname')}
                                 />
-                                <Text style={styles.errorText}>{props.touched.firstname && props.errors.firstname}</Text>
+                                <Text style={styles.errorText}>{props.touched.Firstname && props.errors.Firstname}</Text>
 
                                 <TextInput
                                     style={styles.input}
