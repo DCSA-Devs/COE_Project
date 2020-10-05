@@ -20,25 +20,20 @@ An educational cross platform application developed using react-native.
 ### Step 2 
 1. Fork this repository as your own repo.
 2. Clone your fork:
-
     `git clone git@github.com:YOUR-USERNAME/YOUR-FORKED-REPO.git`
-
 3. Add remote from original repository in your forked repository: 
-
     `cd into/cloned/fork-repo`
     `git remote add upstream git://github.com/ORIGINAL-DEV-USERNAME/REPO-YOU-FORKED-FROM.git`
-    `git fetch upstream`
-
 
 4. Do the neccessary changes
+5. Check the applicatin has no errors and is running fine.
 5. Add the changes using `git add .` command
 6. commit the changes using  `git commit -m 'Your message'`
 7. Push the changes to your forked repo using `git push` commmand
 8. Now compare and create a pull request using **github.com**
 9. For Updating your fork from original repo to keep up with their changes:
-
-   ` git pull upstream master`
-
+    `git fetch upstream` :It will show changes any team member has done
+   ` git pull upstream master` :It will update your repository with the main repository
 ## Running the program
 1. After cloning the repository run command `npm install`
 2. This will download all the required npm modules (make sure you are connected to internet)
