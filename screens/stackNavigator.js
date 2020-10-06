@@ -2,11 +2,14 @@ import React ,{useState} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import LoginScreen from './LoginScreen';
 import DepartmentScreen from './DepartmentScreen';
 import VideoPlayerScreen from './VideoPlayerScreen';
 import LectureVideo from './LectureVideo';
 import Notes from './Notes';
+import SignUp from './SignUp';
+import SignIn from './SignIn';
+import Forgotps from './Forgotps';
+
 const Stack = createStackNavigator();
 export default function StackNavigator() {
 //Minimize the code by generating the stack through map
@@ -22,14 +25,28 @@ export default function StackNavigator() {
             fontWeight: 'bold',
           },
         }}>
+
         <Stack.Screen
-          name='Login'
-          component={LoginScreen}
+          name='SignIn'
+          component={SignIn}
           options={{
             title: 'Login',
           }
           }
         />
+
+        <Stack.Screen
+          name='SignUp'
+          component={SignUp}
+          options={{title: 'Registeration form',}}
+        />
+
+        <Stack.Screen
+          name='Forgotps'
+          component={Forgotps}
+          options={{title: 'Forgot password',}}
+        />
+
         <Stack.Screen
           name='DepartmentScreen'
           component={DepartmentScreen}
