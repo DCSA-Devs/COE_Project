@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Button, TextInput, View, Text } from 'react-native';
 import { Formik } from 'formik';
-import Logo from './Logo'
+import Logo from '../components/Logo';
 
 export default function SignIn() {
 

@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { StyleSheet, Button, TextInput, View, Text, ScrollView } from 'react-native';
 import { Formik } from 'formik';
-import Logo from './Logo';
+import Logo from '../components/Logo';
 import { RadioButton } from 'react-native-paper';
 import * as yup from 'yup';
 
