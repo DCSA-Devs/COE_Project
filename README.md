@@ -1,5 +1,5 @@
 # COE_Project 
-An educational cross platform application developed using react-native.
+An open source cross platform application for remote learning.
 ## Our App Execution stack (For Now)
 ### app.js -> stackNavigatior.js -> LoginScreen.js -> DepartmentScreen.js
 ## General Instructions
@@ -7,8 +7,8 @@ An educational cross platform application developed using react-native.
 2. If you are adding a component or supporting function file ,place it in the /component directory.
 3. For adding multimedia resources like images ,icons,fonts ,place it in the asset diretory.
 4. Try not make any changes to app.js.(For Now)
-5. Always make a pull request ,even if it's a small feature, to avoid merger conflict
-6. **Always Update your local repository before adding any new code by following step 3**
+5. Always make a pull request ,even if it's a small feature, to avoid merge conflict
+6. **Always Update your local repository before adding any new code by following Section 3**
 ## Required Software :
 1. [Git](https://git-scm.com/)
 2. [NodeJs](https://nodejs.org/en/)
@@ -24,15 +24,15 @@ An educational cross platform application developed using react-native.
 2. Clone your fork:
     `git clone https://github.com/YOUR-USERNAME/COE_Project.git`
 3. **Add remote from original repository in your forked repository :** 
-    * `cd into project root folder`
+    * Go to COE_PROJECT folder and the commands given below
     * `git remote add upstream https://github.com/DCSA-Devs/COE_Project.git`
 4. Run `npm install` to install all dependency.
-5. Do the neccessary changes
-6. **DO `npm start` Check the applicatin has no errors and is running fine.**
-7. If the application is running fine then , Add the changes using `git add .` command
-8. commit the changes using  `git commit -m 'Your message'`
+5. **Do the neccessary changes add components/features etc**
+6. **Run  `npm start` to check the applicatin has no errors and is running fine.**
+7. If the application is running fine & your changes are working then run `git add .` command
+8. commit the changes using  `git commit -m"Your message"`
 9. Push the changes to your forked repo using `git push` commmand
-10. Now compare and create a pull request using **github.com ,Ensure ther is no merge conflict**
+10. Now compare and create a pull request using **github.com ,Ensure there is no merge conflict**
 ### Section 3 Upating the local repository with the main repository
 1. `git fetch`
 2. `git fetch upstream` :It will show changes others team member has done
