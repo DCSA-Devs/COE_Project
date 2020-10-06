@@ -10,7 +10,7 @@ export default function Logo() {
                 <Text style={styles.maintitle}>PANJAB UNIVERSITY</Text>
                 <Text style={styles.maintitle}>CHANDIGARH</Text>
                 <View >
-                    <Image  style={styles.imageprop} source={require('../images/LOGO.jpg')} >
+                    <Image  style={styles.imageprop} source={require('../images/LOGO.png')} >
                     </Image>
                 </View>
             

@@ -2,23 +2,24 @@ import React from 'react';
 import {StyleSheet,View,Text,Button, TextInput} from 'react-native'
 import Logo from '../components/Logo'
 
-export default function Forgetps(){
+export default function Forgetps({navigation}){
     return (
         <View style={styles.container}>
             <Logo/>
-            
-    <Text >{"\n"}Trouble logging in ?{"\n"}{"\n"}{"\n"}</Text>
-            <Text>Enter your mail and we will send</Text>
-            <Text>a link to get into your account{"\n"}{"\n"}</Text>
-            
-            <TextInput
-                            style={styles.input}
-                            placeholder='Email'
-                           
-            />
-            
-            <View style={styles.btn}>
-                        <Button color='#2196F3' title="Send Login Link"  />
+            <View style={styles.register}>
+                <Text >Trouble logging in ?{"\n"}{"\n"}{"\n"}</Text>
+                <Text>Enter your mail and we will send</Text>
+                <Text>a link to get into your account{"\n"}{"\n"}</Text>
+                
+                <TextInput
+                                style={styles.input}
+                                placeholder='Email'
+                            
+                />
+                
+                <View style={styles.btn}>
+                            <Button color='#2196F3' title="Send Login Link"  />
+                </View>
             </View>
         </View>
     )
@@ -27,7 +28,10 @@ export default function Forgetps(){
 const styles = StyleSheet.create({
     container: {
         flexDirection:'column',
-        paddingTop: 150,
+        paddingTop: 100,
+    },
+    register:{
+        marginTop:100,
         justifyContent:'center',
         alignItems:'center'
     },

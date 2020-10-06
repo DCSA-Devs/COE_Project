@@ -7,7 +7,7 @@ import { RadioButton } from 'react-native-paper';
 import * as yup from 'yup';
 
 
-export default function SignUp() {
+export default function SignUp({navigation}) {
     const [value, setValue] = React.useState('student');
     //validations
     const reviewformschema = yup.object({
@@ -37,10 +37,10 @@ export default function SignUp() {
 
     return (
         //Sign Up form
-        <View style={styles.container}>
-            <ScrollView >
+        <ScrollView >
+          <View style={styles.container}>
                 <Logo />
-                <View>
+                <View style={{marginTop:1}}>
                     <Text style={styles.title}>Sign Up </Text>
 
 
@@ -129,9 +129,8 @@ export default function SignUp() {
 
                     </Formik>
                 </View>
-            </ScrollView>
-
-        </View >
+             </View >
+        </ScrollView>
 
     );
 }
@@ -140,8 +139,6 @@ export default function SignUp() {
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'column',
-        padding: 20,
-        marginTop: 20,
         alignItems: 'center',
 
     },
@@ -160,10 +157,9 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginBottom: 10,
         fontWeight: "bold",
-        paddingTop: 80,
         fontSize: 25,
         color: '#2196F3',
-        marginTop: 50
+       
     },
     btn: {
         padding: 18,

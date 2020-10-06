@@ -3,7 +3,7 @@ import { StyleSheet, Button, TextInput, View, Text } from 'react-native';
 import { Formik } from 'formik';
 import Logo from '../components/Logo';
 
-export default function SignIn() {
+export default function SignIn({navigation}) {
 
     return (
 
@@ -31,13 +31,13 @@ export default function SignIn() {
                             placeholder='Password'
                             onChangeText={props.handleChange('password')}
                         />
-                        <Text style={{paddingLeft:200}}>Forgot password ?</Text>
+                        <Text style={{paddingLeft:200,color:'#2196F3'}} onPress={()=>navigation.push('Forgotps')}>Forgot password ?</Text>
                         
                         <View style={[{ width:'80%',margin:10, alignContent:'center',paddingLeft:120}]}>
-                        <Button color='#2196F3' title="Log In" />
+                        <Button color='#2196F3' title="Log In" onPress={()=>navigation.push('DepartmentScreen')} />
                         
                         </View>  
-                        <Text style={{alignContent:'center',paddingLeft:110}}>Create Account</Text>                    
+                        <Text style={{alignContent:'center',paddingLeft:110,color:'#2196F3'}} onPress={()=>navigation.push('SignUp')}>Create Account</Text>                    
                     </View>
                 )}
             </Formik>
