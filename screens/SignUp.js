@@ -7,27 +7,27 @@ import { RadioButton } from 'react-native-paper';
 import * as yup from 'yup';
 
 
-export default function SignUp({navigation}) {
+export default function SignUp({ navigation }) {
     const [value, setValue] = React.useState('student');
     //validations
     const reviewformschema = yup.object({
         Firstname: yup.string()
             .required()
             .min(4),
-        lastname: yup.string()
+        Lastname: yup.string()
             .required()
             .min(4),
-        email: yup.string()
+        Email: yup.string()
             .required()
             .email(),
-        mobile: yup.string()
+        Mobile: yup.string()
             .required()
             .min(10)
             .max(10),
         password: yup.string()
             .required()
             .min(8),
-        c_password: yup.string()
+        confirm_password: yup.string()
             .required()
             .min(8)
             .test('passwords-match', 'Passwords must match ', function (value) {
@@ -38,14 +38,15 @@ export default function SignUp({navigation}) {
     return (
         //Sign Up form
         <ScrollView >
-          <View style={styles.container}>
+            <View style={styles.container}>
                 <Logo />
-                <View style={{marginTop:1}}>
+
+                <View style={{ marginTop: 1 }}>
                     <Text style={styles.title}>Sign Up </Text>
 
 
-                <Formik
-                        initialValues={{ Firstname: '', lastname: '', email: '', mobile: '', password: '', confirm_password: '' }}
+                    <Formik
+                        initialValues={{ Firstname: '', Lastname: '', Email: '', Mobile: '', password: '', confirm_password: '' }}
                         validationSchema={reviewformschema}
                         onSubmit={(values, actions) => {
                             console.log(values);
@@ -76,30 +77,30 @@ export default function SignUp({navigation}) {
                                 <TextInput
                                     style={styles.input}
                                     placeholder='Enter Last name'
-                                    onChangeText={props.handleChange('lastname')}
-                                    value={props.values.lastname}
-                                    onBlur={props.handleBlur('lastname')}
+                                    onChangeText={props.handleChange('Lastname')}
+                                    value={props.values.Lastname}
+                                    onBlur={props.handleBlur('Lastname')}
                                 />
-                                <Text style={styles.errorText}>{props.touched.lastname && props.errors.lastname}</Text>
+                                <Text style={styles.errorText}>{props.touched.Lastname && props.errors.Lastname}</Text>
 
                                 <TextInput
                                     style={styles.input}
                                     placeholder='Enter e-mail id'
-                                    onChangeText={props.handleChange('email')}
-                                    value={props.values.email}
-                                    onBlur={props.handleBlur('email')}
+                                    onChangeText={props.handleChange('Email')}
+                                    value={props.values.Email}
+                                    onBlur={props.handleBlur('Email')}
                                 />
-                                <Text style={styles.errorText}>{props.touched.email && props.errors.email}</Text>
+                                <Text style={styles.errorText}>{props.touched.Email && props.errors.Email}</Text>
 
                                 <TextInput
                                     style={styles.input}
                                     placeholder='Enter mobile no.'
-                                    onChangeText={props.handleChange('mobile')}
-                                    value={props.values.mobile}
+                                    onChangeText={props.handleChange('Mobile')}
+                                    value={props.values.Mobile}
                                     keyboardType='numeric'
-                                    onBlur={props.handleBlur('mobile')}
+                                    onBlur={props.handleBlur('Mobile')}
                                 />
-                                <Text style={styles.errorText}>{props.touched.mobile && props.errors.mobile}</Text>
+                                <Text style={styles.errorText}>{props.touched.Mobile && props.errors.Mobile}</Text>
 
                                 <TextInput
                                     style={styles.input}
@@ -129,7 +130,8 @@ export default function SignUp({navigation}) {
 
                     </Formik>
                 </View>
-             </View >
+
+            </View >
         </ScrollView>
 
     );
@@ -159,7 +161,8 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         fontSize: 25,
         color: '#2196F3',
-       
+        marginTop:10
+
     },
     btn: {
         padding: 18,
@@ -174,8 +177,8 @@ const styles = StyleSheet.create({
     errorText: {
         color: 'crimson',
         fontWeight: "bold",
-        marginBottom: 10,
-        marginTop: 6,
+        marginBottom: 3,
+        marginTop: 3,
         textAlign: "center"
     }
 
