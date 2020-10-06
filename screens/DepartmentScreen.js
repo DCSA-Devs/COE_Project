@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StatusBar, Button, StyleSheet, FlatList } from 'react-native';
-import HomeScreenGenerator from '../components/homeScreenGenerator';
+import DepartmentScreenGenerator from '../components/departmentScreenGenerator';
 const screens = [   //It has to be here as stack navigator contains login and other screen or we have to filter
     { component: 'LectureVideo',name:'Lecture Video',imgSrc:require('../assets/images/play.jpg'),key: '1' },
     { component: 'Notes',name:'Subject Notes',imgSrc:require('../assets/images/books.png'),key: '2' },
@@ -20,7 +20,7 @@ export default function Home({ navigation }) {
                 keyExtractor={(item)=>item.key}
                 data={screens}
                 renderItem={({ item }) =>
-                    <HomeScreenGenerator
+                    <DepartmentScreenGenerator
                         navigationProp={navigation}
                         screenItems={item}        
                     />

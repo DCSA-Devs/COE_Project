@@ -1,6 +1,6 @@
 import React from 'react';
 import {View,Text,StyleSheet,TouchableOpacity,Image} from 'react-native';
-export default function HomeScreenGenerator({navigationProp,screenItems}){
+export default function DepartmentScreenGenerator({navigationProp,screenItems}){
   return(
     <TouchableOpacity style={styles.touchableOpacityStyle} onPress={()=>navigationProp.push(screenItems.component)}>
         <Image source={screenItems.imgSrc} 
