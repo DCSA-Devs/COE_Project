@@ -1,4 +1,4 @@
-import React ,{useState} from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -12,7 +12,7 @@ import Forgotps from './Forgotps';
 
 const Stack = createStackNavigator();
 export default function StackNavigator() {
-//Minimize the code by generating the stack through map
+  //Minimize the code by generating the stack through map
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName='SignIn'
@@ -38,19 +38,19 @@ export default function StackNavigator() {
         <Stack.Screen
           name='SignUp'
           component={SignUp}
-          options={{title: 'Registeration form',}}
+          options={{ title: 'Registeration form', }}
         />
 
         <Stack.Screen
           name='Forgotps'
           component={Forgotps}
-          options={{title: 'Forgot password',}}
+          options={{ title: 'Forgot password', }}
         />
 
         <Stack.Screen
           name='DepartmentScreen'
           component={DepartmentScreen}
-          options={{title: 'Department of Computer Science',}}
+          options={{ title: 'DCSA', }}
         />
         <Stack.Screen
           name='LectureVideo'
