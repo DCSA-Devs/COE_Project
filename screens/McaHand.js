@@ -20,7 +20,7 @@ export default function McaHand({ navigation }) {
         keyExtractor={(item) => item.key}
         data={sem}
         renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => navigation.push('DepartmentScreen')}>
+          <TouchableOpacity onPress={() => navigation.push('drawerNavigator')}>
             <Text style={styles.item}>{item.name}</Text>
           </TouchableOpacity>
         )}

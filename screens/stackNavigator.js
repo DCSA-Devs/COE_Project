@@ -21,6 +21,7 @@ import HotelDepartment from '../screens/HotelDepartment';
 import LawDepartment from '../screens/LawDepartment';
 import McaHand from '../screens/McaHand';
 import MscHand from '../screens/MscHand';
+import {drawerNavigator,Toggle} from './drawerNavigator';
 
 const Stack = createStackNavigator();
 export default function StackNavigator() {
@@ -118,12 +119,6 @@ export default function StackNavigator() {
           component={semesterScreen}
           options={{ title: 'Semester' }}
         />
-
-        <Stack.Screen
-          name='DepartmentScreen'
-          component={DepartmentScreen}
-          options={{ title: 'Department of Computer Science', }}
-        />
         <Stack.Screen
           name='LectureVideo'
           component={LectureVideo}
@@ -138,6 +133,14 @@ export default function StackNavigator() {
           name='VideoPlayer'
           component={VideoPlayerScreen}
           options={{ title: 'Player' }}
+        />
+        <Stack.Screen
+          name='drawerNavigator'
+          component={drawerNavigator}
+          options={{ 
+            title: 'DawerScreen',
+            headerShown:false,
+             }}
         />
       </Stack.Navigator>
     </NavigationContainer>
