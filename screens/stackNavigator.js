@@ -15,7 +15,7 @@ export default function StackNavigator() {
 //Minimize the code by generating the stack through map
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='LoginScreen'
+      <Stack.Navigator initialRouteName='SignIn'
         screenOptions={{
           headerStyle: {
             backgroundColor: 'rgb(66, 112, 142 )',
