@@ -1,11 +1,11 @@
 import React from 'react';
 import {View,Text,StatusBar,StyleSheet,ImageBackground} from 'react-native';
-import {globalStyles} from '../globalStyles';
+import {globalStyles} from '../../globalStyles';
 export default function Notes(){
   return(
     <ImageBackground 
     style={styles.backStyle} 
-    source={require('../assets/images/books.png')}>
+    source={require('../../assets/images/books.png')}>
       <Text>Hello</Text>
     </ImageBackground>
   );
