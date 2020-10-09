@@ -7,7 +7,7 @@ export default function SignIn({ navigation }) {
 
     return (
         <KeyboardAvoidingView>
-
+            
             <View style={styles.container}>
                 <Logo />
                 <Formik
@@ -35,7 +35,7 @@ export default function SignIn({ navigation }) {
                             <Text style={{ paddingLeft: 200, color: '#2196F3' }} onPress={() => navigation.push('Forgotps')}>Forgot password ?</Text>
 
                             <View style={[{ width: '80%', margin: 10, alignContent: 'center', paddingLeft: 120 }]}>
-                                <Button color='#2196F3' title="Log In" onPress={() => navigation.push('Department')} />
+                                <Button color='#2196F3' title="Log In" onPress={() => navigation.push('DepartmentScreen')} />
 
                             </View>
                             <Text style={{ alignContent: 'center', paddingLeft: 110, color: '#2196F3' }} onPress={() => navigation.push('SignUp')}>Create Account</Text>
@@ -43,7 +43,7 @@ export default function SignIn({ navigation }) {
                     )}
                 </Formik>
             </View>
-
+        
         </KeyboardAvoidingView>
     );
 }

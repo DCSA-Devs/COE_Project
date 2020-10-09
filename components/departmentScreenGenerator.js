@@ -21,9 +21,7 @@ const styles=StyleSheet.create({
         paddingVertical:10,
         paddingHorizontal:10,
         margin:15,
-        backgroundColor:'rgb(220, 255, 246)',
-        borderColor:"rgb(17, 216, 183 )",
-        borderWidth:1,
+        backgroundColor:'white',
         borderRadius:10,
     },
     componentTextStyle:{
