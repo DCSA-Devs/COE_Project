@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StatusBar, Button, StyleSheet, FlatList } from 'react-native';
-import DepartmentScreenGenerator from '../../components/departmentScreenGenerator';
-import DrawerHeader from '../../components/drawerHeader';
+import DepartmentScreenGenerator from '../../components/drawerScreenComponents/departmentScreenGenerator';
+import DrawerHeader from '../../components/drawerScreenComponents/drawerHeader';
 const screens = [   //It has to be here as stack navigator contains login and other screen or we have to filter
     { component: 'LectureVideo',name:'Lecture Video',imgSrc:require('../../assets/images/VideoLecture.png'),key: '1' },
     { component: 'Notes',name:'Subject Notes',imgSrc:require('../../assets/images/Book1.png'),key: '2' },
@@ -15,7 +15,7 @@ const screens = [   //It has to be here as stack navigator contains login and ot
 export default function Home({ navigation }) {
     return (
         <View style={styles.homeContainer}>
-        <DrawerHeader drawerHandler={()=>navigation.toggleDrawer()}/>
+        <DrawerHeader drawerHandler={()=>navigation.toggleDrawer()} title={'Department Of Computer Science'}/>
             <FlatList
                 style={styles.flatListStyle}
                 numColumns={2}

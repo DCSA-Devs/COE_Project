@@ -4,7 +4,7 @@ import DrawerHeader from '../../components/drawerScreenComponents/drawerHeader';
 export default function DownloadSyllabus({navigation}){
   return(
     <View>
-        <DrawerHeader drawerHandler={()=>navigation.toggleDrawer()} title={'Dowload'}/>
+        <DrawerHeader drawerHandler={()=>navigation.toggleDrawer()}/>
     </View>
   );
 }
