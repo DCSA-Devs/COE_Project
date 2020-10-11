@@ -7,13 +7,26 @@ export default function SignIn({ navigation }) {
 
     return (
         <KeyboardAvoidingView>
-
             <View style={styles.container}>
                 <Logo />
                 <Formik
                     initialValues={{ email: '', password: '' }}
-                    onSubmit={(values) => {
-                        console.log(values);
+                    onSubmit={async (values) => {
+                        const req = await fetch('https://coeproject.herokuapp.com/login', {
+                            method: 'POST',
+                            headers: {
+                                Accept: 'application/json',
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify(values)
+                        })
+                        if (req.status != 200) {
+                            alert('Login Failed')
+                        }
+                        else {
+                            const user = await req.json()
+                            navigation.push('DepartmentScreen', { user })
+                        }
                     }}
                 >
                     {(props) => (
@@ -35,7 +48,7 @@ export default function SignIn({ navigation }) {
                             <Text style={{ paddingLeft: 200, color: '#2196F3' }} onPress={() => navigation.push('Forgotps')}>Forgot password ?</Text>
 
                             <View style={[{ width: '80%', margin: 10, alignContent: 'center', paddingLeft: 120 }]}>
-                                <Button color='#2196F3' title="Log In" onPress={() => navigation.push('DrawerNavigator')} />
+                                <Button color='#2196F3' title="Log In" onPress={props.handleSubmit} />
 
                             </View>
                             <Text style={{ alignContent: 'center', paddingLeft: 110, color: '#2196F3' }} onPress={() => navigation.push('SignUp')}>Create Account</Text>
