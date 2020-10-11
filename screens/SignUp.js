@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { StyleSheet, Button, TextInput, View, Text, ScrollView } from 'react-native';
+import { Alert, StyleSheet, Button, TextInput, View, Text, ScrollView } from 'react-native';
 import { Formik } from 'formik';
 import Logo from '../components/Logo';
 import { RadioButton } from 'react-native-paper';
@@ -8,19 +8,28 @@ import * as yup from 'yup';
 
 
 export default function SignUp({ navigation }) {
-    const [value, setValue] = React.useState('student');
+    const [value, setValue] = React.useState('Student');
+
+    const failAlert = () => {
+        Alert.alert('😥', 'Registration Failed', [
+            {
+                text: 'OK'
+            }
+
+        ], { cancelable: true })
+    }
     //validations
     const reviewformschema = yup.object({
-        Firstname: yup.string()
+        firstName: yup.string()
             .required()
             .min(4),
-        Lastname: yup.string()
+        lastName: yup.string()
             .required()
             .min(4),
-        Email: yup.string()
+        email: yup.string()
             .required()
             .email(),
-        Mobile: yup.string()
+        mobile: yup.string()
             .required()
             .min(10)
             .max(10),
@@ -46,61 +55,77 @@ export default function SignUp({ navigation }) {
 
 
                     <Formik
-                        initialValues={{ Firstname: '', Lastname: '', Email: '', Mobile: '', password: '', confirm_password: '' }}
+                        initialValues={{ firstName: '', lastName: '', email: '', mobile: '', password: '', confirm_password: '' }}
                         validationSchema={reviewformschema}
-                        onSubmit={(values, actions) => {
-                            console.log(values);
-                            actions.resetForm();
-                        }}>
+                        onSubmit={async (values) => {
+                            delete values.confirm_password
+                            values.profession = value
 
+                            const req = await fetch('https://coeproject.herokuapp.com/register', {
+                                method: 'POST',
+                                headers: {
+                                    Accept: 'application/json',
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify(values)
+                            })
+                            if (req.status != 200) {
+                                failAlert()
+                            }
+                            else {
+                                const user = await req.json()
+                                navigation.push('SignIn')
+                            }
+                        }}
+                    >
                         {(props) => (
 
                             <View>
                                 <RadioButton.Group onValueChange={value => setValue(value)} value={value}>
                                     <View style={{ flexDirection: 'row', paddingLeft: 180 }}>
-                                        <RadioButton value='Student'></RadioButton><Text style={{ marginTop: 6 }}>I am student</Text>
+                                        <RadioButton value='Student' onPress={(value) => setValue(value)} /><Text style={{ marginTop: 6 }}>I am student</Text>
                                     </View>
                                     <View style={{ flexDirection: 'row', paddingLeft: 180 }}>
-                                        <RadioButton value='Teacher'></RadioButton><Text style={{ marginTop: 6 }}>I am Teacher</Text>
+                                        <RadioButton value='Teacher' onPress={(value) => setValue(value)} /><Text style={{ marginTop: 6 }}>I am Teacher</Text>
                                     </View>
                                 </RadioButton.Group>
 
                                 <TextInput
                                     style={styles.input}
                                     placeholder='Enter First name'
-                                    onChangeText={props.handleChange('Firstname')}
-                                    value={props.values.Firstname}
-                                    onBlur={props.handleBlur('Firstname')}
+                                    onChangeText={props.handleChange('firstName')}
+                                    value={props.values.firstName}
+                                    onBlur={props.handleBlur('firstName')}
                                 />
-                                <Text style={styles.errorText}>{props.touched.Firstname && props.errors.Firstname}</Text>
+                                <Text style={styles.errorText}>{props.touched.firstName && props.errors.firstName}</Text>
 
                                 <TextInput
                                     style={styles.input}
                                     placeholder='Enter Last name'
-                                    onChangeText={props.handleChange('Lastname')}
-                                    value={props.values.Lastname}
-                                    onBlur={props.handleBlur('Lastname')}
+                                    onChangeText={props.handleChange('lastName')}
+                                    value={props.values.lastName}
+                                    onBlur={props.handleBlur('lastName')}
                                 />
-                                <Text style={styles.errorText}>{props.touched.Lastname && props.errors.Lastname}</Text>
+                                <Text style={styles.errorText}>{props.touched.lastName && props.errors.lastName}</Text>
 
                                 <TextInput
                                     style={styles.input}
                                     placeholder='Enter e-mail id'
-                                    onChangeText={props.handleChange('Email')}
-                                    value={props.values.Email}
-                                    onBlur={props.handleBlur('Email')}
+                                    onChangeText={props.handleChange('email')}
+                                    value={props.values.email}
+                                    onBlur={props.handleBlur('email')}
                                 />
-                                <Text style={styles.errorText}>{props.touched.Email && props.errors.Email}</Text>
+                                <Text style={styles.errorText}>{props.touched.email && props.errors.email}</Text>
 
                                 <TextInput
                                     style={styles.input}
                                     placeholder='Enter mobile no.'
-                                    onChangeText={props.handleChange('Mobile')}
-                                    value={props.values.Mobile}
+                                    onChangeText={props.handleChange('mobile')}
+                                    value={props.values.mobile}
                                     keyboardType='numeric'
-                                    onBlur={props.handleBlur('Mobile')}
+                                    onBlur={props.handleBlur('mobile')}
                                 />
-                                <Text style={styles.errorText}>{props.touched.Mobile && props.errors.Mobile}</Text>
+                                <Text style={styles.errorText}>{props.touched.mobile && props.errors.mobile}</Text>
 
                                 <TextInput
                                     style={styles.input}
@@ -161,7 +186,7 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         fontSize: 25,
         color: '#2196F3',
-        marginTop:10
+        marginTop: 10
 
     },
     btn: {

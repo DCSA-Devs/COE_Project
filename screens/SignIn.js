@@ -1,10 +1,17 @@
 import React from 'react';
-import { StyleSheet, Button, TextInput, View, Text, KeyboardAvoidingView } from 'react-native';
+import { Alert, StyleSheet, Button, TextInput, View, Text, KeyboardAvoidingView } from 'react-native';
 import { Formik } from 'formik';
 import Logo from '../components/Logo';
 
 export default function SignIn({ navigation }) {
+    const failAlert = () => {
+        Alert.alert('Login Failed', 'Make sure credentials are correct', [
+            {
+                text: 'OK'
+            }
 
+        ], { cancelable: true })
+    }
     return (
         <KeyboardAvoidingView>
             <View style={styles.container}>
@@ -21,7 +28,7 @@ export default function SignIn({ navigation }) {
                             body: JSON.stringify(values)
                         })
                         if (req.status != 200) {
-                            alert('Login Failed')
+                            failAlert()
                         }
                         else {
                             const user = await req.json()

@@ -15,7 +15,7 @@ export default function StackNavigator() {
   //Minimize the code by generating the stack through map
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='SignIn'
+      <Stack.Navigator initialRouteName='SignUp'
         screenOptions={{
           headerStyle: {
             backgroundColor: 'rgb(66, 112, 142 )',
@@ -50,8 +50,10 @@ export default function StackNavigator() {
         <Stack.Screen
           name='DrawerNavigator'
           component={DrawerNavigator}
-          options={{ title: 'DrawerNavigator',
-          headerShown:false }}
+          options={{
+            title: 'DrawerNavigator',
+            headerShown: false
+          }}
         />
         <Stack.Screen
           name='DepartmentScreen'
