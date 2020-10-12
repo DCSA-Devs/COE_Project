@@ -4,6 +4,7 @@ import { Formik } from 'formik';
 import Logo from '../components/Logo';
 
 export default function SignIn({ navigation }) {
+    const [isDisabled, setDisabled] = React.useState(false)
     const Toast = (message) => {
         ToastAndroid.show(message, ToastAndroid.SHORT)
     }
@@ -22,6 +23,7 @@ export default function SignIn({ navigation }) {
                 <Formik
                     initialValues={{ email: '', password: '' }}
                     onSubmit={async (values) => {
+                        setDisabled(true)
                         const req = await fetch('https://coeproject.herokuapp.com/login', {
                             method: 'POST',
                             headers: {
@@ -37,7 +39,9 @@ export default function SignIn({ navigation }) {
                             const user = await req.json()
                             Toast('Login Successfull')
                             navigation.push('DepartmentScreen', { user })
+
                         }
+                        setDisabled(false)
                     }}
                 >
                     {(props) => (
@@ -48,7 +52,8 @@ export default function SignIn({ navigation }) {
                                 style={styles.input}
                                 placeholder='E-mail'
                                 onChangeText={props.handleChange('email')}
-                                value={props.values.username}
+                                value={props.values.username
+                                }
                             />
 
                             <TextInput
@@ -59,7 +64,7 @@ export default function SignIn({ navigation }) {
                             <Text style={{ paddingLeft: 200, color: '#2196F3' }} onPress={() => navigation.push('Forgotps')}>Forgot password ?</Text>
 
                             <View style={[{ width: '80%', margin: 10, alignContent: 'center', paddingLeft: 120 }]}>
-                                <Button color='#2196F3' title="Log In" onPress={props.handleSubmit} />
+                                <Button disabled={isDisabled} color='#2196F3' title="Log In" onPress={props.handleSubmit} />
 
                             </View>
                             <Text style={{ alignContent: 'center', paddingLeft: 110, color: '#2196F3' }} onPress={() => navigation.push('SignUp')}>Create Account</Text>

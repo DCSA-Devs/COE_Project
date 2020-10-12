@@ -8,6 +8,7 @@ import * as yup from 'yup';
 
 
 export default function SignUp({ navigation }) {
+    const [isDisabled, setDisabled] = React.useState(false)
     const [value, setValue] = React.useState('Student');
     const Toast = (message) => {
         ToastAndroid.show(message, ToastAndroid.SHORT)
@@ -60,6 +61,7 @@ export default function SignUp({ navigation }) {
                         initialValues={{ firstName: '', lastName: '', email: '', mobile: '', password: '', confirm_password: '' }}
                         validationSchema={reviewformschema}
                         onSubmit={async (values) => {
+                            setDisabled(true)
                             delete values.confirm_password
                             values.profession = value
 
@@ -78,6 +80,7 @@ export default function SignUp({ navigation }) {
                                 Toast('Account created')
                                 navigation.push('SignIn')
                             }
+                            setDisabled(false)
                         }}
                     >
                         {(props) => (
@@ -115,6 +118,7 @@ export default function SignUp({ navigation }) {
                                     placeholder='Enter e-mail id'
                                     onChangeText={props.handleChange('email')}
                                     value={props.values.email}
+                                    keyboardType="email-address"
                                     onBlur={props.handleBlur('email')}
                                 />
                                 <Text style={styles.errorText}>{props.touched.email && props.errors.email}</Text>
@@ -134,6 +138,7 @@ export default function SignUp({ navigation }) {
                                     placeholder='Enter password'
                                     onChangeText={props.handleChange('password')}
                                     value={props.values.password}
+                                    keyboardType="visible-password"
                                     onBlur={props.handleBlur('password')}
                                 />
                                 <Text style={styles.errorText}>{props.touched.password && props.errors.password}</Text>
@@ -148,7 +153,7 @@ export default function SignUp({ navigation }) {
                                 <Text style={styles.errorText}>{props.touched.confirm_password && props.errors.confirm_password}</Text>
 
                                 <View style={styles.btn}>
-                                    <Button title="Create Account" onPress={props.handleSubmit} />
+                                    <Button title="Create Account" disabled={isDisabled} onPress={props.handleSubmit} />
                                 </View>
 
                             </View>
