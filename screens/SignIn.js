@@ -1,9 +1,12 @@
 import React from 'react';
-import { Alert, StyleSheet, Button, TextInput, View, Text, KeyboardAvoidingView } from 'react-native';
+import { Alert, StyleSheet, ToastAndroid, Button, TextInput, View, Text, KeyboardAvoidingView } from 'react-native';
 import { Formik } from 'formik';
 import Logo from '../components/Logo';
 
 export default function SignIn({ navigation }) {
+    const Toast = (message) => {
+        ToastAndroid.show(message, ToastAndroid.SHORT)
+    }
     const failAlert = () => {
         Alert.alert('Login Failed', 'Make sure credentials are correct', [
             {
@@ -32,6 +35,7 @@ export default function SignIn({ navigation }) {
                         }
                         else {
                             const user = await req.json()
+                            Toast('Login Successfull')
                             navigation.push('DepartmentScreen', { user })
                         }
                     }}

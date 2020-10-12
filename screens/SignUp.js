@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Alert, StyleSheet, Button, TextInput, View, Text, ScrollView } from 'react-native';
+import { Alert, ToastAndroid, StyleSheet, Button, TextInput, View, Text, ScrollView } from 'react-native';
 import { Formik } from 'formik';
 import Logo from '../components/Logo';
 import { RadioButton } from 'react-native-paper';
@@ -9,7 +9,9 @@ import * as yup from 'yup';
 
 export default function SignUp({ navigation }) {
     const [value, setValue] = React.useState('Student');
-
+    const Toast = (message) => {
+        ToastAndroid.show(message, ToastAndroid.SHORT)
+    }
     const failAlert = () => {
         Alert.alert('😥', 'Registration Failed', [
             {
@@ -73,7 +75,7 @@ export default function SignUp({ navigation }) {
                                 failAlert()
                             }
                             else {
-                                const user = await req.json()
+                                Toast('Account created')
                                 navigation.push('SignIn')
                             }
                         }}
