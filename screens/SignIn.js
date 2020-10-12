@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert, StyleSheet, ToastAndroid, Button, TextInput, View, Text, KeyboardAvoidingView } from 'react-native';
+import { Alert, StyleSheet, ActivityIndicator, TouchableOpacity, ToastAndroid, TextInput, View, Text, KeyboardAvoidingView } from 'react-native';
 import { Formik } from 'formik';
 import Logo from '../components/Logo';
 
@@ -47,26 +47,27 @@ export default function SignIn({ navigation }) {
                     {(props) => (
                         //Sign In form
                         <View>
+
                             <Text style={styles.title}>Sign In</Text>
                             <TextInput
                                 style={styles.input}
                                 placeholder='E-mail'
+                                editable={!isDisabled}
                                 onChangeText={props.handleChange('email')}
-                                value={props.values.username
-                                }
                             />
-
                             <TextInput
                                 style={styles.input}
                                 placeholder='Password'
+                                editable={!isDisabled}
                                 onChangeText={props.handleChange('password')}
                             />
-                            <Text style={{ paddingLeft: 200, color: '#2196F3' }} onPress={() => navigation.push('Forgotps')}>Forgot password ?</Text>
-
-                            <View style={[{ width: '80%', margin: 10, alignContent: 'center', paddingLeft: 120 }]}>
-                                <Button disabled={isDisabled} color='#2196F3' title="Log In" onPress={props.handleSubmit} />
-
-                            </View>
+                            <Text style={{ color: '#2196F3', alignSelf: 'flex-end', marginRight: 10 }} onPress={() => navigation.push('Forgotps')}>Forgot password ?</Text>
+                            <TouchableOpacity onPress={props.handleSubmit} disabled={isDisabled}>
+                                <View style={[{ width: '50%', alignSelf: 'center', padding: 5, backgroundColor: isDisabled ? '#E2E2E2' : '#2196F3', flexDirection: 'row', justifyContent: 'center', margin: 10 }]}>
+                                    {isDisabled ? <ActivityIndicator size="small" color="#2196F3" /> : false}
+                                    <Text style={{ color: isDisabled ? 'grey' : 'white' }}>{isDisabled ? " LOGGING YOU IN" : "LOGIN"}</Text>
+                                </View>
+                            </TouchableOpacity>
                             <Text style={{ alignContent: 'center', paddingLeft: 110, color: '#2196F3' }} onPress={() => navigation.push('SignUp')}>Create Account</Text>
                         </View>
                     )}
@@ -83,7 +84,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         paddingTop: 70,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     title: {
         textAlign: 'center',
