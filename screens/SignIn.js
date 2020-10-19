@@ -1,109 +1,181 @@
-import React from 'react';
-import { Alert, StyleSheet, ActivityIndicator, TouchableOpacity, ToastAndroid, TextInput, View, Text, KeyboardAvoidingView } from 'react-native';
-import { Formik } from 'formik';
-import Logo from '../components/Logo';
+import React, { useEffect } from "react";
+import {
+  Alert,
+  StyleSheet,
+  ToastAndroid,
+  View,
+  Text,
+  KeyboardAvoidingView,
+} from "react-native";
+import { Formik } from "formik";
+import { Button, TextInput } from "react-native-paper";
+import {
+  heightPercentageToDP,
+  widthPercentageToDP,
+} from "react-native-responsive-screen";
+import Logo from "../components/Logo";
+import AsyncStorage from "@react-native-community/async-storage";
 
 export default function SignIn({ navigation }) {
-    const [isDisabled, setDisabled] = React.useState(false)
-    const Toast = (message) => {
-        ToastAndroid.show(message, ToastAndroid.SHORT)
-    }
-    const failAlert = () => {
-        Alert.alert('Login Failed', 'Make sure credentials are correct', [
-            {
-                text: 'OK'
-            }
-
-        ], { cancelable: true })
-    }
-    return (
-        <KeyboardAvoidingView>
-            <View style={styles.container}>
-                <Logo />
-                <Formik
-                    initialValues={{ email: '', password: '' }}
-                    onSubmit={async (values) => {
-                        setDisabled(true)
-                        const req = await fetch('https://coeproject.herokuapp.com/login', {
-                            method: 'POST',
-                            headers: {
-                                Accept: 'application/json',
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify(values)
-                        })
-                        if (req.status != 200) {
-                            failAlert()
-                        }
-                        else {
-                            const user = await req.json()
-                            Toast('Login Successfull')
-                            navigation.push('DepartmentScreen', { user })
-
-                        }
-                        setDisabled(false)
-                    }}
-                >
-                    {(props) => (
-                        //Sign In form
-                        <View>
-
-                            <Text style={styles.title}>Sign In</Text>
-                            <TextInput
-                                style={styles.input}
-                                placeholder='E-mail'
-                                editable={!isDisabled}
-                                onChangeText={props.handleChange('email')}
-                            />
-                            <TextInput
-                                style={styles.input}
-                                placeholder='Password'
-                                editable={!isDisabled}
-                                onChangeText={props.handleChange('password')}
-                            />
-                            <Text style={{ color: '#2196F3', alignSelf: 'flex-end', marginRight: 10 }} onPress={() => navigation.push('Forgotps')}>Forgot password ?</Text>
-                            <TouchableOpacity onPress={props.handleSubmit} disabled={isDisabled}>
-                                <View style={[{ width: '50%', alignSelf: 'center', padding: 5, backgroundColor: isDisabled ? '#E2E2E2' : '#2196F3', flexDirection: 'row', justifyContent: 'center', margin: 10 }]}>
-                                    {isDisabled ? <ActivityIndicator size="small" color="#2196F3" /> : false}
-                                    <Text style={{ color: isDisabled ? 'grey' : 'white' }}>{isDisabled ? " LOGGING YOU IN" : "LOGIN"}</Text>
+  console.log("SignIn visited");
+  /* <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                                    <Checkbox.Android disabled={isDisabled} status={checkbox} onPress={toogleCheckBox} />
+                                    <Text style={{ color: '#2196F3' }} onPress={() => navigation.push('Forgotps')}>Remember Me</Text>
                                 </View>
-                            </TouchableOpacity>
-                            <Text style={{ alignContent: 'center', paddingLeft: 110, color: '#2196F3' }} onPress={() => navigation.push('SignUp')}>Create Account</Text>
-                        </View>
-                    )}
-                </Formik>
-            </View>
+                                <Text style={{ color: '#2196F3' }} onPress={() => navigation.push('Forgotps')}>Forgot password ?</Text>
+                            </View>
+                            <Button icon="login" mode="contained" disabled={isDisabled} style={{ marginTop: 10, marginBottom: 10 }} loading={isDisabled} onPress={props.handleSubmit}>{isDisabled ? "LOGGING YOU IN" : "LOGIN"}</Button>
+                            <Divider />
+                            <Text style={{ alignSelf: 'center', fontWeight: 'bold', color: '#2196F3' }} onPress={() => navigation.push('SignUp')}>Create Account</Text>
+                        </View>*/
+  const [isDisabled, setDisabled] = React.useState(false);
+  // const [checkbox, setCheckbox] = React.useState("unchecked")
+  // const toogleCheckBox = () => {
+  //     if (checkbox === 'checked')
+  //         setCheckbox('unchecked')
+  //     else
+  //         setCheckbox("checked")
+  // }
 
-        </KeyboardAvoidingView>
+  // })
+  //   let userFetched = await AsyncStorage.getItem("user");
+  //   if (userFetched) {
+  //     userFetched = JSON.parse(userFetched);
+  //     console.log("User Fetched", userFetched);
+  //   }
+
+  const Toast = (message) => {
+    ToastAndroid.show(message, ToastAndroid.SHORT);
+  };
+  const failAlert = () => {
+    Alert.alert(
+      "Login Failed",
+      "Make sure credentials are correct",
+      [
+        {
+          text: "OK",
+        },
+      ],
+      { cancelable: true }
     );
+  };
+  return (
+    <KeyboardAvoidingView behavior="height">
+      <View style={styles.container}>
+        <Logo />
+        <Formik
+          initialValues={{ email: "", password: "" }}
+          onSubmit={async (values) => {
+            setDisabled(true);
+            try {
+              const req = await fetch(
+                "https://coeproject.herokuapp.com/login",
+                {
+                  method: "POST",
+                  headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify(values),
+                }
+              );
+              if (req.status != 200) {
+                failAlert();
+              } else {
+                const user = await req.json();
+                console.log("User", user);
+                const res = await AsyncStorage.setItem(
+                  "user",
+                  JSON.stringify(user)
+                );
+                console.log("Login respose :", res);
+                //Toast('Login Successfull')
+                navigation.push("DepartmentScreen");
+              }
+            } catch (e) {
+              console.log(e);
+              // Toast('Check your internet connection')
+            }
+            setDisabled(false);
+          }}
+        >
+          {(props) => (
+            //Sign In form
+
+            <View style={{ alignSelf: "stretch", padding: "7%" }}>
+              <Text style={styles.title}>Sign In</Text>
+              <TextInput
+                style={styles.TextInput}
+                label="E-Mail"
+                mode="outlined"
+                disabled={isDisabled}
+                onChangeText={props.handleChange("email")}
+                value={props.values.email}
+              />
+              <TextInput
+                style={styles.TextInput}
+                label="Password"
+                mode="outlined"
+                disabled={isDisabled}
+                onChangeText={props.handleChange("password")}
+                value={props.values.password}
+              />
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                <Text
+                  style={{ alignSelf: "center", margin: 5, color: "#2196F3" }}
+                  onPress={() => navigation.push("SignUp")}
+                >
+                  Create Account
+                </Text>
+
+                <Text
+                  style={{ color: "#2196F3" }}
+                  onPress={() => navigation.push("Forgotps")}
+                >
+                  Forgot password ?
+                </Text>
+              </View>
+              <Button
+                icon="login"
+                mode="contained"
+                color="red"
+                disabled={isDisabled}
+                style={{ marginTop: 10, marginBottom: 10 }}
+                loading={isDisabled}
+                onPress={props.handleSubmit}
+              >
+                {isDisabled ? "LOGGING YOU IN" : "LOGIN"}
+              </Button>
+            </View>
+          )}
+        </Formik>
+      </View>
+    </KeyboardAvoidingView>
+  );
 }
 
 //styling
 const styles = StyleSheet.create({
-    container: {
-        flexDirection: 'column',
-        paddingTop: 70,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    title: {
-        textAlign: 'center',
-        marginBottom: 10,
-        fontWeight: 'bold',
-        paddingTop: 50,
-        fontSize: 25,
-        color: '#2196F3',
-        marginTop: 75
-    },
-    input: {
-        backgroundColor: '#ddd',
-        borderRadius: 6,
-        color: 'black',
-        fontSize: 15,
-        paddingTop: 5,
-        padding: 5,
-        margin: 5,
-        height: 50,
-        width: 320
-    },
-})
+  container: {
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    height: heightPercentageToDP("100%"),
+  },
+  title: {
+    textAlign: "center",
+    marginBottom: 10,
+    fontWeight: "bold",
+    fontSize: widthPercentageToDP("6%"),
+    color: "#2196F3",
+  },
+  TextInput: {
+    marginBottom: 5,
+  },
+});
