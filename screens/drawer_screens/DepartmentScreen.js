@@ -10,6 +10,7 @@ import {
 import DepartmentScreenGenerator from "../../components/drawerScreenComponents/departmentScreenGenerator";
 import DrawerHeader from "../../components/drawerScreenComponents/drawerHeader";
 import AsyncStorage from "@react-native-community/async-storage";
+import { userContext } from "../userContext";
 
 const screens = [
   //It has to be here as stack navigator contains login and other screen or we have to filter
@@ -57,12 +58,14 @@ const screens = [
   },
 ];
 export default function Home({ navigation }) {
+  const { setUser } = React.useContext(userContext);
   return (
     <View style={styles.homeContainer}>
       <Button
         title="logout"
         onPress={async () => {
           await AsyncStorage.clear();
+          setUser(null);
         }}
       />
       <DrawerHeader

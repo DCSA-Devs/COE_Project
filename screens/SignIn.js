@@ -87,12 +87,13 @@ export default function SignIn({ navigation }) {
                   JSON.stringify(user)
                 );
                 console.log("Login respose :", res);
-                //Toast('Login Successfull')
+                Toast("Login Successfull");
                 auth.setUser(user);
+                auth.setInitials(user.firstName[0] + user.lastName[0]);
               }
             } catch (e) {
               console.log(e);
-              // Toast('Check your internet connection')
+              Toast("Check your internet connection");
             }
             setDisabled(false);
           }}

@@ -48,7 +48,7 @@ export default function StackNavigator() {
 
   //Minimize the code by generating the stack through map
   return (
-    <userContext.Provider value={{ user, setUser }}>
+    <userContext.Provider value={{ user, setUser, setInitials }}>
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={{

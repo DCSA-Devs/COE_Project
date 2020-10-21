@@ -73,8 +73,8 @@ export default function SignUp({ navigation }) {
         validationSchema={reviewformschema}
         onSubmit={async (values) => {
           setDisabled(true);
-          values.profession = chipValue;
-
+          values.profession = chipValue.toString();
+          console.log(values.profession);
           const req = await fetch("https://coeproject.herokuapp.com/register", {
             method: "POST",
             headers: {
@@ -88,7 +88,7 @@ export default function SignUp({ navigation }) {
             failAlert(JSON.stringify(error.message));
           } else {
             Toast("Account created");
-            navigation.push("SignIn");
+            navigation.navigate("SignIn");
           }
           setDisabled(false);
         }}
