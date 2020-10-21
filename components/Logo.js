@@ -5,20 +5,23 @@ import {
   widthPercentageToDP,
 } from "react-native-responsive-screen";
 
-export default function Logo() {
+export default function Logo({ style, textStyle, imageStyle }) {
   return (
     //title and logo for panjab university
     <View
-      style={{
-        alignItems: "center",
-      }}
+      style={[
+        style,
+        {
+          alignItems: "center",
+        },
+      ]}
     >
       <View>
-        <Text style={styles.maintitle}>PANJAB UNIVERSITY</Text>
-        <Text style={styles.maintitle}>CHANDIGARH</Text>
+        <Text style={[styles.maintitle, textStyle]}>PANJAB UNIVERSITY</Text>
+        <Text style={[styles.maintitle, textStyle]}>CHANDIGARH</Text>
         <View>
           <Image
-            style={styles.imageprop}
+            style={[styles.imageprop, imageStyle]}
             source={require("../assets/images/LOGO.png")}
           />
         </View>

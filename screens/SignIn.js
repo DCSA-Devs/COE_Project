@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Alert,
   StyleSheet,
@@ -15,8 +15,10 @@ import {
 } from "react-native-responsive-screen";
 import Logo from "../components/Logo";
 import AsyncStorage from "@react-native-community/async-storage";
+import { userContext } from "./userContext";
 
 export default function SignIn({ navigation }) {
+  const auth = React.useContext(userContext);
   console.log("SignIn visited");
   /* <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -39,11 +41,6 @@ export default function SignIn({ navigation }) {
   // }
 
   // })
-  //   let userFetched = await AsyncStorage.getItem("user");
-  //   if (userFetched) {
-  //     userFetched = JSON.parse(userFetched);
-  //     console.log("User Fetched", userFetched);
-  //   }
 
   const Toast = (message) => {
     ToastAndroid.show(message, ToastAndroid.SHORT);
@@ -91,7 +88,7 @@ export default function SignIn({ navigation }) {
                 );
                 console.log("Login respose :", res);
                 //Toast('Login Successfull')
-                navigation.push("DepartmentScreen");
+                auth.setUser(user);
               }
             } catch (e) {
               console.log(e);
