@@ -19,25 +19,37 @@ const Stack = createStackNavigator();
 
 export default function StackNavigator() {
   console.log("StacNavigator Visited");
-  const [user, setUser] = useState(null);
-  const [avatar, setAvatar] = useState(null);
-  const [initials, setInitials] = useState("🔥");
-  React.useEffect(() => {
-    console.log("User", user);
-    // console.log("Initials", initials);
-  });
+
+  const [state, dispatch] = React.useReducer(
+    (prevState, action) => {
+      switch (action.type) {
+        case "SIGNIN":
+          return {
+            user: action.user,
+            avatar: null,
+            initials: action.user.firstName[0] + action.user.lastName[0],
+          };
+        case "SIGNOUT":
+          return {
+            user: null,
+            avatar: null,
+            initials: null,
+          };
+      }
+    },
+    {
+      user: null,
+      avatar: null,
+      initials: null,
+    }
+  );
   React.useLayoutEffect(() => {
     const fetchdata = async () => {
       try {
         let userFetched = await AsyncStorage.getItem("user");
         if (userFetched) {
           userFetched = JSON.parse(userFetched);
-          setUser(userFetched);
-          setInitials(userFetched.firstName[0] + userFetched.lastName[0]);
-        }
-        const avatarFetched = await AsyncStorage.getItem("avatar");
-        if (avatarFetched) {
-          setAvatar(avatarFetched);
+          dispatch({ type: "SIGNIN", user: userFetched });
         }
       } catch (err) {
         console.log("Async Error", err);
@@ -48,7 +60,7 @@ export default function StackNavigator() {
 
   //Minimize the code by generating the stack through map
   return (
-    <userContext.Provider value={{ user, setUser, setInitials }}>
+    <userContext.Provider value={dispatch}>
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={{
@@ -60,11 +72,11 @@ export default function StackNavigator() {
               fontWeight: "bold",
             },
             headerRight: () =>
-              avatar ? (
-                <Avatar.Image source={{ uri: avatar }} size={50} />
+              state.avatar ? (
+                <Avatar.Image source={{ uri: state.avatar }} size={50} />
               ) : (
                 <Avatar.Text
-                  label={initials}
+                  label={state.initials}
                   size={50}
                   color="red"
                   style={{
@@ -81,7 +93,7 @@ export default function StackNavigator() {
               ),
           }}
         >
-          {user ? (
+          {state.user ? (
             <>
               <Stack.Screen
                 name="DepartmentScreen"
@@ -132,6 +144,15 @@ export default function StackNavigator() {
             </>
           ) : (
             <>
+              {1 > 5 ? (
+                <Stack.Screen
+                  name="Test"
+                  component={test}
+                  options={{
+                    title: "Test",
+                  }}
+                />
+              ) : null}
               <Stack.Screen
                 name="SignIn"
                 component={SignIn}

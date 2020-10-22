@@ -60,7 +60,7 @@ export default function SignUp({ navigation }) {
   return (
     //Sign Up form
     <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-      <Logo />
+      <Logo style={{ padding: 20 }} />
       <Formik
         initialValues={{
           firstName: "",
@@ -87,7 +87,7 @@ export default function SignUp({ navigation }) {
             const error = await req.json();
             failAlert(JSON.stringify(error.message));
           } else {
-            Toast("Account created");
+            // Toast("Account created");
             navigation.navigate("SignIn");
           }
           setDisabled(false);
@@ -211,6 +211,7 @@ export default function SignUp({ navigation }) {
             </Text>
             <Button
               mode="contained"
+              style={{ margin: 10 }}
               disabled={isDisabled}
               loading={isDisabled}
               onPress={props.handleSubmit}
@@ -237,7 +238,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#ddd",
     borderRadius: 10,
     color: "black",
-    width: widthPercentageToDP("80%"),
+    width: widthPercentageToDP("85%"),
     height: heightPercentageToDP("7%"),
   },
   title: {

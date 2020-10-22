@@ -18,7 +18,7 @@ import AsyncStorage from "@react-native-community/async-storage";
 import { userContext } from "./userContext";
 
 export default function SignIn({ navigation }) {
-  const auth = React.useContext(userContext);
+  const dispatch = React.useContext(userContext);
   console.log("SignIn visited");
   /* <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -79,6 +79,7 @@ export default function SignIn({ navigation }) {
               );
               if (req.status != 200) {
                 failAlert();
+                setDisabled(false);
               } else {
                 const user = await req.json();
                 console.log("User", user);
@@ -87,15 +88,14 @@ export default function SignIn({ navigation }) {
                   JSON.stringify(user)
                 );
                 console.log("Login respose :", res);
-                Toast("Login Successfull");
-                auth.setUser(user);
-                auth.setInitials(user.firstName[0] + user.lastName[0]);
+                // Toast("Login Successfull");
+                dispatch({ type: "SIGNIN", user });
               }
             } catch (e) {
               console.log(e);
-              Toast("Check your internet connection");
+              // Toast("Check your internet connection");
+              setDisabled(false);
             }
-            setDisabled(false);
           }}
         >
           {(props) => (

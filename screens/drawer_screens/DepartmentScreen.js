@@ -58,19 +58,19 @@ const screens = [
   },
 ];
 export default function Home({ navigation }) {
-  const { setUser } = React.useContext(userContext);
+  const dispatch = React.useContext(userContext);
   return (
     <View style={styles.homeContainer}>
+      <DrawerHeader
+        drawerHandler={() => navigation.toggleDrawer()}
+        title={"Department Of Computer Science"}
+      />
       <Button
         title="logout"
         onPress={async () => {
           await AsyncStorage.clear();
-          setUser(null);
+          dispatch({ type: "SIGNOUT" });
         }}
-      />
-      <DrawerHeader
-        drawerHandler={() => navigation.toggleDrawer()}
-        title={"Department Of Computer Science"}
       />
       <FlatList
         style={styles.flatListStyle}

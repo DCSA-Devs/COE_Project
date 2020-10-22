@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, Button } from "react-native";
 import { Avatar } from "react-native-paper";
 import * as SQLite from "expo-sqlite";
+
 import { userContext } from "./userContext";
 const initState = 0;
 const reducer = (state, action) => {
@@ -19,15 +20,11 @@ const reducer = (state, action) => {
 export default function App(navigation) {
   const [count, dispatch] = React.useReducer(reducer, initState);
   const { setInitials } = React.useContext(userContext);
-  // console.log("Bhai kar gya", setUser);
+  React.useLayoutEffect(() => {
+    setInitials(count);
+  }, [count]);
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <Button
-        title="Click"
-        onPress={() => {
-          setInitials("😂");
-        }}
-      ></Button>
       <Text
         style={{
           fontSize: 40,
