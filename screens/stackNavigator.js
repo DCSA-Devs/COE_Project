@@ -11,7 +11,7 @@ import SignIn from "./SignIn";
 import Forgotps from "./Forgotps";
 import DrawerNavigator from "./drawer_screens/drawerNavigator";
 import UploadAvatar from "./drawer_screens/uploadAvatar";
-import test from "./test";
+import Chat from "./Chat";
 import AsyncStorage from "@react-native-community/async-storage";
 import { userContext } from "./userContext";
 
@@ -26,23 +26,28 @@ export default function StackNavigator() {
         case "SIGNIN":
           return {
             user: action.user,
-            avatar: null,
-            initials: action.user.firstName[0] + action.user.lastName[0],
+            avatar: action.user.profilePic,
           };
         case "SIGNOUT":
           return {
             user: null,
             avatar: null,
-            initials: null,
+          };
+        case "AVATAR":
+          return {
+            ...prevState,
+            avatar: action.avatar,
           };
       }
     },
     {
       user: null,
       avatar: null,
-      initials: null,
     }
   );
+  React.useEffect(() => {
+    console.log(state);
+  }, [state]);
   React.useLayoutEffect(() => {
     const fetchdata = async () => {
       try {
@@ -60,7 +65,7 @@ export default function StackNavigator() {
 
   //Minimize the code by generating the stack through map
   return (
-    <userContext.Provider value={dispatch}>
+    <userContext.Provider value={{ state, dispatch }}>
       <NavigationContainer>
         <Stack.Navigator
           screenOptions={{
@@ -73,10 +78,23 @@ export default function StackNavigator() {
             },
             headerRight: () =>
               state.avatar ? (
-                <Avatar.Image source={{ uri: state.avatar }} size={50} />
+                <Avatar.Image
+                  style={{
+                    marginRight: 5,
+                    shadowColor: "black",
+                    shadowOpacity: 0.5,
+                    backgroundColor: "beige",
+                    shadowOffset: {
+                      width: 2,
+                      height: 2,
+                    },
+                  }}
+                  source={{ uri: state.avatar }}
+                  size={50}
+                />
               ) : (
                 <Avatar.Text
-                  label={state.initials}
+                  label={state.user.firstName[0] + state.user.lastName[0]}
                   size={50}
                   color="red"
                   style={{
@@ -100,17 +118,18 @@ export default function StackNavigator() {
                 component={DepartmentScreen}
                 options={{
                   title: "Department of Computer Science",
+                  headerShown: false,
                 }}
               />
               <Stack.Screen
-                name="Test"
-                component={test}
+                name="Chat"
+                component={Chat}
                 options={{
-                  title: "Test",
+                  title: "Chat",
                 }}
               />
               <Stack.Screen
-                name="UplaodAvatar"
+                name="UploadAvatar"
                 component={UploadAvatar}
                 options={{
                   title: "Upload",
@@ -150,6 +169,7 @@ export default function StackNavigator() {
                   component={test}
                   options={{
                     title: "Test",
+                    headerRight: false,
                   }}
                 />
               ) : null}

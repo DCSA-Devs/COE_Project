@@ -56,9 +56,21 @@ const screens = [
     imgSrc: require("../../assets/images/Uploading.png"),
     key: "7",
   },
+  {
+    component: "UploadAvatar",
+    name: "Upload Avatar",
+    imgSrc: require("../../assets/images/avatar.png"),
+    key: "8",
+  },
+  {
+    component: "Chat",
+    name: "Chat",
+    imgSrc: require("../../assets/images/chat.png"),
+    key: "9",
+  },
 ];
 export default function Home({ navigation }) {
-  const dispatch = React.useContext(userContext);
+  const { dispatch } = React.useContext(userContext);
   return (
     <View style={styles.homeContainer}>
       <DrawerHeader

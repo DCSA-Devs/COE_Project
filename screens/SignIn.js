@@ -18,7 +18,7 @@ import AsyncStorage from "@react-native-community/async-storage";
 import { userContext } from "./userContext";
 
 export default function SignIn({ navigation }) {
-  const dispatch = React.useContext(userContext);
+  const { dispatch } = React.useContext(userContext);
   console.log("SignIn visited");
   /* <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -64,7 +64,14 @@ export default function SignIn({ navigation }) {
         <Formik
           initialValues={{ email: "", password: "" }}
           onSubmit={async (values) => {
+            // Trim whitespaces
+            values.email = values.email.trim();
+            values.password = values.password.trim();
+
+            // Disable buttons and inputs
             setDisabled(true);
+
+            //post data to server
             try {
               const req = await fetch(
                 "https://coeproject.herokuapp.com/login",
@@ -77,12 +84,14 @@ export default function SignIn({ navigation }) {
                   body: JSON.stringify(values),
                 }
               );
+              // If user not found
               if (req.status != 200) {
                 failAlert();
                 setDisabled(false);
               } else {
                 const user = await req.json();
                 console.log("User", user);
+                // save user to offline storage
                 const res = await AsyncStorage.setItem(
                   "user",
                   JSON.stringify(user)

@@ -11,29 +11,22 @@ import {
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import { Button, Avatar, TextInput } from "react-native-paper";
-import {
-  heightPercentageToDP,
-  widthPercentageToDP,
-} from "react-native-responsive-screen";
+import { userContext } from "../userContext";
 
-const UploadAvatar = ({ navigation }) => {
+const UploadAvatar = ({ navigation, route }) => {
+  const { dispatch } = React.useContext(userContext);
   const [image, setImage] = useState(null);
 
   const uploadToServer = async () => {
-    var img = {
-      uri: image,
-      name: "opa.jpeg",
-      type: "image/jpeg",
-    };
     const data = new FormData();
     data.append("image", {
-      uri: img.uri,
-      name: img.name,
-      type: img.type,
+      uri: image,
+      name: "uplad.jpg",
+      type: "image/jpeg",
     });
     console.log(data);
     try {
-      await fetch(
+      const test = await fetch(
         "https://api.imgbb.com/1/upload?key=38be174235c027271a826e60334002a0",
         {
           method: "POST",
@@ -43,6 +36,12 @@ const UploadAvatar = ({ navigation }) => {
           body: data,
         }
       );
+      const body = await test.json();
+      const imageURI = body.data.url;
+
+      Alert.alert("URI", JSON.stringify(body), [{ text: "Okk" }], {
+        cancelable: true,
+      });
     } catch (e) {
       console.log("Error", e);
     }
@@ -67,6 +66,8 @@ const UploadAvatar = ({ navigation }) => {
     });
     console.log(imag);
     if (!imag.cancelled) {
+      dispatch({ type: "AVATAR", avatar: imag.uri });
+
       setImage(imag.uri);
     }
   };
@@ -75,7 +76,11 @@ const UploadAvatar = ({ navigation }) => {
       {image ? (
         <Image
           source={{ uri: image }}
-          style={{ borderRadius: 100, width: 200, height: 200 }}
+          style={{
+            borderRadius: 100,
+            width: 200,
+            height: 200,
+          }}
         />
       ) : (
         <Avatar.Text
@@ -83,11 +88,9 @@ const UploadAvatar = ({ navigation }) => {
           size={200}
           style={{
             marginRight: 5,
-            backgroundColor: "powderblue",
           }}
         />
       )}
-
       <Button mode="outlined" onPress={pickImage}>
         Upload Image
       </Button>
@@ -106,14 +109,6 @@ const UploadAvatar = ({ navigation }) => {
         }}
       >
         Try
-      </Button>
-      <Button
-        mode="outlined"
-        onPress={() => {
-          navigation.navigate("SignIn");
-        }}
-      >
-        Go back
       </Button>
     </View>
   );
