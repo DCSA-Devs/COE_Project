@@ -69,6 +69,7 @@ export default function StackNavigator() {
     <userContext.Provider value={{ state, dispatch }}>
       <NavigationContainer>
         <Stack.Navigator
+          initialRouteName="Profile"
           screenOptions={{
             headerStyle: {
               backgroundColor: "red",
