@@ -2,18 +2,18 @@ import React, { useState, useEffect } from "react";
 import { Avatar } from "react-native-paper";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import DepartmentScreen from "./drawer_screens/DepartmentScreen";
-import VideoPlayerScreen from "./drawer_screens/VideoPlayerScreen";
-import LectureVideo from "./drawer_screens/LectureVideo";
-import Notes from "./drawer_screens/Notes";
-import SignUp from "./SignUp";
-import SignIn from "./SignIn";
-import Forgotps from "./Forgotps";
-import DrawerNavigator from "./drawer_screens/drawerNavigator";
-import Profile from "./drawer_screens/Profile";
+import DepartmentScreen from "../screens/drawer_screens/DepartmentScreen";
+import VideoPlayerScreen from "../screens/drawer_screens/VideoPlayerScreen";
+import LectureVideo from "../screens/drawer_screens/LectureVideo";
+import Notes from "../screens/drawer_screens/Notes";
+import SignUp from "../screens/SignUp";
+import SignIn from "../screens/SignIn";
+import Forgotps from "../screens/Forgotps";
+import Profile from "../screens/drawer_screens/Profile";
 import AsyncStorage from "@react-native-community/async-storage";
-import { userContext } from "./userContext";
-import tab from "./drawer_screens/TabNavigator";
+import { userContext } from "../screens/userContext";
+import tab from "./TabNavigator";
+import DrawerNavigator from "./DrawerNavigator";
 import { FontAwesome } from "@expo/vector-icons";
 
 const Stack = createStackNavigator();
@@ -116,17 +116,10 @@ export default function StackNavigator() {
             <>
               <Stack.Screen
                 name="DepartmentScreen"
-                component={tab}
+                component={DrawerNavigator}
                 options={{
                   title: "Department of Computer Science",
-                  headerLeft: () => (
-                    <FontAwesome
-                      name="bars"
-                      size={35}
-                      style={{ marginLeft: 15 }}
-                      color="white"
-                    />
-                  ),
+                  headerShown: false,
                 }}
               />
               <Stack.Screen
@@ -134,15 +127,6 @@ export default function StackNavigator() {
                 component={Profile}
                 options={{
                   title: "Profile",
-                }}
-              />
-
-              <Stack.Screen
-                name="DrawerNavigator"
-                component={DrawerNavigator}
-                options={{
-                  title: "DrawerNavigator",
-                  headerShown: false,
                 }}
               />
 

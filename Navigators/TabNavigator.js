@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 const Tab = createBottomTabNavigator();
-import DeaprtmentScreen from "./DepartmentScreen";
-import Settings from "../Settings";
-import Chat from "../Chat";
+import DeaprtmentScreen from "../screens/drawer_screens/DepartmentScreen";
+import Settings from "../screens/Settings";
+import Chat from "../screens/Chat";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-export default function TabNavigator() {
+export default function TabNavigator({ navigation }) {
   return (
     <Tab.Navigator
       initialRouteName="DepartmentScreen"

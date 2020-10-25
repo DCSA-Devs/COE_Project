@@ -55,13 +55,14 @@ const screens = [
     key: "7",
   },
 ];
+
 export default function Home({ navigation }) {
-  // <DrawerHeader
-  //   drawerHandler={() => navigation.toggleDrawer()}
-  //   title={"Department Of Computer Science"}
-  // />
   return (
     <View style={styles.homeContainer}>
+      <DrawerHeader
+        navigation={navigation}
+        title={"Department Of Computer Science"}
+      />
       <FlatList
         style={styles.flatListStyle}
         numColumns={2}

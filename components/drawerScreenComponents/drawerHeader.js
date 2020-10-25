@@ -12,19 +12,18 @@ import {
 import { userContext } from "../../screens/userContext";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { FontAwesome } from "@expo/vector-icons";
-export default function DrawerHeader({ drawerHandler, title }) {
+export default function DrawerHeader({ navigation, title }) {
   const { state } = React.useContext(userContext);
   return (
     <View style={styles.viewStyle}>
-      <TouchableOpacity onPress={() => drawerHandler()}>
-        {/* Add icon instead of 'choose subject */}
-        <FontAwesome
-          name="bars"
-          size={35}
-          style={{ marginLeft: 15 }}
-          color="white"
-        />
-      </TouchableOpacity>
+      {/* Add icon instead of 'choose subject */}
+      <FontAwesome
+        name="bars"
+        onPress={() => navigation.openDrawer()}
+        size={35}
+        style={{ marginLeft: 15 }}
+        color="white"
+      />
       <Text style={styles.titleStyle}>{title}</Text>
       {state.avatar ? (
         <Avatar.Image
