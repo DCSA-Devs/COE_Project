@@ -12,7 +12,7 @@ export default function Settings({ navigation }) {
       <List.Subheader>Settings</List.Subheader>
       <List.Item
         title="Profile"
-        onPress={() => navigation.navigate("UploadAvatar")}
+        onPress={() => navigation.navigate("Profile")}
         left={() => <List.Icon icon="account" />}
       />
       <List.Item

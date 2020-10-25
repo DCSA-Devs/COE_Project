@@ -10,7 +10,7 @@ import SignUp from "./SignUp";
 import SignIn from "./SignIn";
 import Forgotps from "./Forgotps";
 import DrawerNavigator from "./drawer_screens/drawerNavigator";
-import UploadAvatar from "./drawer_screens/uploadAvatar";
+import Profile from "./drawer_screens/Profile";
 import Chat from "./Chat";
 import AsyncStorage from "@react-native-community/async-storage";
 import { userContext } from "./userContext";
@@ -122,10 +122,10 @@ export default function StackNavigator() {
                 }}
               />
               <Stack.Screen
-                name="UploadAvatar"
-                component={UploadAvatar}
+                name="Profile"
+                component={Profile}
                 options={{
-                  title: "Upload",
+                  title: "Profile",
                 }}
               />
 

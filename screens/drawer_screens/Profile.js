@@ -14,7 +14,7 @@ import { Button, Avatar, TextInput } from "react-native-paper";
 import { userContext } from "../userContext";
 
 const UploadAvatar = ({ navigation, route }) => {
-  const { dispatch } = React.useContext(userContext);
+  const { dispatch, state } = React.useContext(userContext);
   const [image, setImage] = useState(null);
 
   const uploadToServer = async () => {
@@ -72,10 +72,12 @@ const UploadAvatar = ({ navigation, route }) => {
     }
   };
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      {image ? (
+    <View
+      style={{ flex: 1, justifyContent: "space-around", alignItems: "center" }}
+    >
+      {state.avatar ? (
         <Image
-          source={{ uri: image }}
+          source={{ uri: state.avatar }}
           style={{
             borderRadius: 100,
             width: 200,
@@ -84,41 +86,47 @@ const UploadAvatar = ({ navigation, route }) => {
         />
       ) : (
         <Avatar.Text
-          label="KP"
+          label={state.user.firstName[0] + state.user.lastName[0]}
           size={200}
           style={{
             marginRight: 5,
           }}
         />
       )}
-      <Button mode="outlined" onPress={pickImage}>
-        Upload Image
-      </Button>
-      <Button
-        mode="outlined"
-        onPress={() => {
-          setImage(null);
-        }}
-      >
-        Remove Image
-      </Button>
-      <Button
-        mode="outlined"
-        onPress={() => {
-          uploadToServer();
-        }}
-      >
-        Try
-      </Button>
-      <Button
-        mode="outlined"
-        onPress={() => {
-          navigation.navigate("Chat");
-        }}
-      >
-        test
-      </Button>
+      <View>
+        <View style={styles.field}>
+          <Text style={styles.text}>First Name : </Text>
+          <Text style={styles.text}>{state.user.firstName} </Text>
+        </View>
+        <View style={styles.field}>
+          <Text style={styles.text}>Last Name : </Text>
+          <Text style={styles.text}>{state.user.lastName} </Text>
+        </View>
+        <View style={styles.field}>
+          <Text style={styles.text}>Email :</Text>
+          <Text style={styles.text}> {state.user.email}</Text>
+        </View>
+        <View style={styles.field}>
+          <Text style={styles.text}>Date Joined : </Text>
+          <Text style={styles.text}>{state.user.dateJoined}</Text>
+        </View>
+      </View>
     </View>
   );
 };
+const styles = StyleSheet.create({
+  text: {
+    textAlign: "center",
+    fontSize: 20,
+  },
+  field: {
+    padding: 10,
+    borderRadius: 5,
+    borderWidth: 2,
+    borderColor: "grey",
+    marginBottom: 10,
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+});
 export default UploadAvatar;
