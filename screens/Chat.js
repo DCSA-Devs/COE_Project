@@ -13,7 +13,7 @@ export default function Example() {
         user: {
           _id: 2,
           name: "React Native",
-          avatar: "https://placeimg.com/140/140/any",
+          // avatar: "https://placeimg.com/140/140/any",
         },
       },
     ]);

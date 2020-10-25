@@ -14,7 +14,7 @@ import UploadAvatar from "./drawer_screens/uploadAvatar";
 import Chat from "./Chat";
 import AsyncStorage from "@react-native-community/async-storage";
 import { userContext } from "./userContext";
-
+import tab from "./drawer_screens/TabNavigator";
 const Stack = createStackNavigator();
 
 export default function StackNavigator() {
@@ -115,17 +115,10 @@ export default function StackNavigator() {
             <>
               <Stack.Screen
                 name="DepartmentScreen"
-                component={DepartmentScreen}
+                component={tab}
                 options={{
                   title: "Department of Computer Science",
                   headerShown: false,
-                }}
-              />
-              <Stack.Screen
-                name="Chat"
-                component={Chat}
-                options={{
-                  title: "Chat",
                 }}
               />
               <Stack.Screen

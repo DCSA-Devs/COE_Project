@@ -110,6 +110,14 @@ const UploadAvatar = ({ navigation, route }) => {
       >
         Try
       </Button>
+      <Button
+        mode="outlined"
+        onPress={() => {
+          navigation.navigate("Chat");
+        }}
+      >
+        test
+      </Button>
     </View>
   );
 };
