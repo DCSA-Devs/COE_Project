@@ -11,10 +11,11 @@ import SignIn from "./SignIn";
 import Forgotps from "./Forgotps";
 import DrawerNavigator from "./drawer_screens/drawerNavigator";
 import Profile from "./drawer_screens/Profile";
-import Chat from "./Chat";
 import AsyncStorage from "@react-native-community/async-storage";
 import { userContext } from "./userContext";
 import tab from "./drawer_screens/TabNavigator";
+import { FontAwesome } from "@expo/vector-icons";
+
 const Stack = createStackNavigator();
 
 export default function StackNavigator() {
@@ -118,7 +119,14 @@ export default function StackNavigator() {
                 component={tab}
                 options={{
                   title: "Department of Computer Science",
-                  headerShown: false,
+                  headerLeft: () => (
+                    <FontAwesome
+                      name="bars"
+                      size={35}
+                      style={{ marginLeft: 15 }}
+                      color="white"
+                    />
+                  ),
                 }}
               />
               <Stack.Screen

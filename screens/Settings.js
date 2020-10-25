@@ -1,6 +1,6 @@
 import React from "react";
 import { View, TouchableOpacity } from "react-native";
-import { Text, List } from "react-native-paper";
+import { Text, List, Divider } from "react-native-paper";
 import { userContext } from "./userContext";
 import AsyncStorage from "@react-native-community/async-storage";
 
@@ -15,6 +15,7 @@ export default function Settings({ navigation }) {
         onPress={() => navigation.navigate("Profile")}
         left={() => <List.Icon icon="account" />}
       />
+      <Divider />
       <List.Item
         title="Logout"
         onPress={async () => {

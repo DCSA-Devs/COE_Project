@@ -6,17 +6,16 @@ import {
   ToastAndroid,
   View,
   Text,
-  KeyboardAvoidingView,
   Platform,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
-import { Button, Avatar, TextInput } from "react-native-paper";
+import { Button, Avatar, Provider } from "react-native-paper";
 import { userContext } from "../userContext";
 
-const UploadAvatar = ({ navigation, route }) => {
+const UploadAvatar = ({ navigation }) => {
   const { dispatch, state } = React.useContext(userContext);
   const [image, setImage] = useState(null);
-
+  const [visible, isVisible] = React.useState(false);
   const uploadToServer = async () => {
     const data = new FormData();
     data.append("image", {
@@ -72,46 +71,53 @@ const UploadAvatar = ({ navigation, route }) => {
     }
   };
   return (
-    <View
-      style={{ flex: 1, justifyContent: "space-around", alignItems: "center" }}
-    >
-      {state.avatar ? (
-        <Image
-          source={{ uri: state.avatar }}
-          style={{
-            borderRadius: 100,
-            width: 200,
-            height: 200,
-          }}
-        />
-      ) : (
-        <Avatar.Text
-          label={state.user.firstName[0] + state.user.lastName[0]}
-          size={200}
-          style={{
-            marginRight: 5,
-          }}
-        />
-      )}
-      <View>
-        <View style={styles.field}>
-          <Text style={styles.text}>First Name : </Text>
-          <Text style={styles.text}>{state.user.firstName} </Text>
-        </View>
-        <View style={styles.field}>
-          <Text style={styles.text}>Last Name : </Text>
-          <Text style={styles.text}>{state.user.lastName} </Text>
-        </View>
-        <View style={styles.field}>
-          <Text style={styles.text}>Email :</Text>
-          <Text style={styles.text}> {state.user.email}</Text>
-        </View>
-        <View style={styles.field}>
-          <Text style={styles.text}>Date Joined : </Text>
-          <Text style={styles.text}>{state.user.dateJoined}</Text>
+    <Provider>
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "space-around",
+          alignItems: "center",
+        }}
+      >
+        {state.avatar ? (
+          <Image
+            source={{ uri: state.avatar }}
+            style={{
+              borderRadius: 100,
+              width: 200,
+              height: 200,
+            }}
+          />
+        ) : (
+          <Avatar.Text
+            label={state.user.firstName[0] + state.user.lastName[0]}
+            size={200}
+            style={{
+              marginRight: 5,
+            }}
+          />
+        )}
+
+        <View>
+          <View style={styles.field}>
+            <Text style={styles.text}>First Name : </Text>
+            <Text style={styles.text}>{state.user.firstName} </Text>
+          </View>
+          <View style={styles.field}>
+            <Text style={styles.text}>Last Name : </Text>
+            <Text style={styles.text}>{state.user.lastName} </Text>
+          </View>
+          <View style={styles.field}>
+            <Text style={styles.text}>Email :</Text>
+            <Text style={styles.text}> {state.user.email}</Text>
+          </View>
+          <View style={styles.field}>
+            <Text style={styles.text}>Date Joined : </Text>
+            <Text style={styles.text}>{state.user.dateJoined}</Text>
+          </View>
         </View>
       </View>
-    </View>
+    </Provider>
   );
 };
 const styles = StyleSheet.create({
