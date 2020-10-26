@@ -1,6 +1,6 @@
 import React from "react";
-import { View, TouchableOpacity } from "react-native";
-import { Text, List, Divider } from "react-native-paper";
+import { View } from "react-native";
+import { List, Divider } from "react-native-paper";
 import { userContext } from "./userContext";
 import AsyncStorage from "@react-native-community/async-storage";
 

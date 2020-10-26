@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   Alert,
   StyleSheet,
@@ -20,27 +20,8 @@ import { userContext } from "./userContext";
 export default function SignIn({ navigation }) {
   const { dispatch } = React.useContext(userContext);
   console.log("SignIn visited");
-  /* <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                                    <Checkbox.Android disabled={isDisabled} status={checkbox} onPress={toogleCheckBox} />
-                                    <Text style={{ color: '#2196F3' }} onPress={() => navigation.push('Forgotps')}>Remember Me</Text>
-                                </View>
-                                <Text style={{ color: '#2196F3' }} onPress={() => navigation.push('Forgotps')}>Forgot password ?</Text>
-                            </View>
-                            <Button icon="login" mode="contained" disabled={isDisabled} style={{ marginTop: 10, marginBottom: 10 }} loading={isDisabled} onPress={props.handleSubmit}>{isDisabled ? "LOGGING YOU IN" : "LOGIN"}</Button>
-                            <Divider />
-                            <Text style={{ alignSelf: 'center', fontWeight: 'bold', color: '#2196F3' }} onPress={() => navigation.push('SignUp')}>Create Account</Text>
-                        </View>*/
-  const [isDisabled, setDisabled] = React.useState(false);
-  // const [checkbox, setCheckbox] = React.useState("unchecked")
-  // const toogleCheckBox = () => {
-  //     if (checkbox === 'checked')
-  //         setCheckbox('unchecked')
-  //     else
-  //         setCheckbox("checked")
-  // }
 
-  // })
+  const [isDisabled, setDisabled] = React.useState(false);
 
   const Toast = (message) => {
     ToastAndroid.show(message, ToastAndroid.SHORT);

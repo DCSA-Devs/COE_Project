@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 const Tab = createBottomTabNavigator();
 import DeaprtmentScreen from "../screens/drawer_screens/DepartmentScreen";

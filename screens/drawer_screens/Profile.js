@@ -1,20 +1,21 @@
 import React, { useEffect, useState } from "react";
 import {
-  Alert,
   StyleSheet,
   Image,
-  ToastAndroid,
   View,
+  TouchableOpacity,
   Text,
   Platform,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
-import { Button, Avatar } from "react-native-paper";
+import { Avatar, Menu, Provider } from "react-native-paper";
 import { userContext } from "../userContext";
-const UploadAvatar = ({ navigation }) => {
+
+export default function UploadAvatar({ navigation }) {
   const { dispatch, state } = React.useContext(userContext);
   const [image, setImage] = useState(null);
   const [visible, isVisible] = React.useState(false);
+
   const uploadToServer = async () => {
     const data = new FormData();
     data.append("image", {
@@ -22,7 +23,6 @@ const UploadAvatar = ({ navigation }) => {
       name: "uplad.jpg",
       type: "image/jpeg",
     });
-    console.log(data);
     try {
       const test = await fetch(
         "https://api.imgbb.com/1/upload?key=38be174235c027271a826e60334002a0",
@@ -34,12 +34,28 @@ const UploadAvatar = ({ navigation }) => {
           body: data,
         }
       );
-      const body = await test.json();
+      let body = await test.json();
+      console.log(body);
       const imageURI = body.data.url;
-
-      Alert.alert("URI", JSON.stringify(body), [{ text: "Okk" }], {
-        cancelable: true,
-      });
+      const server = await fetch(
+        "https://coeproject.herokuapp.com/upload-avatar",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            type: "Student",
+            email: state.user.email,
+            avatar: imageURI,
+          }),
+        }
+      );
+      body = await server.json();
+      console.log(body);
+      // Alert.alert("URI", JSON.stringify(body), [{ text: "Okk" }], {
+      //   cancelable: true,
+      // });
     } catch (e) {
       console.log("Error", e);
     }
@@ -65,75 +81,95 @@ const UploadAvatar = ({ navigation }) => {
     console.log(imag);
     if (!imag.cancelled) {
       dispatch({ type: "AVATAR", avatar: imag.uri });
-
       setImage(imag.uri);
+      isVisible(false);
+      uploadToServer();
     }
   };
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "space-around",
-        alignItems: "center",
-      }}
-    >
-      {
-        <View>
-          {state.avatar ? (
-            <Image
-              source={{ uri: state.avatar }}
-              style={{
-                borderRadius: 100,
-                width: 200,
-                height: 200,
-              }}
-            />
-          ) : (
-            <Avatar.Text
-              label={state.user.firstName[0] + state.user.lastName[0]}
-              size={200}
+    <Provider>
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "space-around",
+          alignItems: "center",
+        }}
+      >
+        {
+          <View>
+            {state.avatar ? (
+              <Image
+                source={{ uri: state.avatar }}
+                style={{
+                  borderRadius: 100,
+                  width: 200,
+                  height: 200,
+                }}
+              />
+            ) : (
+              <Avatar.Text
+                label={state.user.firstName[0] + state.user.lastName[0]}
+                size={200}
+                style={{
+                  marginRight: 5,
+                }}
+              />
+            )}
+            <View
               style={{
                 marginRight: 5,
+                position: "absolute",
+                left: 130,
+                top: 150,
               }}
-            />
-          )}
-          <Avatar.Icon
-            icon="pencil"
-            size={55}
-            color="white"
-            style={{
-              marginRight: 5,
-              position: "absolute",
-              backgroundColor: "red",
+            >
+              <Menu
+                anchor={
+                  <TouchableOpacity onPress={() => isVisible(true)}>
+                    <Avatar.Icon
+                      icon="pencil"
+                      size={55}
+                      style={{ backgroundColor: "red" }}
+                      color="white"
+                    />
+                  </TouchableOpacity>
+                }
+                visible={visible}
+                onDismiss={() => isVisible(false)}
+              >
+                <Menu.Item
+                  icon="update"
+                  title="Update"
+                  onPress={() => pickImage()}
+                />
+                <Menu.Item icon="delete" title="Remove" onPress={() => {}} />
+              </Menu>
+            </View>
+          </View>
+        }
 
-              left: 130,
-              top: 150,
-            }}
-          />
-        </View>
-      }
-
-      <View>
-        <View style={styles.field}>
-          <Text style={styles.text}>First Name : </Text>
-          <Text style={styles.text}>{state.user.firstName} </Text>
-        </View>
-        <View style={styles.field}>
-          <Text style={styles.text}>Last Name : </Text>
-          <Text style={styles.text}>{state.user.lastName} </Text>
-        </View>
-        <View style={styles.field}>
-          <Text style={styles.text}>Email :</Text>
-          <Text style={styles.text}> {state.user.email}</Text>
-        </View>
-        <View style={styles.field}>
-          <Text style={styles.text}>Date Joined : </Text>
-          <Text style={styles.text}>{state.user.dateJoined}</Text>
+        <View>
+          <View style={styles.field}>
+            <Text style={styles.text}>First Name : </Text>
+            <Text style={styles.text}>{state.user.firstName} </Text>
+          </View>
+          <View style={styles.field}>
+            <Text style={styles.text}>Last Name : </Text>
+            <Text style={styles.text}>{state.user.lastName} </Text>
+          </View>
+          <View style={styles.field}>
+            <Text style={styles.text}>Email :</Text>
+            <Text style={styles.text}> {state.user.email}</Text>
+          </View>
+          <View style={styles.field}>
+            <Text style={styles.text}>Date Joined : </Text>
+            <Text style={styles.text}>{state.user.dateJoined}</Text>
+          </View>
         </View>
       </View>
-    </View>
+    </Provider>
   );
-};
+}
 const styles = StyleSheet.create({
   text: {
     textAlign: "center",
@@ -149,4 +185,3 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
 });
-export default UploadAvatar;

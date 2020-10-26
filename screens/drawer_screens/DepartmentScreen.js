@@ -1,14 +1,6 @@
-import React, { useState } from "react";
-import {
-  View,
-  Text,
-  StatusBar,
-  Button,
-  StyleSheet,
-  FlatList,
-} from "react-native";
+import React from "react";
+import { View, StyleSheet, FlatList } from "react-native";
 import DepartmentScreenGenerator from "../../components/drawerScreenComponents/departmentScreenGenerator";
-import DrawerHeader from "../../components/drawerScreenComponents/drawerHeader";
 
 const screens = [
   //It has to be here as stack navigator contains login and other screen or we have to filter
@@ -59,10 +51,6 @@ const screens = [
 export default function Home({ navigation }) {
   return (
     <View style={styles.homeContainer}>
-      <DrawerHeader
-        navigation={navigation}
-        title={"Department Of Computer Science"}
-      />
       <FlatList
         style={styles.flatListStyle}
         numColumns={2}

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import {
   Alert,
-  TouchableOpacity,
   ToastAndroid,
   StyleSheet,
   View,
