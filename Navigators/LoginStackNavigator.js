@@ -8,14 +8,15 @@ import Profile from "../screens/drawer_screens/Profile";
 import { userContext } from "../screens/userContext";
 import TabNavigator from "./TabNavigator";
 import { FontAwesome } from "@expo/vector-icons";
-
+import Syllabus from "../screens/drawer_screens/Syllabus/Syllabus";
+import SyllabusRender from "../screens/drawer_screens/Syllabus/SyllabusRender";
 const Stack = createStackNavigator();
-
 export default function StackNavigator({ navigation }) {
   const { state } = React.useContext(userContext);
   //Minimize the code by generating the stack through map
   return (
     <Stack.Navigator
+      initialRouteName="Syllabus"
       screenOptions={{
         headerRight: () =>
           state.avatar ? (
@@ -55,18 +56,19 @@ export default function StackNavigator({ navigation }) {
       <Stack.Screen
         name="DepartmentScreen"
         component={TabNavigator}
-        options={{
-          title: "Department of Computer Science",
-          headerLeft: () => (
-            <FontAwesome
-              name="bars"
-              onPress={() => navigation.openDrawer()}
-              size={35}
-              style={{ marginLeft: 15 }}
-              color="black"
-            />
-          ),
-          // headerShown: false,
+        options={({ navigation, route }) => {
+          return {
+            title: "Department of Computer Science",
+            headerLeft: () => (
+              <FontAwesome
+                name="bars"
+                onPress={() => navigation.openDrawer()}
+                size={35}
+                style={{ marginLeft: 15 }}
+                color="black"
+              />
+            ),
+          };
         }}
       />
       <Stack.Screen
@@ -84,9 +86,19 @@ export default function StackNavigator({ navigation }) {
         options={{ title: "Video Lectures" }}
       />
       <Stack.Screen
+        name="SyllabusRender"
+        component={SyllabusRender}
+        options={{ title: "Syllabus" }}
+      />
+      <Stack.Screen
         name="Notes"
         component={Notes}
         options={{ title: "Subject Notes" }}
+      />
+      <Stack.Screen
+        name="Syllabus"
+        component={Syllabus}
+        options={{ title: "Syllabus" }}
       />
       <Stack.Screen
         name="VideoPlayer"

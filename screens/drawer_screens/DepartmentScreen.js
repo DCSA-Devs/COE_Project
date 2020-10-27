@@ -35,7 +35,7 @@ const screens = [
     key: "5",
   },
   {
-    component: "Notes",
+    component: "Syllabus",
     name: "Download Syllabus",
     imgSrc: require("../../assets/images/PDF.png"),
     key: "6",

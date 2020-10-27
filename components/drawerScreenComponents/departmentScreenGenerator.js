@@ -12,8 +12,8 @@ export default function DepartmentScreenGenerator({
       <Image
         source={screenItems.imgSrc}
         style={{
-          width: 110,
-          height: 110,
+          width: 90,
+          height: 90,
           tintColor: "rgba(89,89,89, 1)",
         }}
       />
@@ -27,12 +27,14 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    padding: 10,
+    padding: 20,
     margin: 10,
-    backgroundColor: "rgba(246,129,129,0.4)",
+    backgroundColor: "rgba(220,129,129,0.5)",
     borderRadius: 10,
   },
   componentTextStyle: {
+    marginTop: 10,
+    color: "rgba(89,89,89, 1)",
     textAlign: "center",
     fontWeight: "bold",
     fontSize: 20,
