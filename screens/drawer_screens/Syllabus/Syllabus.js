@@ -1,24 +1,69 @@
 import React from "react";
-import { View, Text } from "react-native";
-import { List } from "react-native-paper";
+import { View, Text, ScrollView } from "react-native";
+import { ActivityIndicator, List, Modal, Portal } from "react-native-paper";
 
 const semesters = [1, 2, 3, 4, 5, 6];
 export default function Syllabus({ navigation }) {
+  //? Implement Toast for error messages
+  //? Find fix for scrollview Hint:flex
+  const [syllabus, setSyllabus] = React.useState(null);
+  React.useEffect(() => {
+    const url = "http://localhost:3000/syllabus";
+    const url2 = "https://coeproject.herokuapp.com/syllabus?sem=3";
+    const fetchSyllabus = async () => {
+      try {
+        const res = await fetch(url);
+        const data = await res.json();
+        if (res.status === 200) {
+          console.log(data);
+          setSyllabus(data);
+        } else {
+          alert("Sylabus not found");
+          // ToastAndroid.show(JSON.stringify(data.message),ToastAndroid.SHORT)
+        }
+      } catch (err) {
+        alert("Error: Check Internet Connection");
+        // ToastAndroid.show("Error: Check Internet Connection",ToastAndroid.SHORT)
+      }
+    };
+
+    fetchSyllabus();
+  }, []);
+
   return (
-    <View>
-      <List.Section style={{ marginLeft: 10 }}>
-        {semesters.map((semester) => (
-          <List.Item
-            title={"Semester " + semester}
-            key={semester}
-            onPress={() =>
-              navigation.navigate("SyllabusRender", {
-                value: semester,
-              })
-            }
-          />
-        ))}
-      </List.Section>
-    </View>
+    <ScrollView>
+      <View>
+        <List.Section style={{ marginLeft: 10 }}>
+          {syllabus ? (
+            syllabus.map((semester, index) => (
+              <List.Accordion
+                key={index}
+                title={"Semester " + semester.semester}
+              >
+                {semester.syllabus.length === 0 ? (
+                  <List.Item key={0} title="No data found" />
+                ) : null}
+                {semester.syllabus.map((subject, indexx) => (
+                  <List.Item
+                    key={indexx}
+                    title={subject.name}
+                    onPress={() =>
+                      navigation.navigate("SyllabusRender", {
+                        data: subject,
+                      })
+                    }
+                  />
+                ))}
+              </List.Accordion>
+            ))
+          ) : (
+            <>
+              <Text>Fetching Syllabus</Text>
+              <ActivityIndicator size="large" />
+            </>
+          )}
+        </List.Section>
+      </View>
+    </ScrollView>
   );
 }
