@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, ScrollView } from "react-native";
-import { ActivityIndicator, List, Modal, Portal } from "react-native-paper";
+import { ActivityIndicator, List } from "react-native-paper";
 
 const semesters = [1, 2, 3, 4, 5, 6];
 export default function Syllabus({ navigation }) {
@@ -9,10 +9,10 @@ export default function Syllabus({ navigation }) {
   const [syllabus, setSyllabus] = React.useState(null);
   React.useEffect(() => {
     const url = "http://localhost:3000/syllabus";
-    const url2 = "https://coeproject.herokuapp.com/syllabus?sem=3";
+    const url2 = "https://coeproject.herokuapp.com/syllabus";
     const fetchSyllabus = async () => {
       try {
-        const res = await fetch(url);
+        const res = await fetch(url2);
         const data = await res.json();
         if (res.status === 200) {
           console.log(data);
@@ -41,7 +41,7 @@ export default function Syllabus({ navigation }) {
                 title={"Semester " + semester.semester}
               >
                 {semester.syllabus.length === 0 ? (
-                  <List.Item key={0} title="No data found" />
+                  <List.Item title="No data found" />
                 ) : null}
                 {semester.syllabus.map((subject, indexx) => (
                   <List.Item
