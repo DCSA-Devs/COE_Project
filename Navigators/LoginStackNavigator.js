@@ -3,6 +3,7 @@ import { Avatar } from "react-native-paper";
 import { createStackNavigator } from "@react-navigation/stack";
 import VideoPlayerScreen from "../screens/drawer_screens/VideoPlayerScreen";
 import LectureVideo from "../screens/drawer_screens/LectureVideo";
+import Forum from "../screens/drawer_screens/Forum/Forum";
 import Notes from "../screens/drawer_screens/Notes";
 import Profile from "../screens/drawer_screens/Profile";
 import { userContext } from "../screens/userContext";
@@ -83,6 +84,11 @@ export default function StackNavigator({ navigation }) {
         name="LectureVideo"
         component={LectureVideo}
         options={{ title: "Video Lectures" }}
+      />
+      <Stack.Screen
+        name="Forum"
+        component={Forum}
+        options={{ title: "Forum" }}
       />
       <Stack.Screen
         name="SyllabusRender"

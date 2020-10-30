@@ -23,7 +23,7 @@ const screens = [
     key: "3",
   },
   {
-    component: "Notes",
+    component: "Forum",
     name: "Forum",
     imgSrc: require("../../assets/images/Forum1.png"),
     key: "4",

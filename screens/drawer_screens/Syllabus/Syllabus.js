@@ -31,7 +31,17 @@ export default function Syllabus({ navigation }) {
   }, []);
 
   return (
-    <ScrollView>
+    <ScrollView
+      contentContainerStyle={
+        syllabus
+          ? false
+          : {
+              flex: 1,
+              justifyContent: "center",
+              alignItems: "center",
+            }
+      }
+    >
       <View>
         <List.Section style={{ marginLeft: 10 }}>
           {syllabus ? (
@@ -58,7 +68,9 @@ export default function Syllabus({ navigation }) {
             ))
           ) : (
             <>
-              <Text>Fetching Syllabus</Text>
+              <Text style={{ padding: 20, fontSize: 20, fontWeight: "bold" }}>
+                Fetching Syllabus
+              </Text>
               <ActivityIndicator size="large" />
             </>
           )}

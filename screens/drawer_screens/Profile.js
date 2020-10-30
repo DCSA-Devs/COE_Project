@@ -163,7 +163,9 @@ export default function UploadAvatar({ navigation }) {
           </View>
           <View style={styles.field}>
             <Text style={styles.text}>Date Joined : </Text>
-            <Text style={styles.text}>{state.user.dateJoined}</Text>
+            <Text style={styles.text}>
+              {new Date(state.user.dateJoined).toDateString()}
+            </Text>
           </View>
         </View>
       </View>
