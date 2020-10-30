@@ -27,8 +27,10 @@ export default function Question({ navigation, route }) {
   React.useEffect(() => {
     const fetchReplies = async () => {
       const url = "http://localhost:3000/getReplies/" + question._id;
-      console.log("url : ", url);
-      const res = await fetch(url);
+      const url2 =
+        "https://coeproject.herokuapp.com/getReplies/" + question._id;
+      // console.log("url : ", url2);
+      const res = await fetch(url2);
       const replies = await res.json();
       console.log("Replies :", replies);
       if (res.status == 200) setReplies(replies);
@@ -38,7 +40,7 @@ export default function Question({ navigation, route }) {
   const postReply = async () => {
     const url = "http://localhost:3000/postReply";
     const url2 = "https://coeproject.herokuapp.com/postReply";
-    const res = await fetch(url, {
+    const res = await fetch(url2, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

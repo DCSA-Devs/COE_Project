@@ -28,6 +28,7 @@ export default function Forum({ navigation }) {
       }),
     });
     if (res.status == 200) {
+      // setQuestionList();
       setModalVisibility(false);
       //TOAST
     }
