@@ -1,18 +1,22 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, TouchableOpacity } from "react-native";
 import { TextInput, Appbar, Button, Modal, Provider } from "react-native-paper";
 import Question from "./QuestionCard";
 import { userContext } from "../../userContext";
-export default function Forum() {
+//? Toast when post fails or succeed
+export default function Forum({ navigation }) {
   const { state } = React.useContext(userContext);
 
-  const [question, setQuestion] = React.useState("");
+  const [title, setTitle] = React.useState("");
+  const [body, setBody] = React.useState("");
   const [questionsList, setQuestionList] = React.useState(null);
   const [modalVisibility, setModalVisibility] = React.useState(false);
-  const askQuestion = async (title, id) => {
+  const [isButtonLoading, setButtonLoading] = React.useState(false);
+  const postQuestion = async (title, body, id) => {
+    setButtonLoading(true);
     const url = "http://localhost:3000/question-submit";
     const url2 = "https://coeproject.herokuapp.com/question-submit";
-    const res = await fetch(url2, {
+    const res = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -20,12 +24,14 @@ export default function Forum() {
       body: JSON.stringify({
         title,
         id,
+        body,
       }),
     });
     if (res.status == 200) {
       setModalVisibility(false);
       //TOAST
     }
+    setButtonLoading(false);
   };
 
   React.useEffect(() => {
@@ -39,25 +45,39 @@ export default function Forum() {
     };
     askQuestion();
   }, []);
+
   return (
     <View style={styles.container}>
       {questionsList
         ? questionsList.map((question, index) => (
-            <Question key={index} question={question} />
+            <Question key={index} question={question} navigation={navigation} />
           ))
         : null}
       <Modal dismissable={false} visible={modalVisibility}>
         <View style={styles.modalContainer}>
           <TextInput
             mode="outlined"
-            title="Question?"
             placeholder="Title for your question"
-            value={question}
-            onChangeText={(value) => setQuestion(value)}
+            value={title}
+            onChangeText={(value) => setTitle(value)}
+          />
+          <TextInput
+            mode="outlined"
+            multiline={true}
+            numberOfLines={4}
+            placeholder="Type your question"
+            value={body}
+            onChangeText={(value) => setBody(value)}
           />
           <View style={styles.modelButtonView}>
-            <Button onPress={() => setModalVisibility(false)}>Close</Button>
-            <Button onPress={() => askQuestion(question, state.user._id)}>
+            <Button icon="close" onPress={() => setModalVisibility(false)}>
+              Close
+            </Button>
+            <Button
+              loading={isButtonLoading}
+              icon="send"
+              onPress={() => postQuestion(title, body, state.user._id)}
+            >
               Post
             </Button>
           </View>

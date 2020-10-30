@@ -1,26 +1,27 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Avatar } from "react-native-paper";
-const mon = [
-  "Jan",
-  "Feb",
-  "Mar",
-  "Apr",
-  "May",
-  "Jun",
-  "Jul",
-  "Aug",
-  "Sept",
-  "Oct",
-  "Nov",
-  "Dec",
-];
-export default function Question(props) {
+import relativeDate from "relative-date";
+// const mon = [
+//   "Jan",
+//   "Feb",
+//   "Mar",
+//   "Apr",
+//   "May",
+//   "Jun",
+//   "Jul",
+//   "Aug",
+//   "Sept",
+//   "Oct",
+//   "Nov",
+//   "Dec",
+// ];
+export default function QuestionCard(props) {
   const question = props.question;
   const date = new Date(question.dateAsked);
-  let formatedDate = date.getDate().toString();
-  formatedDate += " " + mon[date.getMonth().toString()];
-  formatedDate += " " + date.getFullYear().toString().slice(2, 4);
+  // let formatedDate = date.getDate().toString();
+  // formatedDate += " " + mon[date.getMonth().toString()];
+  // formatedDate += " " + date.getFullYear().toString().slice(2, 4);
   // Gray (#606060FF) and Lime Punch (#D6ED17FF)
   // Forest Green (#2C5F2D) and Moss Green (#97BC62FF)
   // Electric Blue Lemonade (#0063B2FF) and Aquamarine (#9CC3D5FF)
@@ -34,7 +35,10 @@ export default function Question(props) {
   ).toLowerCase();
   const initials = question.askedBy.firstName[0] + question.askedBy.lastName[0];
   return (
-    <View style={styles.question}>
+    <TouchableOpacity
+      style={styles.question}
+      onPress={() => props.navigation.navigate("Question", { question })}
+    >
       {!question.askedBy.profilePic ? (
         <Avatar.Text
           label={initials}
@@ -52,17 +56,17 @@ export default function Question(props) {
         }}
       >
         <Text style={{ fontWeight: "bold", fontSize: 16 }}>
-          {props.question.title}
+          {question.title}
         </Text>
         <Text style={{ color: "grey", textTransform: "capitalize" }}>
           {fullname}
         </Text>
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <Text style={{ fontWeight: "bold" }}>14 replies</Text>
-          <Text>{formatedDate}</Text>
+          <Text>{relativeDate(new Date(date))}</Text>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 

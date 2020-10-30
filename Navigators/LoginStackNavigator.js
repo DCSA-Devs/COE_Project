@@ -11,12 +11,14 @@ import TabNavigator from "./TabNavigator";
 import { FontAwesome } from "@expo/vector-icons";
 import Syllabus from "../screens/drawer_screens/Syllabus/Syllabus";
 import SyllabusRender from "../screens/drawer_screens/Syllabus/SyllabusRender";
+import Question from "../screens/drawer_screens/Forum/Question";
 const Stack = createStackNavigator();
 export default function StackNavigator({ navigation }) {
   const { state } = React.useContext(userContext);
   //Minimize the code by generating the stack through map
   return (
     <Stack.Navigator
+      initialRouteName="Forum"
       screenOptions={{
         headerRight: () =>
           state.avatar ? (
@@ -89,6 +91,11 @@ export default function StackNavigator({ navigation }) {
         name="Forum"
         component={Forum}
         options={{ title: "Forum" }}
+      />
+      <Stack.Screen
+        name="Question"
+        component={Question}
+        options={{ title: "Question" }}
       />
       <Stack.Screen
         name="SyllabusRender"
