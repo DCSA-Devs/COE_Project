@@ -1,6 +1,12 @@
 import React from "react";
-import { View, StyleSheet, TouchableOpacity } from "react-native";
-import { TextInput, Appbar, Button, Modal, Provider } from "react-native-paper";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  TextInput,
+  Appbar,
+  Button,
+  Modal,
+  ActivityIndicator,
+} from "react-native-paper";
 import Question from "./QuestionCard";
 import { userContext } from "../../userContext";
 //? Toast when post fails or succeed
@@ -49,11 +55,20 @@ export default function Forum({ navigation }) {
 
   return (
     <View style={styles.container}>
-      {questionsList
-        ? questionsList.map((question, index) => (
-            <Question key={index} question={question} navigation={navigation} />
-          ))
-        : null}
+      {questionsList ? (
+        questionsList.map((question, index) => (
+          <Question key={index} question={question} navigation={navigation} />
+        ))
+      ) : (
+        <View
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        >
+          <Text style={{ padding: 20, fontSize: 20, fontWeight: "bold" }}>
+            Fetching Questions
+          </Text>
+          <ActivityIndicator size="large" />
+        </View>
+      )}
       <Modal dismissable={false} visible={modalVisibility}>
         <View style={styles.modalContainer}>
           <TextInput
@@ -85,13 +100,15 @@ export default function Forum({ navigation }) {
         </View>
       </Modal>
 
-      <Appbar style={styles.bottom}>
-        <Appbar.Action icon="plus" onPress={() => setModalVisibility(true)} />
-        <Appbar.Action
-          icon="filter"
-          onPress={() => console.log("Pressed filter")}
-        />
-      </Appbar>
+      {questionsList ? (
+        <Appbar style={styles.bottom}>
+          <Appbar.Action icon="plus" onPress={() => setModalVisibility(true)} />
+          <Appbar.Action
+            icon="filter"
+            onPress={() => console.log("Pressed filter")}
+          />
+        </Appbar>
+      ) : null}
     </View>
   );
 }

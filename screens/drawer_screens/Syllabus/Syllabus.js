@@ -2,7 +2,6 @@ import React from "react";
 import { View, Text, ScrollView } from "react-native";
 import { ActivityIndicator, List } from "react-native-paper";
 
-const semesters = [1, 2, 3, 4, 5, 6];
 export default function Syllabus({ navigation }) {
   //? Implement Toast for error messages
   //? Find fix for scrollview Hint:flex

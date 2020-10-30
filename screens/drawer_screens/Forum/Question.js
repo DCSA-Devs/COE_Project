@@ -2,13 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import relativeDate from "relative-date";
 
-import {
-  Avatar,
-  TextInput,
-  Button,
-  Divider,
-  IconButton,
-} from "react-native-paper";
+import { TextInput, Button, Divider, IconButton } from "react-native-paper";
 import { userContext } from "../../userContext";
 export default function Question({ navigation, route }) {
   const { state } = React.useContext(userContext);

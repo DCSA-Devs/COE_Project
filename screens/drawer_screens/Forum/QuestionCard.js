@@ -62,7 +62,9 @@ export default function QuestionCard(props) {
           {fullname}
         </Text>
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-          <Text style={{ fontWeight: "bold" }}>14 replies</Text>
+          <Text style={{ fontWeight: "bold" }}>
+            {question.replyCount} replies
+          </Text>
           <Text>{relativeDate(new Date(date))}</Text>
         </View>
       </View>
