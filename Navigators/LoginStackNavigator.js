@@ -18,7 +18,6 @@ export default function StackNavigator({ navigation }) {
   //Minimize the code by generating the stack through map
   return (
     <Stack.Navigator
-      initialRouteName="Forum"
       screenOptions={{
         headerRight: () =>
           state.avatar ? (
