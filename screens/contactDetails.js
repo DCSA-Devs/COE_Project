@@ -9,7 +9,7 @@ export default function ContactDetails(props){
     return(
         <View>
             <Card> 
-                <Text style={styles.desig}> {title}</Text>
+                <Text style={styles.desig}>{title}</Text>
                 <Text style={styles.contactText}>Phone number:   {number }</Text>
                 <Text style={styles.contactText}>Email:  {email }</Text>
             </Card>
