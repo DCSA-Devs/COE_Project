@@ -18,6 +18,7 @@ export default function Contact({ navigation }){
         { title: 'Director, Computer Centre', number: '2534064' , email: 'directorcc@pu.ac.in', key: '11'},
         { title: 'Director Registrar (General)', number: '2534857' , email: 'drg@pu.ac.in', key: '12'},
         { title: 'Director Registrar (Colleges)', number: '2534805' , email: 'drcolleges@pu.ac.in', key: '13'},
+        { title: 'Website Management Team', number: '12345678910' , email: 'abc@gmail.com', key: '14'},
     ]);
     
     return(

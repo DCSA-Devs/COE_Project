@@ -32,6 +32,3 @@ const styles = StyleSheet.create({
 
 })
 
-// const pressHandler = ()=>{
-    //     navigation.navigate('ReviewDetails');
-    // }

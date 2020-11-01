@@ -15,9 +15,9 @@ function ContactStack({navigation}) {
         <Stack.Screen
           name="Contact"
           component={Contact}
-          options= {({ navigation }) => ({     // navigation is object and navigationOptions is a function that returns an object
+          options= {({ navigation }) => ({     
             
-            headerTitle:() => <Header navigation={navigation} title='Contact PU' />,   // title: () => <Header />       title expects a string not a function
+            headerTitle:() => <Header navigation={navigation} title='Contact PU' />,   
             } )
         }
         />
@@ -26,8 +26,7 @@ function ContactStack({navigation}) {
         <Stack.Screen
           name="ContactDetails"
           component={ContactDetails}
-          options={{ title: 'Contact Details' }}
-        //  initialParams={{ user: 'me' }}
+          options={{ title: 'Contact Details' } }
         />
 
       </Stack.Navigator>
