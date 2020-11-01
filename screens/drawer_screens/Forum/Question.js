@@ -1,12 +1,19 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import relativeDate from "relative-date";
-
 import { TextInput, Button, Divider, IconButton } from "react-native-paper";
 import { userContext } from "../../userContext";
+
+let array = [];
+
 export default function Question({ navigation, route }) {
+  const [replies, setReplies] = React.useState(null);
+  const [reply, setReply] = React.useState("");
+  const [visible, setVisible] = React.useState(false);
+
   const { state } = React.useContext(userContext);
   const question = route.params.question;
+  const setReplyCount = route.params.setReplyCount;
   //? Add a flair for teacher
   //? Add edit comments
   //? Add delete comments
@@ -15,9 +22,7 @@ export default function Question({ navigation, route }) {
     " " +
     question.askedBy.lastName
   ).toLowerCase();
-  const [replies, setReplies] = React.useState(null);
-  const [reply, setReply] = React.useState("");
-  const [visible, setVisible] = React.useState(false);
+
   React.useEffect(() => {
     const fetchReplies = async () => {
       const url = "http://localhost:3000/getReplies/" + question._id;
@@ -27,7 +32,11 @@ export default function Question({ navigation, route }) {
       const res = await fetch(url2);
       const replies = await res.json();
       console.log("Replies :", replies);
-      if (res.status == 200) setReplies(replies);
+      if (res.status == 200) {
+        array = replies;
+        setReplies(replies);
+        setReplyCount(array.length);
+      }
     };
     fetchReplies();
   }, []);
@@ -45,7 +54,15 @@ export default function Question({ navigation, route }) {
         reply,
       }),
     });
-    if (res.status == 200) setVisible(false);
+    if (res.status == 200) {
+      const data = await res.json();
+      array.push(data);
+      setReply("");
+      setReplyCount(array.length);
+
+      setReplies(array);
+      setVisible(false);
+    }
   };
   return (
     <View style={styles.container}>

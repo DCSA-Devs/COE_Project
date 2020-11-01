@@ -16,9 +16,10 @@ import relativeDate from "relative-date";
 //   "Nov",
 //   "Dec",
 // ];
-export default function QuestionCard(props) {
-  const question = props.question;
+export default function QuestionCard({ navigation, question }) {
   const date = new Date(question.dateAsked);
+  const [replyCount, setReplyCount] = React.useState(question.replyCount);
+
   // let formatedDate = date.getDate().toString();
   // formatedDate += " " + mon[date.getMonth().toString()];
   // formatedDate += " " + date.getFullYear().toString().slice(2, 4);
@@ -37,7 +38,9 @@ export default function QuestionCard(props) {
   return (
     <TouchableOpacity
       style={styles.question}
-      onPress={() => props.navigation.navigate("Question", { question })}
+      onPress={() =>
+        navigation.navigate("Question", { question, setReplyCount })
+      }
     >
       {!question.askedBy.profilePic ? (
         <Avatar.Text
@@ -62,9 +65,20 @@ export default function QuestionCard(props) {
           {fullname}
         </Text>
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
-          <Text style={{ fontWeight: "bold" }}>
-            {question.replyCount} replies
-          </Text>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+            }}
+          >
+            <Text style={{ fontWeight: "bold" }}>{replyCount}</Text>
+            <Avatar.Icon
+              style={{ backgroundColor: "transparent", marginTop: 2 }}
+              icon="comment-text-outline"
+              color="black"
+              size={25}
+            />
+          </View>
           <Text>{relativeDate(new Date(date))}</Text>
         </View>
       </View>
@@ -75,6 +89,7 @@ export default function QuestionCard(props) {
 const styles = StyleSheet.create({
   question: {
     margin: 5,
+    marginHorizontal: 10,
     flexDirection: "row",
     backgroundColor: "white",
     padding: 10,
