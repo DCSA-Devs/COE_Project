@@ -1,0 +1,63 @@
+import React, { useState } from 'react';
+import { View, StyleSheet, Text, FlatList, TouchableOpacity } from 'react-native';
+import Card from '../shared/card';
+
+
+export default function Contact({ navigation }){
+    const [contacts, setContacts] = useState([
+        { title: 'Single Window Enquiry', number: 18001802065, email: 'abc', key: '1'},
+        { title: 'Vice-Chancellor', number: 2534299, email: 'vc@pu.ac.in', key: '2'},
+        { title: 'Dean University Instructions', number: 2534292, email: 'dui@pu.ac.in', key: '3'},
+        { title: 'Registar', number: 2534867, email: 'regr@pu.ac.in', key: '4'},
+        { title: 'Dean Student Welfare', number: 2541596, email: 'dsw@pu.ac.in', key: '5'},
+        { title: 'Librarian', number: 2548159, email: 'librarian@pu.ac.in', key: '6'},
+        { title: 'Chief Medical Officer', number: 2534477, email: 'bgjih@pu.ac.in', key: '7'},
+        { title: 'Director Public Relations', number: 2534865, email: 'dpr@pu.ac.in', key: '8'},
+        { title: 'Dean International Students', number: 2541873, email: 'dis@pu.ac.in', key: '9'},
+        { title: 'Dean Alumni Relations', number: 2541881, email: 'darpu@pu.ac.in', key: '10'},
+    ]);
+    
+    return(
+        <FlatList 
+                data = {contacts} 
+                renderItem = {({ item }) => (
+                                <TouchableOpacity onPress = { () => {navigation.navigate('ContactDetails', {item})}}>
+                                    <Card>
+                                        <Text >{ item.title }</Text>
+                                    </Card>
+                                </TouchableOpacity>
+                ) }
+                ListHeaderComponent={
+                    <>
+                        <View style={styles.heading}>
+                            <Text style={{ fontSize: 18, fontWeight: 'bold', color: 'white', letterSpacing: 1 }}>  Important Contacts  </Text>
+                        </View>
+                        <View style={styles.designation}>
+                            <Text style={ { fontWeight: 'bold', fontSize: 18, color: 'blue'}}> Designation </Text>
+                        </View>
+                    </>
+                }
+        /> 
+    );
+}
+
+const styles = StyleSheet.create({
+    heading:{
+        backgroundColor: 'red',
+        height:30,
+        // color: 'white',
+        fontWeight: '800',
+        letterSpacing: 1,
+        margin: 10,
+        
+
+    },
+    designation:{
+        fontWeight: 'bold',
+        marginLeft: 10,
+        margin: 3,
+    }
+});
+
+
+
