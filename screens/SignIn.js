@@ -6,6 +6,7 @@ import {
   View,
   Text,
   KeyboardAvoidingView,
+  ScrollView,
 } from "react-native";
 import { Formik } from "formik";
 import { Button, TextInput } from "react-native-paper";
@@ -39,9 +40,10 @@ export default function SignIn({ navigation }) {
     );
   };
   return (
+    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
     <KeyboardAvoidingView behavior="height">
+      <Logo />
       <View style={styles.container}>
-        <Logo />
         <Formik
           initialValues={{ email: "", password: "" }}
           onSubmit={async (values) => {
@@ -146,6 +148,7 @@ export default function SignIn({ navigation }) {
         </Formik>
       </View>
     </KeyboardAvoidingView>
+    </ScrollView>
   );
 }
 
@@ -154,7 +157,7 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: "space-evenly",
     alignItems: "center",
-    height: heightPercentageToDP("100%"),
+    height: heightPercentageToDP("45%"),
   },
   title: {
     textAlign: "center",

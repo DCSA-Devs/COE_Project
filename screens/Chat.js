@@ -28,7 +28,7 @@ export default function Chat({ navigation }) {
   return (
     <GiftedChat
       messages={messages}
-      placeholder="Likh Bhai"
+      placeholder="Write a message"
       onSend={(messages) => onSend(messages)}
       user={{
         _id: 1,

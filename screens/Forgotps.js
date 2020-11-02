@@ -1,10 +1,11 @@
 import React from "react";
-import { StyleSheet, View, Text, KeyboardAvoidingView } from "react-native";
+import { StyleSheet, View, Text,  ScrollView, KeyboardAvoidingView } from "react-native";
 import { TextInput, Button } from "react-native-paper";
 import Logo from "../components/Logo";
 
 export default function Forgetps({ navigation }) {
   return (
+    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
     <KeyboardAvoidingView>
       <View style={styles.container}>
         <Logo />
@@ -23,6 +24,7 @@ export default function Forgetps({ navigation }) {
         </View>
       </View>
     </KeyboardAvoidingView>
+    </ScrollView>
   );
 }
 
