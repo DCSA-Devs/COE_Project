@@ -42,8 +42,7 @@ export default function SignUp({ navigation }) {
   };
   //validations
   const reviewformschema = yup.object({
-    firstName: yup.string().required().min(4),
-    lastName: yup.string().required().min(4),
+    name: yup.string().required().min(4),
     email: yup.string().required().email(),
     mobile: yup.string().required().min(10).max(10),
     password: yup.string().required().min(8),
@@ -62,8 +61,7 @@ export default function SignUp({ navigation }) {
       <Logo style={{ padding: 20 }} />
       <Formik
         initialValues={{
-          firstName: "",
-          lastName: "",
+          name: "",
           email: "",
           mobile: "",
           password: "",
@@ -138,26 +136,14 @@ export default function SignUp({ navigation }) {
             <TextInput
               mode="outlined"
               style={styles.input}
-              label="First name"
-              onChangeText={props.handleChange("firstName")}
-              value={props.values.firstName}
-              onBlur={props.handleBlur("firstName")}
+              label="Name"
+              onChangeText={props.handleChange("name")}
+              value={props.values.name}
+              onBlur={props.handleBlur("name")}
               disabled={isDisabled}
             />
             <Text style={styles.errorText}>
-              {props.touched.firstName && props.errors.firstName}
-            </Text>
-            <TextInput
-              style={styles.input}
-              mode="outlined"
-              label="Last name"
-              onChangeText={props.handleChange("lastName")}
-              value={props.values.lastName}
-              onBlur={props.handleBlur("lastName")}
-              disabled={isDisabled}
-            />
-            <Text style={styles.errorText}>
-              {props.touched.lastName && props.errors.lastName}
+              {props.touched.name && props.errors.name}
             </Text>
             <TextInput
               style={styles.input}
@@ -228,10 +214,10 @@ export default function SignUp({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    height: heightPercentageToDP("100%"),
+    height: heightPercentageToDP("70%"),
     justifyContent: "space-between",
     alignItems: "center",
-    padding: widthPercentageToDP("2%"),
+    padding: widthPercentageToDP("1%"),
   },
   input: {
     backgroundColor: "#ddd",
@@ -242,7 +228,6 @@ const styles = StyleSheet.create({
   },
   title: {
     textAlign: "center",
-
     fontWeight: "bold",
     fontSize: 25,
     color: "#2196F3",
@@ -250,8 +235,8 @@ const styles = StyleSheet.create({
   errorText: {
     color: "crimson",
     fontWeight: "bold",
-    marginBottom: 3,
-    marginTop: 3,
+    marginBottom: 2,
+    marginTop: 2,
     textAlign: "center",
   },
 });
