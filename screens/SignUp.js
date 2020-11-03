@@ -70,24 +70,33 @@ export default function SignUp({ navigation }) {
         validationSchema={reviewformschema}
         onSubmit={async (values) => {
           setDisabled(true);
-          values.profession = chipValue.toString();
-          console.log(values.profession);
-          const req = await fetch("https://coeproject.herokuapp.com/register", {
-            method: "POST",
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(values),
-          });
-          if (req.status != 200) {
-            const error = await req.json();
-            failAlert(JSON.stringify(error.message));
-          } else {
-            // Toast("Account created");
-            navigation.navigate("SignIn");
+          if (chipValue === "Teacher") {
+            values.isTeacher = true;
           }
-          setDisabled(false);
+          console.log(values.profession);
+          const url = "http://localhost:3000/register";
+          const url2 = "https://coeproject.herokuapp.com/register";
+          try {
+            const req = await fetch(url2, {
+              method: "POST",
+              headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(values),
+            });
+
+            if (req.status != 200) {
+              const error = await req.json();
+              failAlert(JSON.stringify(error.message));
+            } else {
+              // Toast("Account created");
+              navigation.navigate("SignIn");
+            }
+          } catch (err) {
+            setDisabled(false);
+            // Toast("Unable to connect to server");
+          }
         }}
       >
         {(props) => (

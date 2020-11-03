@@ -2,6 +2,8 @@ import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Avatar } from "react-native-paper";
 import relativeDate from "relative-date";
+import initials from "../../../functions/initials";
+
 // const mon = [
 //   "Jan",
 //   "Feb",
@@ -17,9 +19,8 @@ import relativeDate from "relative-date";
 //   "Dec",
 // ];
 export default function QuestionCard({ navigation, question }) {
-  const date = new Date(question.dateAsked);
+  const date = question.dateAsked;
   const [replyCount, setReplyCount] = React.useState(question.replyCount);
-
   // let formatedDate = date.getDate().toString();
   // formatedDate += " " + mon[date.getMonth().toString()];
   // formatedDate += " " + date.getFullYear().toString().slice(2, 4);
@@ -29,12 +30,6 @@ export default function QuestionCard({ navigation, question }) {
   // Black (#101820FF) and Blazing Yellow (#FEE715FF)
   // (#D198C5FF) and Cream Gold (#E0C568FF)
   // Sky Blue (#89ABE3FF) and White (#FCF6F5FF
-  const fullname = (
-    question.askedBy.firstName +
-    " " +
-    question.askedBy.lastName
-  ).toLowerCase();
-  const initials = question.askedBy.firstName[0] + question.askedBy.lastName[0];
   return (
     <TouchableOpacity
       style={styles.question}
@@ -44,7 +39,7 @@ export default function QuestionCard({ navigation, question }) {
     >
       {!question.askedBy.profilePic ? (
         <Avatar.Text
-          label={initials}
+          label={initials(question.askedBy.name)}
           color="#606060FF"
           style={{ backgroundColor: "#D6ED17FF" }}
         />
@@ -62,7 +57,7 @@ export default function QuestionCard({ navigation, question }) {
           {question.title}
         </Text>
         <Text style={{ color: "grey", textTransform: "capitalize" }}>
-          {fullname}
+          {question.askedBy.name.toLowerCase()}
         </Text>
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <View

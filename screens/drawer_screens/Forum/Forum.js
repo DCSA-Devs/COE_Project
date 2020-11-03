@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
 import {
   TextInput,
   Appbar,
@@ -10,6 +10,10 @@ import {
 import Question from "./QuestionCard";
 import { userContext } from "../../userContext";
 import AsyncStorage from "@react-native-community/async-storage";
+import {
+  heightPercentageToDP,
+  widthPercentageToDP,
+} from "react-native-responsive-screen";
 //? Toast when post fails or succeed
 let array = [];
 export default function Forum({ navigation }) {
@@ -19,7 +23,15 @@ export default function Forum({ navigation }) {
   const [questionsList, setQuestionList] = React.useState(null);
   const [modalVisibility, setModalVisibility] = React.useState(false);
   const [isButtonLoading, setButtonLoading] = React.useState(false);
-
+  React.useEffect(() => {
+    if (questionsList != null) {
+      AsyncStorage.setItem("questions", JSON.stringify(questionsList))
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((err) => console.log("AsyncStorage Error"));
+    }
+  }, [questionsList]);
   const fetchNewQuestions = async () => {
     const lastDate = array[0].dateAsked;
     console.log("Last Date", lastDate);
@@ -30,9 +42,31 @@ export default function Forum({ navigation }) {
     const data = await res.json();
     console.log(data);
     if (data.length !== 0) {
-      console.log("ye chala?");
       array = data.concat(array);
       setQuestionList(array);
+    } else {
+      const url = "http://localhost:3000/countQuestions/" + array.length;
+      const url2 =
+        "https://coeproject.herokuapp.com/countQuestions/" + array.length;
+      const res = await fetch(url2);
+      const data = await res.json();
+      console.log(data);
+      if (array.length != data) {
+        let idArray = [];
+        data.forEach((element) => {
+          idArray.push(element["_id"]);
+        });
+        console.log("ID Array : ", idArray);
+        let newArray = [];
+        array.forEach((element) => {
+          if (idArray.includes(element["_id"])) {
+            console.log("true");
+            newArray.push(element);
+          }
+        });
+        array = newArray;
+        setQuestionList(newArray);
+      }
     }
   };
   const postQuestion = async (title, body, id) => {
@@ -54,10 +88,7 @@ export default function Forum({ navigation }) {
       const data = await res.json();
       setTitle("");
       setBody("");
-      console.log("Data", data);
-      console.log("array", array);
       array.unshift(data);
-      await AsyncStorage.setItem("questions", JSON.stringify(array));
       setQuestionList(array);
       setModalVisibility(false);
       //TOAST
@@ -68,43 +99,43 @@ export default function Forum({ navigation }) {
   const fetchQuestionsOffline = async () => {
     const questionsString = await AsyncStorage.getItem("questions");
     console.log("QuestionString : ", questionsString);
-    if (questionsString === null) {
+    if (questionsString === null || questionsString === "[]") {
       return false;
     }
+
     const fetchedQuestions = JSON.parse(questionsString);
     array = fetchedQuestions;
     setQuestionList(fetchedQuestions);
     return true;
   };
   React.useEffect(() => {
-    const askQuestion = async (title, id) => {
+    const fetchQuestion = async () => {
       const url = "http://localhost:3000/getQuestions";
       const url2 = "https://coeproject.herokuapp.com/getQuestions";
       const res = await fetch(url2);
       const data = await res.json();
       console.log(data);
       array = data;
-      const questionSaved = await AsyncStorage.setItem(
-        "questions",
-        JSON.stringify(array)
-      );
       setQuestionList(data);
     };
     fetchQuestionsOffline().then((status) => {
       if (status === false) {
-        askQuestion();
+        fetchQuestion();
       } else {
         fetchNewQuestions();
       }
     });
+    // await AsyncStorage.removeItem('questions')
   }, []);
 
   return (
     <View style={styles.container}>
       {questionsList ? (
-        questionsList.map((question, index) => (
-          <Question key={index} question={question} navigation={navigation} />
-        ))
+        <ScrollView>
+          {questionsList.map((question, index) => (
+            <Question key={index} question={question} navigation={navigation} />
+          ))}
+        </ScrollView>
       ) : (
         <View
           style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
@@ -145,7 +176,6 @@ export default function Forum({ navigation }) {
           </View>
         </View>
       </Modal>
-
       {questionsList ? (
         <Appbar style={styles.bottom}>
           <Appbar.Action icon="plus" onPress={() => setModalVisibility(true)} />

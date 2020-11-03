@@ -10,18 +10,13 @@ export default function Question({ navigation, route }) {
   const [replies, setReplies] = React.useState(null);
   const [reply, setReply] = React.useState("");
   const [visible, setVisible] = React.useState(false);
-
+  const [postVisible, setPostVisible] = React.useState(true);
   const { state } = React.useContext(userContext);
   const question = route.params.question;
   const setReplyCount = route.params.setReplyCount;
   //? Add a flair for teacher
   //? Add edit comments
   //? Add delete comments
-  const fullname = (
-    question.askedBy.firstName +
-    " " +
-    question.askedBy.lastName
-  ).toLowerCase();
 
   React.useEffect(() => {
     const fetchReplies = async () => {
@@ -41,6 +36,7 @@ export default function Question({ navigation, route }) {
     fetchReplies();
   }, []);
   const postReply = async () => {
+    setPostVisible(false);
     const url = "http://localhost:3000/postReply";
     const url2 = "https://coeproject.herokuapp.com/postReply";
     const res = await fetch(url2, {
@@ -59,8 +55,8 @@ export default function Question({ navigation, route }) {
       array.push(data);
       setReply("");
       setReplyCount(array.length);
-
       setReplies(array);
+      setPostVisible(true);
       setVisible(false);
     }
   };
@@ -69,7 +65,9 @@ export default function Question({ navigation, route }) {
       <View style={styles.questionView}>
         <Text style={styles.title}>{question.title}</Text>
         <View style={{ flexDirection: "row", marginVertical: 5 }}>
-          <Text style={styles.username}>{fullname}</Text>
+          <Text style={styles.username}>
+            {question.askedBy.name.toLowerCase()}
+          </Text>
           <Text>{relativeDate(new Date(question.dateAsked))}</Text>
         </View>
         <Text style={styles.content}>{question.body}</Text>
@@ -92,10 +90,12 @@ export default function Question({ navigation, route }) {
             <IconButton
               icon="send"
               color="#6200EE"
+              disabled={!postVisible}
               onPress={() => postReply()}
             />
             <IconButton
               icon="cancel"
+              disabled={!postVisible}
               color="#6200EE"
               onPress={() => setVisible(false)}
             />
@@ -107,7 +107,7 @@ export default function Question({ navigation, route }) {
             <View key={index} style={styles.commentView}>
               <View style={styles.commentUserTimeVIew}>
                 <Text style={styles.username}>
-                  {(reply.by.firstName + " " + reply.by.lastName).toLowerCase()}
+                  {reply.by.name.toLowerCase()}
                 </Text>
                 <Text>{relativeDate(new Date(reply.date))}</Text>
               </View>

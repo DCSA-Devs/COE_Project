@@ -10,7 +10,7 @@ import {
 import * as ImagePicker from "expo-image-picker";
 import { Avatar, Menu, Provider } from "react-native-paper";
 import { userContext } from "../userContext";
-
+import initials from "../../functions/initials";
 export default function UploadAvatar({ navigation }) {
   const { dispatch, state } = React.useContext(userContext);
   const [image, setImage] = useState(null);
@@ -36,7 +36,7 @@ export default function UploadAvatar({ navigation }) {
       );
       let body = await test.json();
       console.log(body);
-      const imageURI = body.data.url;
+      const imageURI = body.data.thumb.url;
       const server = await fetch(
         "https://coeproject.herokuapp.com/upload-avatar",
         {
@@ -71,19 +71,24 @@ export default function UploadAvatar({ navigation }) {
       }
     };
   }, []);
+
+  useEffect(() => {
+    if (image != null) {
+      uploadToServer();
+    }
+  }, [image]);
   const pickImage = async () => {
     const imag = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [4, 3],
-      quality: 1,
+      quality: 0.2,
     });
     console.log(imag);
     if (!imag.cancelled) {
       dispatch({ type: "AVATAR", avatar: imag.uri });
       setImage(imag.uri);
       isVisible(false);
-      uploadToServer();
     }
   };
   return (
@@ -108,9 +113,11 @@ export default function UploadAvatar({ navigation }) {
               />
             ) : (
               <Avatar.Text
-                label={state.user.firstName[0] + state.user.lastName[0]}
+                label={initials(state.user.name)}
                 size={200}
                 style={{
+                  borderColor: "#563D74",
+                  borderWidth: 5,
                   marginRight: 5,
                 }}
               />
@@ -129,8 +136,12 @@ export default function UploadAvatar({ navigation }) {
                     <Avatar.Icon
                       icon="pencil"
                       size={55}
-                      style={{ backgroundColor: "red" }}
-                      color="white"
+                      style={{
+                        backgroundColor: "#BB86FC",
+                        borderColor: "#563D74",
+                        borderWidth: 5,
+                      }}
+                      color="#563D74"
                     />
                   </TouchableOpacity>
                 }
@@ -150,16 +161,17 @@ export default function UploadAvatar({ navigation }) {
 
         <View>
           <View style={styles.field}>
-            <Text style={styles.text}>First Name : </Text>
-            <Text style={styles.text}>{state.user.firstName} </Text>
+            <Text style={styles.text}>Name : </Text>
+            <Text style={styles.text}>{state.user.name} </Text>
           </View>
-          <View style={styles.field}>
-            <Text style={styles.text}>Last Name : </Text>
-            <Text style={styles.text}>{state.user.lastName} </Text>
-          </View>
+
           <View style={styles.field}>
             <Text style={styles.text}>Email :</Text>
             <Text style={styles.text}> {state.user.email}</Text>
+          </View>
+          <View style={styles.field}>
+            <Text style={styles.text}>Mobile :</Text>
+            <Text style={styles.text}> {state.user.mobile}</Text>
           </View>
           <View style={styles.field}>
             <Text style={styles.text}>Date Joined : </Text>

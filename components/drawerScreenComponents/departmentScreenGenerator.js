@@ -27,9 +27,9 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: "white",
     padding: 20,
     margin: 10,
-    backgroundColor: "rgba(220,129,129,0.5)",
     borderRadius: 10,
   },
   componentTextStyle: {

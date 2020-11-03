@@ -12,9 +12,11 @@ import { FontAwesome } from "@expo/vector-icons";
 import Syllabus from "../screens/drawer_screens/Syllabus/Syllabus";
 import SyllabusRender from "../screens/drawer_screens/Syllabus/SyllabusRender";
 import Question from "../screens/drawer_screens/Forum/Question";
+import initials from "../functions/initials";
 const Stack = createStackNavigator();
 export default function StackNavigator({ navigation }) {
   const { state } = React.useContext(userContext);
+
   //Minimize the code by generating the stack through map
   return (
     <Stack.Navigator
@@ -37,12 +39,13 @@ export default function StackNavigator({ navigation }) {
             />
           ) : (
             <Avatar.Text
-              label={state.user.firstName[0] + state.user.lastName[0]}
+              label={initials(state.user.name)}
               size={50}
-              color="red"
+              color="#563D74"
               style={{
-                backgroundColor: "beige",
+                backgroundColor: "#BB86FC",
                 marginRight: 5,
+                borderColor: "#563D74",
                 shadowColor: "black",
                 shadowOpacity: 0.5,
                 shadowOffset: {
