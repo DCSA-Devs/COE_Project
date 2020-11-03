@@ -109,6 +109,7 @@ export default function SignIn({ navigation }) {
                   disabled={isDisabled}
                   onChangeText={props.handleChange("password")}
                   value={props.values.password}
+                  secureTextEntry={true}
                 />
                 <View
                   style={{

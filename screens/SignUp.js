@@ -187,6 +187,7 @@ export default function SignUp({ navigation }) {
               value={props.values.password}
               onBlur={props.handleBlur("password")}
               disabled={isDisabled}
+              secureTextEntry={true}
             />
             <Text style={styles.errorText}>
               {props.touched.password && props.errors.password}
@@ -199,6 +200,7 @@ export default function SignUp({ navigation }) {
               value={props.values.confirm_password}
               onBlur={props.handleBlur("confirm_password")}
               disabled={isDisabled}
+              secureTextEntry={true}
             />
             <Text style={styles.errorText}>
               {props.touched.confirm_password && props.errors.confirm_password}
