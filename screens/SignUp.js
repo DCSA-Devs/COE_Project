@@ -34,7 +34,7 @@ export default function SignUp({ navigation }) {
       errorMessage,
       [
         {
-          text: "OK",
+          text: "Ok",
         },
       ],
       { cancelable: true }
@@ -102,7 +102,7 @@ export default function SignUp({ navigation }) {
         {(props) => (
           <View style={styles.container}>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <Chip
+              <Chip 
                 selected={chipValue === "Student" ? true : false}
                 onPress={() => {
                   setChipValue("Student");
@@ -225,7 +225,7 @@ export default function SignUp({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    height: heightPercentageToDP("70%"),
+    height: heightPercentageToDP("100%"),
     justifyContent: "space-between",
     alignItems: "center",
     padding: widthPercentageToDP("1%"),
@@ -246,8 +246,8 @@ const styles = StyleSheet.create({
   errorText: {
     color: "crimson",
     fontWeight: "bold",
-    marginBottom: 2,
-    marginTop: 2,
+    marginBottom: 1,
+    marginTop: 1,
     textAlign: "center",
   },
 });
