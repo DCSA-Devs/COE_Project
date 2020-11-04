@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Avatar } from "react-native-paper";
 import relativeDate from "relative-date";
-import initials from "../../../functions/initials";
+import { Initials } from "../../../functions/commonFunctions";
 
 // const mon = [
 //   "Jan",
@@ -39,7 +39,7 @@ export default function QuestionCard({ navigation, question }) {
     >
       {!question.askedBy.profilePic ? (
         <Avatar.Text
-          label={initials(question.askedBy.name)}
+          label={Initials(question.askedBy.name)}
           color="#606060FF"
           style={{ backgroundColor: "#D6ED17FF" }}
         />

@@ -7,6 +7,8 @@ import Forgotps from "../screens/Forgotps";
 import AsyncStorage from "@react-native-community/async-storage";
 import { userContext } from "../screens/userContext";
 import DrawerNavigator from "./DrawerNavigator";
+import LoginStackNavigator from "./LoginStackNavigator";
+
 const Stack = createStackNavigator();
 
 export default function StackNavigator() {
@@ -71,8 +73,8 @@ export default function StackNavigator() {
           {state.user ? (
             <>
               <Stack.Screen
-                name="DrawerNavigator"
-                component={DrawerNavigator}
+                name="loginStacknavigator"
+                component={LoginStackNavigator}
                 options={{
                   title: "Department of Computer Science",
                   headerShown: false,

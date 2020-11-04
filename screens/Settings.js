@@ -17,6 +17,12 @@ export default function Settings({ navigation }) {
       />
       <Divider />
       <List.Item
+        title="Contact"
+        onPress={() => navigation.navigate("Contact")}
+        left={() => <List.Icon icon="contact-phone" />}
+      />
+      <Divider />
+      <List.Item
         title="Logout"
         onPress={async () => {
           await AsyncStorage.clear();
