@@ -246,8 +246,6 @@ const styles = StyleSheet.create({
   errorText: {
     color: "crimson",
     fontWeight: "bold",
-    marginBottom: 1,
-    marginTop: 1,
     textAlign: "center",
   },
 });
