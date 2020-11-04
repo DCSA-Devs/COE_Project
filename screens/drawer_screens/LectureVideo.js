@@ -40,6 +40,7 @@ export default function LectureVideo({ navigation }) {
         <FlatList
           style={styles.flatlistStyle}
           data={videos}
+          keyExtractor={(item, index) => index.toString()}
           renderItem={({ item }) => (
             <TouchableOpacity
               style={styles.touchStyles}

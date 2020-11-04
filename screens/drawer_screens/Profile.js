@@ -10,7 +10,7 @@ import {
 import * as ImagePicker from "expo-image-picker";
 import { Avatar, Menu, Provider } from "react-native-paper";
 import { userContext } from "../userContext";
-import initials from "../../functions/initials";
+import { Initials } from "../../functions/commonFunctions";
 export default function UploadAvatar({ navigation }) {
   const { dispatch, state } = React.useContext(userContext);
   const [image, setImage] = useState(null);
@@ -113,7 +113,7 @@ export default function UploadAvatar({ navigation }) {
               />
             ) : (
               <Avatar.Text
-                label={initials(state.user.name)}
+                label={Initials(state.user.name)}
                 size={200}
                 style={{
                   borderColor: "#563D74",
@@ -166,7 +166,7 @@ export default function UploadAvatar({ navigation }) {
           </View>
 
           <View style={styles.field}>
-            <Text style={styles.text}>Email :</Text>
+            <Text style={styles.text}>Email : </Text>
             <Text style={styles.text}> {state.user.email}</Text>
           </View>
           <View style={styles.field}>
@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
   field: {
     padding: 10,
     borderRadius: 5,
-    borderWidth: 2,
+    borderWidth: 3,
     borderColor: "grey",
     marginBottom: 10,
     flexDirection: "row",

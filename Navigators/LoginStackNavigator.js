@@ -12,7 +12,9 @@ import { FontAwesome } from "@expo/vector-icons";
 import Syllabus from "../screens/drawer_screens/Syllabus/Syllabus";
 import SyllabusRender from "../screens/drawer_screens/Syllabus/SyllabusRender";
 import Question from "../screens/drawer_screens/Forum/Question";
-import initials from "../functions/initials";
+import Contact from "../screens/contact";
+import ContactDetails from "../screens/contactDetails";
+import { Initials } from "../functions/commonFunctions";
 const Stack = createStackNavigator();
 export default function StackNavigator({ navigation }) {
   const { state } = React.useContext(userContext);
@@ -39,7 +41,7 @@ export default function StackNavigator({ navigation }) {
             />
           ) : (
             <Avatar.Text
-              label={initials(state.user.name)}
+              label={Initials(state.user.name)}
               size={50}
               color="#563D74"
               style={{
@@ -63,15 +65,6 @@ export default function StackNavigator({ navigation }) {
         options={({ navigation, route }) => {
           return {
             title: "Department of Computer Science",
-            headerLeft: () => (
-              <FontAwesome
-                name="bars"
-                onPress={() => navigation.openDrawer()}
-                size={35}
-                style={{ marginLeft: 15 }}
-                color="black"
-              />
-            ),
           };
         }}
       />
@@ -113,6 +106,16 @@ export default function StackNavigator({ navigation }) {
         name="Syllabus"
         component={Syllabus}
         options={{ title: "Syllabus" }}
+      />
+      <Stack.Screen
+        name="Contact"
+        component={Contact}
+        options={{ title: "Contact" }}
+      />
+      <Stack.Screen
+        name="ContactDetails"
+        component={ContactDetails}
+        options={{ title: "Contact Details" }}
       />
       <Stack.Screen
         name="VideoPlayer"

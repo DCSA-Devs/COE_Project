@@ -5,6 +5,7 @@ import {
   Appbar,
   Button,
   Modal,
+  Chip,
   ActivityIndicator,
 } from "react-native-paper";
 import Question from "./QuestionCard";
@@ -22,6 +23,11 @@ export default function Forum({ navigation }) {
   const [body, setBody] = React.useState("");
   const [questionsList, setQuestionList] = React.useState(null);
   const [modalVisibility, setModalVisibility] = React.useState(false);
+  const [orderFilter, setOrderFilter] = React.useState("ASC");
+  const [filter, setFilter] = React.useState("DateUploaded");
+  const [filterModalVisibility, setFilterModalVisibility] = React.useState(
+    false
+  );
   const [isButtonLoading, setButtonLoading] = React.useState(false);
   React.useEffect(() => {
     if (questionsList != null) {
@@ -109,20 +115,20 @@ export default function Forum({ navigation }) {
     return true;
   };
   React.useEffect(() => {
-    const fetchQuestion = async () => {
-      const url = "http://localhost:3000/getQuestions";
-      const url2 = "https://coeproject.herokuapp.com/getQuestions";
-      const res = await fetch(url2);
-      const data = await res.json();
-      console.log(data);
-      array = data;
-      setQuestionList(data);
-    };
+    // const fetchQuestion = async () => {
+    //   const url = "http://localhost:3000/getQuestions";
+    //   const url2 = "https://coeproject.herokuapp.com/getQuestions";
+    //   const res = await fetch(url2);
+    //   const data = await res.json();
+    //   console.log(data);
+    //   array = data;
+    //   setQuestionList(data);
+    // };
     fetchQuestionsOffline().then((status) => {
       if (status === false) {
-        fetchQuestion();
+        // fetchQuestion();
       } else {
-        fetchNewQuestions();
+        // fetchNewQuestions();
       }
     });
     // await AsyncStorage.removeItem('questions')
@@ -176,12 +182,90 @@ export default function Forum({ navigation }) {
           </View>
         </View>
       </Modal>
+      <Modal dismissable={false} visible={filterModalVisibility}>
+        <View style={styles.modalContainer}>
+          <Text style={styles.chipTextStyle}>Filter</Text>
+          <View style={{ flexDirection: "row", flexWrap: 1 }}>
+            <Chip
+              selected={filter === "YourPost"}
+              mode="outlined"
+              selectedColor="#563D74"
+              style={
+                filter === "YourPost" ? { backgroundColor: "#BB86FC" } : false
+              }
+              onPress={() => setFilter("YourPost")}
+            >
+              Your Posts
+            </Chip>
+            <Chip
+              selected={filter === "DateUploaded"}
+              mode="outlined"
+              selectedColor="#563D74"
+              style={
+                filter === "DateUploaded"
+                  ? { backgroundColor: "#BB86FC" }
+                  : false
+              }
+              onPress={() => setFilter("DateUploaded")}
+            >
+              Date Uploaded
+            </Chip>
+            <Chip
+              selected={filter === "Views"}
+              mode="outlined"
+              selectedColor="#563D74"
+              style={
+                filter === "Views" ? { backgroundColor: "#BB86FC" } : false
+              }
+              onPress={() => setFilter("Views")}
+            >
+              Views
+            </Chip>
+          </View>
+          <Text style={styles.chipTextStyle}>Order</Text>
+          <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
+            <Chip
+              selected={orderFilter === "ASC"}
+              mode="outlined"
+              onPress={() => setOrderFilter("ASC")}
+              selectedColor="#563D74"
+              style={
+                orderFilter === "ASC" ? { backgroundColor: "#BB86FC" } : false
+              }
+            >
+              ASC
+            </Chip>
+            <Chip
+              selected={orderFilter === "DESC"}
+              mode="outlined"
+              onPress={() => setOrderFilter("DESC")}
+              selectedColor="#563D74"
+              style={
+                orderFilter === "DESC" ? { backgroundColor: "#BB86FC" } : false
+              }
+            >
+              DESC
+            </Chip>
+          </View>
+          <View style={styles.modelButtonView}>
+            <Button
+              icon="close"
+              onPress={() => setFilterModalVisibility(false)}
+            >
+              Close
+            </Button>
+            <Button loading={isButtonLoading} icon="send">
+              Select
+            </Button>
+          </View>
+        </View>
+      </Modal>
       {questionsList ? (
         <Appbar style={styles.bottom}>
           <Appbar.Action icon="plus" onPress={() => setModalVisibility(true)} />
           <Appbar.Action
             icon="filter"
-            onPress={() => console.log("Pressed filter")}
+            onPress={() => setFilterModalVisibility(true)}
           />
         </Appbar>
       ) : null}
@@ -205,7 +289,12 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     marginTop: 5,
   },
-
+  chipTextStyle: {
+    padding: 10,
+    fontWeight: "bold",
+    fontSize: 14,
+    fontFamily: "Roboto",
+  },
   bottom: {
     position: "absolute",
     left: 0,
