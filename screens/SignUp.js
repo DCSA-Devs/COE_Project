@@ -34,7 +34,7 @@ export default function SignUp({ navigation }) {
       errorMessage,
       [
         {
-          text: "OK",
+          text: "Ok",
         },
       ],
       { cancelable: true }
@@ -102,7 +102,7 @@ export default function SignUp({ navigation }) {
         {(props) => (
           <View style={styles.container}>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <Chip
+              <Chip 
                 selected={chipValue === "Student" ? true : false}
                 onPress={() => {
                   setChipValue("Student");
@@ -187,6 +187,7 @@ export default function SignUp({ navigation }) {
               value={props.values.password}
               onBlur={props.handleBlur("password")}
               disabled={isDisabled}
+              secureTextEntry={true}
             />
             <Text style={styles.errorText}>
               {props.touched.password && props.errors.password}
@@ -199,6 +200,7 @@ export default function SignUp({ navigation }) {
               value={props.values.confirm_password}
               onBlur={props.handleBlur("confirm_password")}
               disabled={isDisabled}
+              secureTextEntry={true}
             />
             <Text style={styles.errorText}>
               {props.touched.confirm_password && props.errors.confirm_password}
@@ -223,7 +225,7 @@ export default function SignUp({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    height: heightPercentageToDP("70%"),
+    height: heightPercentageToDP("100%"),
     justifyContent: "space-between",
     alignItems: "center",
     padding: widthPercentageToDP("1%"),
@@ -244,8 +246,6 @@ const styles = StyleSheet.create({
   errorText: {
     color: "crimson",
     fontWeight: "bold",
-    marginBottom: 2,
-    marginTop: 2,
     textAlign: "center",
   },
 });
