@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useState, useContext } from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import {
   TextInput,
@@ -18,17 +18,30 @@ import {
 //? Toast when post fails or succeed
 let array = [];
 export default function Forum({ navigation }) {
-  const { state } = React.useContext(userContext);
-  const [title, setTitle] = React.useState("");
-  const [body, setBody] = React.useState("");
-  const [questionsList, setQuestionList] = React.useState(null);
-  const [modalVisibility, setModalVisibility] = React.useState(false);
-  const [orderFilter, setOrderFilter] = React.useState("ASC");
-  const [filter, setFilter] = React.useState("DateUploaded");
-  const [filterModalVisibility, setFilterModalVisibility] = React.useState(
-    false
+  const { state } = useContext(userContext);
+  const [title, setTitle] = useState("");
+  const [body, setBody] = useState("");
+  const [questionsList, setQuestionList] = useState(null);
+  const [modalVisibility, setModalVisibility] = useState(false);
+  const [orderFilter, setOrderFilter] = useState("ASC");
+  const [filter, setFilter] = useState("DateUploaded");
+  const [filterModalVisibility, setFilterModalVisibility] = useState(false);
+  const [isButtonLoading, setButtonLoading] = useState(false);
+  const handleFilterModelVisibility = useCallback(
+    (bool) => setFilterModalVisibility(bool),
+    [filterModalVisibility]
   );
-  const [isButtonLoading, setButtonLoading] = React.useState(false);
+  const handleModelVisibility = useCallback(
+    (bool) => setModalVisibility(bool),
+    [modalVisibility]
+  );
+
+  const handleOrderFilter = useCallback((value) => setOrderFilter(value), [
+    orderFilter,
+  ]);
+
+  const handleFilter = useCallback((value) => setFilter(value), [filter]);
+
   React.useEffect(() => {
     if (questionsList != null) {
       AsyncStorage.setItem("questions", JSON.stringify(questionsList))
@@ -38,7 +51,8 @@ export default function Forum({ navigation }) {
         .catch((err) => console.log("AsyncStorage Error"));
     }
   }, [questionsList]);
-  const fetchNewQuestions = async () => {
+
+  const fetchNewQuestions = useCallback(async () => {
     const lastDate = array[0].dateAsked;
     console.log("Last Date", lastDate);
     const url = "http://localhost:3000/test/getQuestions/" + lastDate;
@@ -74,8 +88,9 @@ export default function Forum({ navigation }) {
         setQuestionList(newArray);
       }
     }
-  };
-  const postQuestion = async (title, body, id) => {
+  }, []);
+
+  const postQuestion = useCallback(async (title, body, id) => {
     setButtonLoading(true);
     const url = "http://localhost:3000/question-submit";
     const url2 = "https://coeproject.herokuapp.com/question-submit";
@@ -100,9 +115,9 @@ export default function Forum({ navigation }) {
       //TOAST
     }
     setButtonLoading(false);
-  };
+  }, []);
 
-  const fetchQuestionsOffline = async () => {
+  const fetchQuestionsOffline = useCallback(async () => {
     const questionsString = await AsyncStorage.getItem("questions");
     console.log("QuestionString : ", questionsString);
     if (questionsString === null || questionsString === "[]") {
@@ -113,22 +128,22 @@ export default function Forum({ navigation }) {
     array = fetchedQuestions;
     setQuestionList(fetchedQuestions);
     return true;
-  };
+  }, []);
   React.useEffect(() => {
-    // const fetchQuestion = async () => {
-    //   const url = "http://localhost:3000/getQuestions";
-    //   const url2 = "https://coeproject.herokuapp.com/getQuestions";
-    //   const res = await fetch(url2);
-    //   const data = await res.json();
-    //   console.log(data);
-    //   array = data;
-    //   setQuestionList(data);
-    // };
+    const fetchQuestion = async () => {
+      const url = "http://localhost:3000/getQuestions";
+      const url2 = "https://coeproject.herokuapp.com/getQuestions";
+      const res = await fetch(url2);
+      const data = await res.json();
+      console.log(data);
+      array = data;
+      setQuestionList(data);
+    };
     fetchQuestionsOffline().then((status) => {
       if (status === false) {
-        // fetchQuestion();
+        fetchQuestion();
       } else {
-        // fetchNewQuestions();
+        fetchNewQuestions();
       }
     });
     // await AsyncStorage.removeItem('questions')
@@ -169,7 +184,7 @@ export default function Forum({ navigation }) {
             onChangeText={(value) => setBody(value)}
           />
           <View style={styles.modelButtonView}>
-            <Button icon="close" onPress={() => setModalVisibility(false)}>
+            <Button icon="close" onPress={() => handleModelVisibility(false)}>
               Close
             </Button>
             <Button
@@ -193,7 +208,7 @@ export default function Forum({ navigation }) {
               style={
                 filter === "YourPost" ? { backgroundColor: "#BB86FC" } : false
               }
-              onPress={() => setFilter("YourPost")}
+              onPress={() => handleFilter("YourPost")}
             >
               Your Posts
             </Chip>
@@ -206,7 +221,7 @@ export default function Forum({ navigation }) {
                   ? { backgroundColor: "#BB86FC" }
                   : false
               }
-              onPress={() => setFilter("DateUploaded")}
+              onPress={() => handleFilter("DateUploaded")}
             >
               Date Uploaded
             </Chip>
@@ -217,7 +232,7 @@ export default function Forum({ navigation }) {
               style={
                 filter === "Views" ? { backgroundColor: "#BB86FC" } : false
               }
-              onPress={() => setFilter("Views")}
+              onPress={() => handleFilter("Views")}
             >
               Views
             </Chip>
@@ -227,7 +242,7 @@ export default function Forum({ navigation }) {
             <Chip
               selected={orderFilter === "ASC"}
               mode="outlined"
-              onPress={() => setOrderFilter("ASC")}
+              onPress={() => handleOrderFilter("ASC")}
               selectedColor="#563D74"
               style={
                 orderFilter === "ASC" ? { backgroundColor: "#BB86FC" } : false
@@ -238,7 +253,7 @@ export default function Forum({ navigation }) {
             <Chip
               selected={orderFilter === "DESC"}
               mode="outlined"
-              onPress={() => setOrderFilter("DESC")}
+              onPress={() => handleOrderFilter("DESC")}
               selectedColor="#563D74"
               style={
                 orderFilter === "DESC" ? { backgroundColor: "#BB86FC" } : false
@@ -250,7 +265,7 @@ export default function Forum({ navigation }) {
           <View style={styles.modelButtonView}>
             <Button
               icon="close"
-              onPress={() => setFilterModalVisibility(false)}
+              onPress={() => handleFilterModelVisibility(false)}
             >
               Close
             </Button>
@@ -262,10 +277,13 @@ export default function Forum({ navigation }) {
       </Modal>
       {questionsList ? (
         <Appbar style={styles.bottom}>
-          <Appbar.Action icon="plus" onPress={() => setModalVisibility(true)} />
+          <Appbar.Action
+            icon="plus"
+            onPress={() => handleModelVisibility(true)}
+          />
           <Appbar.Action
             icon="filter"
-            onPress={() => setFilterModalVisibility(true)}
+            onPress={() => handleFilterModelVisibility(true)}
           />
         </Appbar>
       ) : null}

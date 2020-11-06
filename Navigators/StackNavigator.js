@@ -6,7 +6,6 @@ import SignIn from "../screens/SignIn";
 import Forgotps from "../screens/Forgotps";
 import AsyncStorage from "@react-native-community/async-storage";
 import { userContext } from "../screens/userContext";
-import DrawerNavigator from "./DrawerNavigator";
 import LoginStackNavigator from "./LoginStackNavigator";
 
 const Stack = createStackNavigator();
@@ -88,18 +87,17 @@ export default function StackNavigator() {
                 component={SignIn}
                 options={{
                   title: "SignIn",
-                  headerRight: false,
                 }}
               />
               <Stack.Screen
                 name="SignUp"
                 component={SignUp}
-                options={{ title: "Registeration form", headerRight: false }}
+                options={{ title: "Registeration form" }}
               />
               <Stack.Screen
                 name="Forgotps"
                 component={Forgotps}
-                options={{ title: "Forgot password", headerRight: false }}
+                options={{ title: "Forgot password" }}
               />
             </>
           )}

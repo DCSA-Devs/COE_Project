@@ -9,20 +9,7 @@ import {
   StyleSheet,
 } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
-// const lectureData = [
-//   {
-//     title: "Introduction to Subject",
-//     link:
-//       "https://udemy.pundeermaza.xyz/?/Udemy%20-%20Flutter%20%26%20Dart%20-%20The%20Complete%20Guide%20%5B2020%20Edition%5D/12.%20Adding%20Animations%20%5BSHOP%20APP%5D/1.%20Module%20Introduction.mp4",
-//     key: "1",
-//   },
-//   { title: "First Chapter", link: "", key: "2" },
-//   { title: "Second Chapter", link: "", key: "3" },
-//   { title: "Third Chapter", link: "", key: "4" },
-//   { title: "Fourth Chapter", link: "", key: "5" },
-//   { title: "Fifth Chapter", link: "", key: "6" },
-//   { title: "Sixth Chapter", link: "", key: "7" },
-// ];
+
 export default function LectureVideo({ navigation }) {
   const [videos, setVideos] = React.useState(null);
   React.useEffect(() => {
