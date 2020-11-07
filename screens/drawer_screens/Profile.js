@@ -10,7 +10,7 @@ import {
 import * as ImagePicker from "expo-image-picker";
 import { Avatar, Menu, Provider } from "react-native-paper";
 import { userContext } from "../userContext";
-import { Initials } from "../../functions/commonFunctions";
+import { Initials } from "../../shared/functions";
 export default function UploadAvatar({ navigation }) {
   const { dispatch, state } = React.useContext(userContext);
   const [image, setImage] = useState(null);

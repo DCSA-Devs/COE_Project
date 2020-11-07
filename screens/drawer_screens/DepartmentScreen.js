@@ -29,7 +29,7 @@ const screens = [
     key: "4",
   },
   {
-    component: "Notes",
+    component: "OldExamPapers",
     name: "Sample Question Paper",
     imgSrc: require("../../assets/images/questionPaper.png"),
     key: "5",

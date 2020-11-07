@@ -6,15 +6,16 @@ import LectureVideo from "../screens/drawer_screens/LectureVideo";
 import Forum from "../screens/drawer_screens/Forum/Forum";
 import Notes from "../screens/drawer_screens/Notes";
 import Profile from "../screens/drawer_screens/Profile";
+import OldExamPapers from "../screens/drawer_screens/OldExamPapers/OldExamPapers";
 import { userContext } from "../screens/userContext";
 import TabNavigator from "./TabNavigator";
-import { FontAwesome } from "@expo/vector-icons";
 import Syllabus from "../screens/drawer_screens/Syllabus/Syllabus";
 import SyllabusRender from "../screens/drawer_screens/Syllabus/SyllabusRender";
 import Question from "../screens/drawer_screens/Forum/Question";
 import Contact from "../screens/contact";
 import ContactDetails from "../screens/contactDetails";
-import { Initials } from "../functions/commonFunctions";
+
+import { Initials } from "../shared/functions";
 const Stack = createStackNavigator();
 export default function StackNavigator({ navigation }) {
   const { state } = React.useContext(userContext);
@@ -74,6 +75,13 @@ export default function StackNavigator({ navigation }) {
         options={{
           title: "Profile",
           headerRight: false,
+        }}
+      />
+      <Stack.Screen
+        name="OldExamPapers"
+        component={OldExamPapers}
+        options={{
+          title: "Previous Exam Papers",
         }}
       />
 

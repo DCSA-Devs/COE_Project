@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Avatar } from "react-native-paper";
 import relativeDate from "relative-date";
-import { Initials } from "../../../functions/commonFunctions";
+import { Initials } from "../../../shared/functions";
 
 // const mon = [
 //   "Jan",

@@ -1,24 +1,9 @@
 import React, { useState, useCallback, useEffect, useReducer } from "react";
-import { GiftedChat } from "react-native-gifted-chat";
+import { GiftedChat, Bubble } from "react-native-gifted-chat";
 import { userContext } from "../screens/userContext";
-//  import firebase from '../functions/firebase'
-
+require("../shared/firebase");
 import firebase from "firebase";
 
-const config = {
-  apiKey: "AIzaSyCHjNSh1e8JIu969bWygXqgxIsUbkmpRpQ",
-  authDomain: "coeproject-24160.firebaseapp.com",
-  databaseURL: "https://coeproject-24160.firebaseio.com",
-  projectId: "coeproject-24160",
-  storageBucket: "coeproject-24160.appspot.com",
-  messagingSenderId: "404708360630",
-  appId: "1:404708360630:web:76b5839fd35e81da1bc117",
-  measurementId: "G-VHPX937EGR",
-};
-
-if (!firebase.apps.length) {
-  firebase.initializeApp(config);
-}
 const database = firebase.database();
 
 var connectedRef = firebase.database().ref(".info/connected");
@@ -41,17 +26,6 @@ export default function Chat({ navigation }) {
     database.ref("messages").push(message);
   }, []);
   useEffect(() => {
-    // database
-    //   .ref("messages/")
-    //   .limitToLast(100)
-    //   .once("value", (snapshot) => {
-    //     let array = [];
-    //     snapshot.forEach((childSnapshot) => {
-    //       array.unshift(childSnapshot.val());
-    //     });
-    //     console.log(array);
-    //     setMessages(array);
-    //   });
     database
       .ref("messages")
       .limitToLast(100)
@@ -75,12 +49,39 @@ export default function Chat({ navigation }) {
   return (
     <GiftedChat
       messages={messages}
-      placeholder="Write a message"
       onSend={(messages) => onSend(messages)}
+      renderUsernameOnMessage={true}
+      isLoadingEarlier={true}
       user={{
         _id: user._id,
         name: user.name,
         avatar: user.profilePic || null,
+      }}
+      renderBubble={(props) => {
+        return (
+          <Bubble
+            {...props}
+            wrapperStyle={{
+              right: {
+                backgroundColor: "#FE3636",
+              },
+              left: {
+                backgroundColor: "#464746",
+              },
+            }}
+            usernameStyle={{
+              color: "#FFFFFF",
+            }}
+            textStyle={{
+              right: {
+                color: "#FFFFFF",
+              },
+              left: {
+                color: "#FFFFFF",
+              },
+            }}
+          />
+        );
       }}
     />
   );
