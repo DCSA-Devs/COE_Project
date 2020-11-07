@@ -102,21 +102,21 @@ export default function DocumentCard({ navigation, doc }) {
               </Text>
             </TouchableOpacity>
           ) : (
-            <View style={{ flexDirection: "row" }}>
-              <TouchableOpacity
-                onPress={viewFile}
-                style={[styles.TouchableButtons, { marginRight: 4 }]}
-              >
-                <Text style={{ color: "white" }}>View</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={deleteFile}
-                style={styles.TouchableButtons}
-              >
-                <Text style={{ color: "white" }}>Delete</Text>
-              </TouchableOpacity>
-            </View>
-          )}
+              <View style={{ flexDirection: "row" }}>
+                <TouchableOpacity
+                  onPress={viewFile}
+                  style={[styles.TouchableButtons, { marginRight: 4 }]}
+                >
+                  <Text style={{ color: "white", fontWeight: "bold" }}>View</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={deleteFile}
+                  style={styles.TouchableButtons}
+                >
+                  <Text style={{ color: "white", fontWeight: "bold" }}>Delete</Text>
+                </TouchableOpacity>
+              </View>
+            )}
           <Text>{doc.year}</Text>
         </View>
       </View>
