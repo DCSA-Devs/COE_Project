@@ -22,7 +22,18 @@ export default function DocumentCard({ navigation, doc }) {
     {},
     callback
   );
-
+  React.useEffect(() => {
+    const doesFileExists = async () => {
+      const file = await FileSystem.getInfoAsync(
+        FileSystem.documentDirectory + doc.name
+      );
+      console.log("File", file);
+      if (file.exists === true) {
+        setDownloaded(true);
+      }
+    };
+    doesFileExists();
+  }, []);
   const download = React.useCallback(async () => {
     setVisible(true);
     try {
@@ -35,8 +46,15 @@ export default function DocumentCard({ navigation, doc }) {
       console.error(e);
     }
   }, []);
-
-  const test = () =>
+  const deleteFile = React.useCallback(async () => {
+    const res = await FileSystem.deleteAsync(
+      FileSystem.documentDirectory + doc.name,
+      { idempotent: true }
+    );
+    console.log(res);
+    setDownloaded(false);
+  }, []);
+  const viewFile = () =>
     FileSystem.getContentUriAsync(FileSystem.documentDirectory + doc.name).then(
       (cUri) => {
         console.log(cUri);
@@ -49,10 +67,7 @@ export default function DocumentCard({ navigation, doc }) {
 
   return (
     <View style={styles.question}>
-      <Image
-        source={require("../../../assets/images/Sampledocx.png")}
-        style={{ width: 70, height: 70 }}
-      />
+      <Image source={require("./docx.png")} style={{ width: 70, height: 70 }} />
       <View
         style={{
           flex: 1,
@@ -86,12 +101,15 @@ export default function DocumentCard({ navigation, doc }) {
           ) : (
             <View style={{ flexDirection: "row" }}>
               <TouchableOpacity
-                onPress={test}
+                onPress={viewFile}
                 style={[styles.TouchableButtons, { marginRight: 4 }]}
               >
                 <Text style={{ color: "white" }}>View</Text>
               </TouchableOpacity>
-              <TouchableOpacity onPress={test} style={styles.TouchableButtons}>
+              <TouchableOpacity
+                onPress={deleteFile}
+                style={styles.TouchableButtons}
+              >
                 <Text style={{ color: "white" }}>Delete</Text>
               </TouchableOpacity>
             </View>
@@ -114,9 +132,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   TouchableButtons: {
-    borderRadius: 10,
+    borderRadius: 5,
     paddingHorizontal: 10,
-    paddingVertical: 5,
+    paddingVertical: 6,
     backgroundColor: "#E74C3C",
   },
 });
