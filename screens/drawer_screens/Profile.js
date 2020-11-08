@@ -7,10 +7,15 @@ import {
   Text,
   Platform,
 } from "react-native";
+import { FontAwesome } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import { Avatar, Menu, Provider } from "react-native-paper";
 import { userContext } from "../userContext";
 import { Initials } from "../../shared/functions";
+import {
+  heightPercentageToDP,
+  widthPercentageToDP,
+} from "react-native-responsive-screen";
 export default function UploadAvatar({ navigation }) {
   const { dispatch, state } = React.useContext(userContext);
   const [image, setImage] = useState(null);
@@ -96,12 +101,20 @@ export default function UploadAvatar({ navigation }) {
       <View
         style={{
           flex: 1,
-          justifyContent: "space-around",
-          alignItems: "center",
+          alignItems: "stretch",
+          backgroundColor: "white",
         }}
       >
         {
-          <View>
+          <View
+            style={{
+              padding: 80,
+              alignItems: "center",
+              backgroundColor: "#BB86FC",
+              height: "50%",
+              zIndex: 2,
+            }}
+          >
             {state.avatar ? (
               <Image
                 source={{ uri: state.avatar }}
@@ -112,22 +125,24 @@ export default function UploadAvatar({ navigation }) {
                 }}
               />
             ) : (
-              <Avatar.Text
-                label={Initials(state.user.name)}
-                size={200}
-                style={{
-                  borderColor: "#563D74",
-                  borderWidth: 5,
-                  marginRight: 5,
-                }}
-              />
+              <View>
+                <Text
+                  style={{
+                    fontSize: 150,
+                    fontWeight: "bold",
+                    color: "#563D74",
+                  }}
+                >
+                  {Initials(state.user.name)}
+                </Text>
+              </View>
             )}
             <View
               style={{
                 marginRight: 5,
                 position: "absolute",
-                left: 130,
-                top: 150,
+                left: widthPercentageToDP("85%"),
+                top: heightPercentageToDP("37%"),
               }}
             >
               <Menu
@@ -138,8 +153,6 @@ export default function UploadAvatar({ navigation }) {
                       size={55}
                       style={{
                         backgroundColor: "#BB86FC",
-                        borderColor: "#563D74",
-                        borderWidth: 5,
                       }}
                       color="#563D74"
                     />
@@ -159,25 +172,48 @@ export default function UploadAvatar({ navigation }) {
           </View>
         }
 
-        <View>
-          <View style={styles.field}>
-            <Text style={styles.text}>Name : </Text>
-            <Text style={styles.text}>{state.user.name} </Text>
-          </View>
+        <View style={styles.container}>
+          <Text style={{ fontSize: 22, marginVertical: 10 }}>
+            {state.user.name}{" "}
+          </Text>
 
           <View style={styles.field}>
-            <Text style={styles.text}>Email : </Text>
-            <Text style={styles.text}> {state.user.email}</Text>
+            <FontAwesome
+              name="envelope"
+              color="#3B3B3B"
+              size={24}
+              style={styles.iconStyle}
+            />
+            <View>
+              <Text style={styles.headerText}>Email</Text>
+              <Text style={styles.text}>{state.user.email}</Text>
+            </View>
           </View>
           <View style={styles.field}>
-            <Text style={styles.text}>Mobile :</Text>
-            <Text style={styles.text}> {state.user.mobile}</Text>
+            <FontAwesome
+              name="phone"
+              color="#3B3B3B"
+              size={26}
+              style={styles.iconStyle}
+            />
+            <View>
+              <Text style={styles.headerText}>Mobile</Text>
+              <Text style={styles.text}>{state.user.mobile}</Text>
+            </View>
           </View>
           <View style={styles.field}>
-            <Text style={styles.text}>Date Joined : </Text>
-            <Text style={styles.text}>
-              {new Date(state.user.dateJoined).toDateString()}
-            </Text>
+            <FontAwesome
+              name="calendar"
+              color="#3B3B3B"
+              size={24}
+              style={styles.iconStyle}
+            />
+            <View>
+              <Text style={styles.headerText}>Date Joined</Text>
+              <Text style={styles.text}>
+                {new Date(state.user.dateJoined).toDateString()}
+              </Text>
+            </View>
           </View>
         </View>
       </View>
@@ -191,11 +227,17 @@ const styles = StyleSheet.create({
   },
   field: {
     padding: 10,
-    borderRadius: 5,
-    borderWidth: 3,
-    borderColor: "grey",
-    marginBottom: 10,
     flexDirection: "row",
-    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  headerText: {
+    color: "#3B3B3B",
+  },
+  iconStyle: {
+    marginRight: 20,
+  },
+  container: {
+    height: heightPercentageToDP("50%"),
+    padding: 20,
   },
 });
