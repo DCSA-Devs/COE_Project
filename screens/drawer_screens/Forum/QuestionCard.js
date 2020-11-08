@@ -4,26 +4,10 @@ import { Avatar } from "react-native-paper";
 import relativeDate from "relative-date";
 import { Initials } from "../../../shared/functions";
 
-// const mon = [
-//   "Jan",
-//   "Feb",
-//   "Mar",
-//   "Apr",
-//   "May",
-//   "Jun",
-//   "Jul",
-//   "Aug",
-//   "Sept",
-//   "Oct",
-//   "Nov",
-//   "Dec",
-// ];
 export default function QuestionCard({ navigation, question }) {
   const date = question.dateAsked;
   const [replyCount, setReplyCount] = React.useState(question.replyCount);
-  // let formatedDate = date.getDate().toString();
-  // formatedDate += " " + mon[date.getMonth().toString()];
-  // formatedDate += " " + date.getFullYear().toString().slice(2, 4);
+
   // Gray (#606060FF) and Lime Punch (#D6ED17FF)
   // Forest Green (#2C5F2D) and Moss Green (#97BC62FF)
   // Electric Blue Lemonade (#0063B2FF) and Aquamarine (#9CC3D5FF)

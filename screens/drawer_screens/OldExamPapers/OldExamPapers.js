@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { Avatar, ActivityIndicator } from "react-native-paper";
 import DocumentCard from "./DocumentCard";
-export default function OldExamPapers({ navigation, question }) {
+export default function OldExamPapers() {
   const [docs, setDocs] = React.useState(null);
   useEffect(() => {
     const fetchDocs = async () => {

@@ -1,15 +1,20 @@
 import * as FileSystem from "expo-file-system";
 import * as IntentLauncher from "expo-intent-launcher";
-
-import React from "react";
+import * as Sharing from "expo-sharing";
+import React, { useCallback } from "react";
+import { IconButton, ActivityIndicator } from "react-native-paper";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
-import { Avatar, Button } from "react-native-paper";
 
-export default function DocumentCard({ navigation, doc }) {
+import pdf from "../../../assets/images/Samplepdf.png";
+import doc from "../../../assets/images/Sampledoc.png";
+import docx from "../../../assets/images/Sampledocx.png";
+
+export default function DocumentCard({ doc }) {
   const [progress, setProgress] = React.useState(0);
-  const [visible, setVisible] = React.useState(false);
+  const [downloading, setDownloading] = React.useState(false);
   const [downloaded, setDownloaded] = React.useState(false);
   const ext = doc.name.substr(doc.name.lastIndexOf(".") + 1);
+
   const callback = (downloadProgress) => {
     const progress =
       downloadProgress.totalBytesWritten /
@@ -34,12 +39,12 @@ export default function DocumentCard({ navigation, doc }) {
     };
     doesFileExists();
   }, []);
-  const download = React.useCallback(async () => {
-    setVisible(true);
+  const downloadFile = React.useCallback(async () => {
+    setDownloading(true);
     try {
       const { uri } = await downloadResumable.downloadAsync();
       console.log("Finished downloading to ", uri);
-      setVisible(false);
+      setDownloading(false);
       setProgress(0);
       setDownloaded(true);
     } catch (e) {
@@ -64,11 +69,15 @@ export default function DocumentCard({ navigation, doc }) {
         });
       }
     );
+  const shareFile = React.useCallback(
+    () => Sharing.shareAsync(FileSystem.documentDirectory + doc.name),
+    []
+  );
 
   return (
     <View style={styles.question}>
       <Image
-        source={require("../../../assets/images/Sampledocx.png")}
+        source={require("../../../assets/images/Sample" + ext + ".png")}
         style={{ width: 70, height: 70 }}
       />
       <View
@@ -92,31 +101,44 @@ export default function DocumentCard({ navigation, doc }) {
             marginTop: 3,
           }}
         >
-          {!downloaded ? (
-            <TouchableOpacity
-              onPress={download}
-              style={styles.TouchableButtons}
-            >
-              <Text style={{ color: "white" }}>
-                {visible ? "Downloading " + progress + "%" : "Download"}
-              </Text>
-            </TouchableOpacity>
-          ) : (
-            <View style={{ flexDirection: "row" }}>
-              <TouchableOpacity
-                onPress={viewFile}
-                style={[styles.TouchableButtons, { marginRight: 4 }]}
-              >
-                <Text style={{ color: "white" }}>View</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={deleteFile}
-                style={styles.TouchableButtons}
-              >
-                <Text style={{ color: "white" }}>Delete</Text>
-              </TouchableOpacity>
-            </View>
-          )}
+          <View
+            style={{
+              flexDirection: "row",
+              borderRadius: 10,
+              backgroundColor: "#F3F3F4",
+            }}
+          >
+            {!downloaded ? (
+              downloading ? (
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    padding: 10,
+                  }}
+                >
+                  <ActivityIndicator color="black" />
+                  <Text
+                    style={{
+                      fontSize: 16,
+                      fontWeight: "bold",
+                      marginLeft: 10,
+                    }}
+                  >
+                    {progress + "%"}{" "}
+                  </Text>
+                </View>
+              ) : (
+                <IconButton icon="download" onPress={downloadFile} />
+              )
+            ) : (
+              <>
+                <IconButton icon="book-open-variant" onPress={viewFile} />
+                <IconButton icon="share" onPress={shareFile} />
+                <IconButton icon="delete" onPress={deleteFile} />
+              </>
+            )}
+          </View>
           <Text>{doc.year}</Text>
         </View>
       </View>
@@ -133,11 +155,5 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 10,
     alignItems: "center",
-  },
-  TouchableButtons: {
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    paddingVertical: 6,
-    backgroundColor: "#E74C3C",
   },
 });
