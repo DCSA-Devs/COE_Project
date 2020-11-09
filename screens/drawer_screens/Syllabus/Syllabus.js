@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, ScrollView } from "react-native";
 import { ActivityIndicator, List } from "react-native-paper";
-
+import AsyncStorage from "@react-native-community/async-storage";
 export default function Syllabus({ navigation }) {
   //? Implement Toast for error messages
   //? Find fix for scrollview Hint:flex
@@ -9,12 +9,14 @@ export default function Syllabus({ navigation }) {
   React.useEffect(() => {
     const url = "http://localhost:3000/syllabus";
     const url2 = "https://coeproject.herokuapp.com/syllabus";
+
     const fetchSyllabus = async () => {
       try {
         const res = await fetch(url2);
         const data = await res.json();
         if (res.status === 200) {
           console.log(data);
+          await AsyncStorage.setItem("syllabus", JSON.stringify(data));
           setSyllabus(data);
         } else {
           alert("Sylabus not found");
@@ -25,8 +27,17 @@ export default function Syllabus({ navigation }) {
         // ToastAndroid.show("Error: Check Internet Connection",ToastAndroid.SHORT)
       }
     };
-
-    fetchSyllabus();
+    const fetchSyllabusOffline = async () => {
+      let syllabus = await AsyncStorage.getItem("syllabus");
+      console.log("syllabus", syllabus);
+      if (syllabus) {
+        syllabus = JSON.parse(syllabus);
+        setSyllabus(syllabus);
+      } else {
+        fetchSyllabus();
+      }
+    };
+    fetchSyllabusOffline();
   }, []);
 
   return (

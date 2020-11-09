@@ -14,12 +14,14 @@ export default function Settings({ navigation }) {
         title="Profile"
         onPress={() => navigation.navigate("Profile")}
         left={() => <List.Icon icon="account" />}
+        right={() => <List.Icon icon="menu-right" />}
       />
       <Divider />
       <List.Item
         title="Contact"
         onPress={() => navigation.navigate("Contact")}
-        left={() => <List.Icon icon="contact-phone" />}
+        left={() => <List.Icon icon="contacts" />}
+        right={() => <List.Icon icon="menu-right" />}
       />
       <Divider />
       <List.Item
@@ -29,6 +31,7 @@ export default function Settings({ navigation }) {
           dispatch({ type: "SIGNOUT" });
         }}
         left={() => <List.Icon icon="logout" />}
+        right={() => <List.Icon icon="menu-right" />}
       />
     </View>
   );

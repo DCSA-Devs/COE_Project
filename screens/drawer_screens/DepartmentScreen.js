@@ -11,16 +11,18 @@ const screens = [
     key: "1",
   },
   {
-    component: "Notes",
-    name: "Subject Notes",
+    component: "OldExamPapers",
+    name: "Assignments",
     imgSrc: require("../../assets/images/Book1.png"),
     key: "2",
+    uri: "https://coeproject.herokuapp.com/getAssignments",
   },
   {
-    component: "Notes",
+    component: "OldExamPapers",
     name: "E-Books",
     imgSrc: require("../../assets/images/EBooks.png"),
     key: "3",
+    uri: "https://coeproject.herokuapp.com/getEbooks",
   },
   {
     component: "Forum",
@@ -30,21 +32,16 @@ const screens = [
   },
   {
     component: "OldExamPapers",
-    name: "Sample Question Paper",
+    name: "Sample Papers",
     imgSrc: require("../../assets/images/questionPaper.png"),
     key: "5",
+    uri: "https://coeproject.herokuapp.com/getSamplePapers",
   },
   {
     component: "Syllabus",
-    name: "Download Syllabus",
+    name: "Syllabus",
     imgSrc: require("../../assets/images/PDF.png"),
     key: "6",
-  },
-  {
-    component: "Notes",
-    name: "Upload Resource",
-    imgSrc: require("../../assets/images/Uploading.png"),
-    key: "7",
   },
 ];
 

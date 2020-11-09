@@ -4,9 +4,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 import VideoPlayerScreen from "../screens/drawer_screens/VideoPlayerScreen";
 import LectureVideo from "../screens/drawer_screens/LectureVideo";
 import Forum from "../screens/drawer_screens/Forum/Forum";
-import Notes from "../screens/drawer_screens/Notes";
 import Profile from "../screens/drawer_screens/Profile";
-import OldExamPapers from "../screens/drawer_screens/OldExamPapers/OldExamPapers";
+import OldExamPapers from "../screens/drawer_screens/DocumentTemplate/DocumentFetch";
 import { userContext } from "../screens/userContext";
 import TabNavigator from "./TabNavigator";
 import Syllabus from "../screens/drawer_screens/Syllabus/Syllabus";
@@ -23,6 +22,7 @@ export default function StackNavigator({ navigation }) {
   //Minimize the code by generating the stack through map
   return (
     <Stack.Navigator
+      initialRouteName="Profile"
       screenOptions={{
         headerRight: () =>
           state.avatar ? (
@@ -80,9 +80,9 @@ export default function StackNavigator({ navigation }) {
       <Stack.Screen
         name="OldExamPapers"
         component={OldExamPapers}
-        options={{
-          title: "Previous Exam Papers",
-        }}
+        options={({ route }) => ({
+          title: route.params.name,
+        })}
       />
 
       <Stack.Screen
@@ -105,11 +105,7 @@ export default function StackNavigator({ navigation }) {
         component={SyllabusRender}
         options={{ title: "Syllabus" }}
       />
-      <Stack.Screen
-        name="Notes"
-        component={Notes}
-        options={{ title: "Subject Notes" }}
-      />
+
       <Stack.Screen
         name="Syllabus"
         component={Syllabus}
