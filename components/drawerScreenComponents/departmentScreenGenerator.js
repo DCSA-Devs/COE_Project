@@ -8,7 +8,10 @@ export default function DepartmentScreenGenerator({
     <TouchableOpacity
       style={styles.touchableOpacityStyle}
       onPress={() =>
-        navigationProp.push(screenItems.component, { uri: screenItems.uri })
+        navigationProp.push(screenItems.component, {
+          uri: screenItems.uri,
+          name: screenItems.name,
+        })
       }
     >
       <Image

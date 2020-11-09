@@ -12,10 +12,10 @@ const screens = [
   },
   {
     component: "OldExamPapers",
-    name: "Subject Notes",
+    name: "Assignments",
     imgSrc: require("../../assets/images/Book1.png"),
     key: "2",
-    uri: "https://coeproject.herokuapp.com/getNotes",
+    uri: "https://coeproject.herokuapp.com/getAssignments",
   },
   {
     component: "OldExamPapers",
