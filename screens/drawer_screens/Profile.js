@@ -1,15 +1,8 @@
 import React, { useEffect, useState } from "react";
-import {
-  StyleSheet,
-  Image,
-  View,
-  TouchableOpacity,
-  Text,
-  Platform,
-} from "react-native";
-import { FontAwesome } from "@expo/vector-icons";
+import { StyleSheet, Image, View, Text, Platform } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
-import { Avatar, Menu, Provider } from "react-native-paper";
+import { Menu, Provider } from "react-native-paper";
 import { userContext } from "../userContext";
 import { Initials } from "../../shared/functions";
 import {
@@ -41,7 +34,7 @@ export default function UploadAvatar({ navigation }) {
       );
       let body = await test.json();
       console.log(body);
-      const imageURI = body.data.thumb.url;
+      const imageURI = body.data.medium.url;
       const server = await fetch(
         "https://coeproject.herokuapp.com/upload-avatar",
         {
@@ -50,7 +43,6 @@ export default function UploadAvatar({ navigation }) {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            type: "Student",
             email: state.user.email,
             avatar: imageURI,
           }),
@@ -102,86 +94,80 @@ export default function UploadAvatar({ navigation }) {
         style={{
           flex: 1,
           alignItems: "stretch",
-          backgroundColor: "white",
         }}
       >
-        {
-          <View
-            style={{
-              padding: 80,
-              alignItems: "center",
-              backgroundColor: "#BB86FC",
-              height: "50%",
-              zIndex: 2,
-            }}
-          >
-            {state.avatar ? (
-              <Image
-                source={{ uri: state.avatar }}
-                style={{
-                  borderRadius: 100,
-                  width: 200,
-                  height: 200,
-                }}
-              />
-            ) : (
-              <View>
-                <Text
-                  style={{
-                    fontSize: 150,
-                    fontWeight: "bold",
-                    color: "#563D74",
-                  }}
-                >
-                  {Initials(state.user.name)}
-                </Text>
-              </View>
-            )}
-            <View
+        <View
+          style={{
+            alignItems: "center",
+            backgroundColor: "#BB86FC",
+            height: heightPercentageToDP("50%"),
+            justifyContent: "center",
+          }}
+        >
+          {state.avatar ? (
+            <Image
+              source={{ uri: state.avatar }}
               style={{
-                marginRight: 5,
-                position: "absolute",
-                left: widthPercentageToDP("85%"),
-                top: heightPercentageToDP("37%"),
+                height: heightPercentageToDP("50%"),
+                width: widthPercentageToDP("100%"),
+              }}
+            />
+          ) : (
+            <Text
+              style={{
+                fontSize: widthPercentageToDP("30%"),
+                fontWeight: "bold",
+                color: "#563D74",
               }}
             >
-              <Menu
-                anchor={
-                  <TouchableOpacity onPress={() => isVisible(true)}>
-                    <Avatar.Icon
-                      icon="pencil"
-                      size={55}
-                      style={{
-                        backgroundColor: "#BB86FC",
-                      }}
-                      color="#563D74"
-                    />
-                  </TouchableOpacity>
-                }
-                visible={visible}
-                onDismiss={() => isVisible(false)}
-              >
-                <Menu.Item
-                  icon="update"
-                  title="Update"
-                  onPress={() => pickImage()}
+              {Initials(state.user.name)}
+            </Text>
+          )}
+          <View
+            style={{
+              position: "absolute",
+              bottom: 0,
+              left: widthPercentageToDP("87%"),
+            }}
+          >
+            <Menu
+              anchor={
+                <Ionicons
+                  name="md-create"
+                  onPress={() => isVisible(true)}
+                  size={40}
+                  color={state.avatar ? "white" : "#563D74"}
                 />
-                <Menu.Item icon="delete" title="Remove" onPress={() => {}} />
-              </Menu>
-            </View>
+              }
+              visible={visible}
+              onDismiss={() => isVisible(false)}
+            >
+              <Menu.Item
+                icon="update"
+                title="Update"
+                onPress={() => pickImage()}
+              />
+              <Menu.Item icon="delete" title="Remove" onPress={() => {}} />
+            </Menu>
           </View>
-        }
-
+        </View>
         <View style={styles.container}>
-          <Text style={{ fontSize: 22, marginVertical: 10 }}>
-            {state.user.name}{" "}
+          <Text
+            style={{
+              fontWeight: "bold",
+              fontSize: 22,
+              borderBottomWidth: 2,
+              marginVertical: 10,
+              paddingBottom: 5,
+            }}
+          >
+            {state.user.name}
           </Text>
-
           <View style={styles.field}>
-            <FontAwesome
-              name="envelope"
-              color="#3B3B3B"
-              size={24}
+            <Ionicons
+              name="md-mail"
+              color="black"
+              size={26}
               style={styles.iconStyle}
             />
             <View>
@@ -190,9 +176,9 @@ export default function UploadAvatar({ navigation }) {
             </View>
           </View>
           <View style={styles.field}>
-            <FontAwesome
-              name="phone"
-              color="#3B3B3B"
+            <Ionicons
+              name="md-call"
+              color="black"
               size={26}
               style={styles.iconStyle}
             />
@@ -202,10 +188,10 @@ export default function UploadAvatar({ navigation }) {
             </View>
           </View>
           <View style={styles.field}>
-            <FontAwesome
-              name="calendar"
-              color="#3B3B3B"
-              size={24}
+            <Ionicons
+              name="md-calendar"
+              color="black"
+              size={26}
               style={styles.iconStyle}
             />
             <View>
@@ -228,10 +214,11 @@ const styles = StyleSheet.create({
   field: {
     padding: 10,
     flexDirection: "row",
-    alignItems: "center",
+    alignItems: "flex-end",
   },
   headerText: {
-    color: "#3B3B3B",
+    color: "black",
+    fontWeight: "bold",
   },
   iconStyle: {
     marginRight: 20,
