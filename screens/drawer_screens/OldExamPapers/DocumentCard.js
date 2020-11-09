@@ -129,15 +129,15 @@ export default function DocumentCard({ doc }) {
                   </Text>
                 </View>
               ) : (
-                <IconButton icon="download" onPress={downloadFile} />
-              )
+                  <IconButton icon="download" onPress={downloadFile} />
+                )
             ) : (
-              <>
-                <IconButton icon="book-open-variant" onPress={viewFile} />
-                <IconButton icon="share" onPress={shareFile} />
-                <IconButton icon="delete" onPress={deleteFile} />
-              </>
-            )}
+                <>
+                  <IconButton icon="book-open-variant" onPress={viewFile} />
+                  <IconButton icon="share" onPress={shareFile} />
+                  <IconButton icon="delete" onPress={deleteFile} />
+                </>
+              )}
           </View>
           <Text>{doc.year}</Text>
         </View>
