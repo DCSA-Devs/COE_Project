@@ -28,7 +28,7 @@ export default function StackNavigator() {
           };
         case "AVATAR":
           return {
-            ...prevState,
+            user: prevState.user,
             avatar: action.avatar,
           };
       }

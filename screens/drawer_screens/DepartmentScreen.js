@@ -32,14 +32,14 @@ const screens = [
   },
   {
     component: "OldExamPapers",
-    name: "Sample Question Paper",
+    name: "Sample Papers",
     imgSrc: require("../../assets/images/questionPaper.png"),
     key: "5",
     uri: "https://coeproject.herokuapp.com/getSamplePapers",
   },
   {
     component: "Syllabus",
-    name: "Download Syllabus",
+    name: "Syllabus",
     imgSrc: require("../../assets/images/PDF.png"),
     key: "6",
   },
