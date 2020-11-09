@@ -6,7 +6,7 @@ import LectureVideo from "../screens/drawer_screens/LectureVideo";
 import Forum from "../screens/drawer_screens/Forum/Forum";
 import Notes from "../screens/drawer_screens/Notes";
 import Profile from "../screens/drawer_screens/Profile";
-import OldExamPapers from "../screens/drawer_screens/OldExamPapers/OldExamPapers";
+import OldExamPapers from "../screens/drawer_screens/DocumentTemplate/Document Fetch";
 import { userContext } from "../screens/userContext";
 import TabNavigator from "./TabNavigator";
 import Syllabus from "../screens/drawer_screens/Syllabus/Syllabus";

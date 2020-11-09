@@ -2,13 +2,12 @@ import React, { useEffect } from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { Avatar, ActivityIndicator } from "react-native-paper";
 import DocumentCard from "./DocumentCard";
-export default function OldExamPapers() {
+export default function OldExamPapers({ route }) {
   const [docs, setDocs] = React.useState(null);
+  const uri = route.params.uri;
   useEffect(() => {
     const fetchDocs = async () => {
-      const res = await fetch(
-        "https://coeproject.herokuapp.com/getSamplePapers"
-      );
+      const res = await fetch(uri);
       const data = await res.json();
       setDocs(data);
     };
