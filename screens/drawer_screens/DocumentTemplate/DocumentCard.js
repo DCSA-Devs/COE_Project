@@ -1,6 +1,6 @@
-// import * as FileSystem from "expo-file-system";
-// import * as IntentLauncher from "expo-intent-launcher";
-// import * as Sharing from "expo-sharing";
+import * as FileSystem from "expo-file-system";
+import * as IntentLauncher from "expo-intent-launcher";
+import * as Sharing from "expo-sharing";
 import React, { useCallback } from "react";
 import { IconButton, ActivityIndicator } from "react-native-paper";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
@@ -129,15 +129,15 @@ export default function DocumentCard({ doc }) {
                   </Text>
                 </View>
               ) : (
-                <IconButton icon="download" onPress={downloadFile} />
-              )
+                  <IconButton icon="download" onPress={downloadFile} />
+                )
             ) : (
-              <>
-                <IconButton icon="book-open-variant" onPress={viewFile} />
-                <IconButton icon="share" onPress={shareFile} />
-                <IconButton icon="delete" onPress={deleteFile} />
-              </>
-            )}
+                <>
+                  <IconButton icon="book-open-variant" onPress={viewFile} />
+                  <IconButton icon="share" onPress={shareFile} />
+                  <IconButton icon="delete" onPress={deleteFile} />
+                </>
+              )}
           </View>
           <Text>{doc.size}</Text>
         </View>
