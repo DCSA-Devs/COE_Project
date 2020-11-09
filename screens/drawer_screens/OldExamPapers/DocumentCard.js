@@ -1,6 +1,6 @@
-import * as FileSystem from "expo-file-system";
-import * as IntentLauncher from "expo-intent-launcher";
-import * as Sharing from "expo-sharing";
+// import * as FileSystem from "expo-file-system";
+// import * as IntentLauncher from "expo-intent-launcher";
+// import * as Sharing from "expo-sharing";
 import React, { useCallback } from "react";
 import { IconButton, ActivityIndicator } from "react-native-paper";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
