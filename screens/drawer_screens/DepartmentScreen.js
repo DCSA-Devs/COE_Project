@@ -11,14 +11,14 @@ const screens = [
     key: "1",
   },
   {
-    component: "OldExamPapers",
+    component: "Document",
     name: "Assignments",
     imgSrc: require("../../assets/images/Book1.png"),
     key: "2",
     uri: "https://coeproject.herokuapp.com/getAssignments",
   },
   {
-    component: "OldExamPapers",
+    component: "Document",
     name: "E-Books",
     imgSrc: require("../../assets/images/EBooks.png"),
     key: "3",
@@ -31,7 +31,7 @@ const screens = [
     key: "4",
   },
   {
-    component: "OldExamPapers",
+    component: "Document",
     name: "Sample Papers",
     imgSrc: require("../../assets/images/questionPaper.png"),
     key: "5",

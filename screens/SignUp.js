@@ -1,45 +1,57 @@
-import React, { useState } from "react";
-import {
-  Alert,
-  ToastAndroid,
-  StyleSheet,
-  View,
-  Text,
-  ScrollView,
-} from "react-native";
+import React, { useState, useCallback } from "react";
+import { Alert, StyleSheet, View, Text, ScrollView } from "react-native";
 import { ErrorMessage, Formik } from "formik";
 import {
   heightPercentageToDP,
   widthPercentageToDP,
 } from "react-native-responsive-screen";
 import Logo from "../components/Logo";
-import {
-  RadioButton,
-  TextInput,
-  Button,
-  Chip,
-  Avatar,
-} from "react-native-paper";
+import { RadioButton, TextInput, Button, Chip } from "react-native-paper";
 import * as yup from "yup";
 
 export default function SignUp({ navigation }) {
   const [isDisabled, setDisabled] = useState(false);
-  const [chipValue, setChipValue] = useState("");
-  const Toast = (message) => {
-    ToastAndroid.show(message, ToastAndroid.SHORT);
-  };
-  const failAlert = (errorMessage) => {
-    Alert.alert(
-      "Error!",
-      errorMessage,
-      [
-        {
-          text: "Ok",
+  const [chipValue, setChipValue] = useState("Student");
+
+  const registerUser = useCallback(async (formData) => {
+    const failAlert = (errorMessage) => {
+      Alert.alert(
+        "Error!",
+        errorMessage,
+        [
+          {
+            text: "Ok",
+          },
+        ],
+        { cancelable: true }
+      );
+    };
+    setDisabled(true);
+    delete formData.confirm_password;
+    const url = "https://coeproject.herokuapp.com/register";
+    try {
+      const req = await fetch(url, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
         },
-      ],
-      { cancelable: true }
-    );
-  };
+        body: JSON.stringify(formData),
+      });
+
+      if (req.status != 200) {
+        const error = await req.json();
+        failAlert(JSON.stringify(error.message));
+      } else {
+        // Toast("Account created");
+        navigation.navigate("SignIn");
+      }
+    } catch (err) {
+      setDisabled(false);
+      // Toast("Unable to connect to server");
+    }
+  }, []);
+
   //validations
   const reviewformschema = yup.object({
     name: yup.string().required().min(4),
@@ -68,41 +80,17 @@ export default function SignUp({ navigation }) {
           confirm_password: "",
         }}
         validationSchema={reviewformschema}
-        onSubmit={async (values) => {
-          setDisabled(true);
+        onSubmit={(values) => {
           if (chipValue === "Teacher") {
             values.isTeacher = true;
           }
-          console.log(values.profession);
-          const url = "http://localhost:3000/register";
-          const url2 = "https://coeproject.herokuapp.com/register";
-          try {
-            const req = await fetch(url2, {
-              method: "POST",
-              headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(values),
-            });
-
-            if (req.status != 200) {
-              const error = await req.json();
-              failAlert(JSON.stringify(error.message));
-            } else {
-              // Toast("Account created");
-              navigation.navigate("SignIn");
-            }
-          } catch (err) {
-            setDisabled(false);
-            // Toast("Unable to connect to server");
-          }
+          registerUser(values);
         }}
       >
         {(props) => (
           <View style={styles.container}>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <Chip 
+              <Chip
                 selected={chipValue === "Student" ? true : false}
                 onPress={() => {
                   setChipValue("Student");

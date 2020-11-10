@@ -1,8 +1,6 @@
 import React from "react";
-import { View, Text, StyleSheet, ScrollView, ToastAndroid } from "react-native";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
 export default function SyllabusRender({ route }) {
-  //? Implement Toast for error messages
-  //? Find fix for scrollview Hint:flex
   const subject = route.params.data;
   return (
     <ScrollView>

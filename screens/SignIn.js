@@ -1,12 +1,12 @@
-import React from "react";
+import React, { useCallback } from "react";
 import {
   Alert,
   StyleSheet,
-  ToastAndroid,
   View,
   Text,
   KeyboardAvoidingView,
   ScrollView,
+  TouchableOpacity,
 } from "react-native";
 import { Formik } from "formik";
 import { Button, TextInput } from "react-native-paper";
@@ -22,71 +22,78 @@ export default function SignIn({ navigation }) {
   const { dispatch } = React.useContext(userContext);
   console.log("SignIn visited");
 
-  const [isDisabled, setDisabled] = React.useState(false);
+  const [buttonsDisable, setButtonDisable] = React.useState(false);
 
-  const Toast = (message) => {
-    ToastAndroid.show(message, ToastAndroid.SHORT);
-  };
-  const failAlert = () => {
-    Alert.alert(
-      "Login Failed",
-      "Make sure credentials are correct",
-      [
-        {
-          text: "OK",
+  const verifyloginCredentials = useCallback(async (formValues) => {
+    //alert when login fails
+    const failAlert = () => {
+      Alert.alert(
+        "Login Failed",
+        "Make sure credentials are correct",
+        [
+          {
+            text: "OK",
+          },
+        ],
+        { cancelable: true }
+      );
+    };
+
+    const url = "https://coeproject.herokuapp.com/login";
+
+    // Disable buttons and inputs
+    setButtonDisable(true);
+    //post data to server
+    try {
+      const res = await fetch(url, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
         },
-      ],
-      { cancelable: true }
-    );
-  };
+        body: JSON.stringify(formValues),
+      });
+      // If user not found
+      if (res.status != 200) {
+        failAlert();
+        setButtonDisable(false);
+      } else {
+        const user = await res.json();
+        console.log("User Fetcehd From AsyncStorage", user);
+        // save user to offline storage
+        await AsyncStorage.setItem("user", JSON.stringify(user));
+        // Toast("Login Successfull");
+        dispatch({ type: "SIGNIN", user });
+      }
+    } catch (e) {
+      console.log(e);
+      // Toast("Check your internet connection");
+      setButtonDisable(false);
+    }
+  }, []);
   return (
-    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-      <KeyboardAvoidingView behavior="height">
-        <Logo />
+    <ScrollView
+      contentContainerStyle={{
+        flexGrow: 1,
+      }}
+    >
+      <KeyboardAvoidingView style={{ flex: 1 }}>
+        <Logo
+          style={{
+            flex: 1,
+            justifyContent: "space-evenly",
+          }}
+          textStyle={{ padding: 3 }}
+          imageStyle={{ marginTop: 10 }}
+        />
         <View style={styles.container}>
           <Formik
             initialValues={{ email: "", password: "" }}
-            onSubmit={async (values) => {
+            onSubmit={(values) => {
               // Trim whitespaces
               values.email = values.email.trim();
               values.password = values.password.trim();
-
-              // Disable buttons and inputs
-              setDisabled(true);
-
-              //post data to server
-              try {
-                const url = "http://localhost:3000/login";
-                const url2 = "https://coeproject.herokuapp.com/login";
-                const req = await fetch(url2, {
-                  method: "POST",
-                  headers: {
-                    Accept: "application/json",
-                    "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify(values),
-                });
-                // If user not found
-                if (req.status != 200) {
-                  failAlert();
-                  setDisabled(false);
-                } else {
-                  const user = await req.json();
-                  console.log("User", user);
-                  // save user to offline storage
-                  const res = await AsyncStorage.setItem(
-                    "user",
-                    JSON.stringify(user)
-                  );
-                  console.log("Login respose :", res);
-                  // Toast("Login Successfull");
-                  dispatch({ type: "SIGNIN", user });
-                }
-              } catch (e) {
-                console.log(e);
-                // Toast("Check your internet connection");
-                setDisabled(false);
-              }
+              verifyloginCredentials(values);
             }}
           >
             {(props) => (
@@ -98,7 +105,7 @@ export default function SignIn({ navigation }) {
                   style={styles.TextInput}
                   label="E-Mail"
                   mode="outlined"
-                  disabled={isDisabled}
+                  disabled={buttonsDisable}
                   onChangeText={props.handleChange("email")}
                   value={props.values.email}
                 />
@@ -106,7 +113,7 @@ export default function SignIn({ navigation }) {
                   style={styles.TextInput}
                   label="Password"
                   mode="outlined"
-                  disabled={isDisabled}
+                  disabled={buttonsDisable}
                   onChangeText={props.handleChange("password")}
                   value={props.values.password}
                   secureTextEntry={true}
@@ -116,32 +123,46 @@ export default function SignIn({ navigation }) {
                     flexDirection: "row",
                     justifyContent: "space-between",
                     alignItems: "center",
+                    padding: 10,
                   }}
                 >
-                  <Text
-                    style={{ alignSelf: "center", margin: 5, color: "#2196F3" }}
+                  <TouchableOpacity
                     onPress={() => navigation.push("SignUp")}
+                    disabled={buttonsDisable}
                   >
-                    Create Account
-                  </Text>
-
-                  <Text
-                    style={{ color: "#2196F3" }}
+                    <Text
+                      style={{
+                        fontWeight: "bold",
+                        color: buttonsDisable ? "grey" : "#2196F3",
+                      }}
+                    >
+                      Create Account
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
                     onPress={() => navigation.push("Forgotps")}
+                    disabled={buttonsDisable}
                   >
-                    Forgot password ?
-                  </Text>
+                    <Text
+                      style={{
+                        fontWeight: "bold",
+                        color: buttonsDisable ? "grey" : "#2196F3",
+                      }}
+                    >
+                      Forgot password ?
+                    </Text>
+                  </TouchableOpacity>
                 </View>
                 <Button
                   icon="login"
                   mode="contained"
                   color="red"
-                  disabled={isDisabled}
+                  disabled={buttonsDisable}
                   style={{ marginTop: 10, marginBottom: 10 }}
-                  loading={isDisabled}
+                  loading={buttonsDisable}
                   onPress={props.handleSubmit}
                 >
-                  {isDisabled ? "LOGGING YOU IN" : "LOGIN"}
+                  {buttonsDisable ? "LOGGING YOU IN" : "LOGIN"}
                 </Button>
               </View>
             )}
@@ -155,9 +176,9 @@ export default function SignIn({ navigation }) {
 //styling
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     justifyContent: "space-evenly",
     alignItems: "center",
-    height: heightPercentageToDP("45%"),
   },
   title: {
     textAlign: "center",

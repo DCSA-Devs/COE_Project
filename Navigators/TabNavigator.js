@@ -10,7 +10,7 @@ export default function TabNavigator({ navigation }) {
     <Tab.Navigator
       initialRouteName="DepartmentScreen"
       tabBarOptions={{
-        activeTintColor: "red",
+        activeTintColor: "#BB86FC",
         inactiveTintColor: "gray",
       }}
       screenOptions={({ route }) => ({

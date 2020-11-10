@@ -6,7 +6,7 @@ import {
   FlatList,
   TouchableOpacity,
 } from "react-native";
-import Card from "../shared/card";
+import Card from "../../shared/card";
 
 export default function Contact({ navigation }) {
   const [contacts, setContacts] = useState([

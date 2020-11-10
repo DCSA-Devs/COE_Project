@@ -5,14 +5,14 @@ import VideoPlayerScreen from "../screens/drawer_screens/VideoPlayerScreen";
 import LectureVideo from "../screens/drawer_screens/LectureVideo";
 import Forum from "../screens/drawer_screens/Forum/Forum";
 import Profile from "../screens/drawer_screens/Profile";
-import OldExamPapers from "../screens/drawer_screens/DocumentTemplate/DocumentFetch";
+import Document from "../screens/drawer_screens/DocumentTemplate/DocumentFetch";
 import { userContext } from "../screens/userContext";
 import TabNavigator from "./TabNavigator";
 import Syllabus from "../screens/drawer_screens/Syllabus/Syllabus";
 import SyllabusRender from "../screens/drawer_screens/Syllabus/SyllabusRender";
 import Question from "../screens/drawer_screens/Forum/Question";
-import Contact from "../screens/contact";
-import ContactDetails from "../screens/contactDetails";
+import Contact from "../screens/Contact/contact";
+import ContactDetails from "../screens/Contact/contactDetails";
 
 import { Initials } from "../shared/functions";
 const Stack = createStackNavigator();
@@ -22,7 +22,6 @@ export default function StackNavigator({ navigation }) {
   //Minimize the code by generating the stack through map
   return (
     <Stack.Navigator
-      initialRouteName="Profile"
       screenOptions={{
         headerRight: () =>
           state.avatar ? (
@@ -78,8 +77,8 @@ export default function StackNavigator({ navigation }) {
         }}
       />
       <Stack.Screen
-        name="OldExamPapers"
-        component={OldExamPapers}
+        name="Document"
+        component={Document}
         options={({ route }) => ({
           title: route.params.name,
         })}
