@@ -13,14 +13,14 @@ export default function Settings({ navigation }) {
       <List.Item
         title="Profile"
         onPress={() => navigation.navigate("Profile")}
-        left={() => <List.Icon icon="account" />}
+        left={() => <List.Icon icon="account" color="#55a630" />}
         right={() => <List.Icon icon="menu-right" />}
       />
       <Divider />
       <List.Item
         title="Contact"
         onPress={() => navigation.navigate("Contact")}
-        left={() => <List.Icon icon="contacts" />}
+        left={() => <List.Icon icon="contacts" color="#55a630" />}
         right={() => <List.Icon icon="menu-right" />}
       />
       <Divider />
@@ -30,7 +30,7 @@ export default function Settings({ navigation }) {
           await AsyncStorage.clear();
           dispatch({ type: "SIGNOUT" });
         }}
-        left={() => <List.Icon icon="logout" />}
+        left={() => <List.Icon icon="logout" color="#55a630" />}
         right={() => <List.Icon icon="menu-right" />}
       />
     </View>

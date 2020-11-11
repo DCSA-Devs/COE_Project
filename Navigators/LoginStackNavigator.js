@@ -43,9 +43,11 @@ export default function StackNavigator({ navigation }) {
               <Avatar.Text
                 label={Initials(state.user.name)}
                 size={50}
-                color="#563D74"
+                color="white"
+                // "#563D74"
                 style={{
-                  backgroundColor: "#BB86FC",
+                  backgroundColor: "#55a630",
+                  // "#BB86FC",
                   marginRight: 5,
                   borderColor: "#563D74",
                   shadowColor: "black",

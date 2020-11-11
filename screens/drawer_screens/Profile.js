@@ -100,7 +100,7 @@ export default function UploadAvatar({ navigation }) {
           <View
             style={{
               alignItems: "center",
-              backgroundColor: "#BB86FC",
+              backgroundColor: "#FFA000",
               justifyContent: "center",
               flex: 1,
               overflow: "hidden",
@@ -116,16 +116,17 @@ export default function UploadAvatar({ navigation }) {
                 }}
               />
             ) : (
-              <Text
-                style={{
-                  fontSize: widthPercentageToDP("50%"),
-                  fontWeight: "bold",
-                  color: "#563D74",
-                }}
-              >
-                {Initials(user.name)}
-              </Text>
-            )}
+                <Text
+                  style={{
+                    fontSize: widthPercentageToDP("50%"),
+                    fontWeight: "bold",
+                    color: "black"
+                    // "#563D74",
+                  }}
+                >
+                  {Initials(user.name)}
+                </Text>
+              )}
           </View>
           <View style={styles.container}>
             <Text
@@ -142,7 +143,7 @@ export default function UploadAvatar({ navigation }) {
             <View style={styles.field}>
               <Ionicons
                 name="md-mail"
-                color="black"
+                color="crimson"
                 size={26}
                 style={styles.iconStyle}
               />
@@ -154,7 +155,7 @@ export default function UploadAvatar({ navigation }) {
             <View style={styles.field}>
               <Ionicons
                 name="md-call"
-                color="black"
+                color="#55a630"
                 size={26}
                 style={styles.iconStyle}
               />
@@ -166,7 +167,7 @@ export default function UploadAvatar({ navigation }) {
             <View style={styles.field}>
               <Ionicons
                 name="md-calendar"
-                color="black"
+                color="#ffbe0b"
                 size={26}
                 style={styles.iconStyle}
               />
@@ -184,11 +185,13 @@ export default function UploadAvatar({ navigation }) {
             actions={[
               {
                 icon: "delete",
+                color: "black",
                 label: "Remove",
                 onPress: () => removeImage(),
               },
               {
                 icon: "update",
+                color: "black",
                 label: "Update",
                 onPress: () => pickImage(),
               },
@@ -196,7 +199,10 @@ export default function UploadAvatar({ navigation }) {
             onStateChange={({ open }) => {
               setOpen(open);
             }}
-            fabStyle={{ backgroundColor: "#BB86FC" }}
+            fabStyle={{
+              backgroundColor: "#FFA000"
+            }}
+          // "#BB86FC" }}
           />
         </View>
       </Portal>

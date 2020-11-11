@@ -124,6 +124,7 @@ export default function SignIn({ navigation }) {
                     justifyContent: "space-between",
                     alignItems: "center",
                     padding: 10,
+
                   }}
                 >
                   <TouchableOpacity
@@ -133,7 +134,7 @@ export default function SignIn({ navigation }) {
                     <Text
                       style={{
                         fontWeight: "bold",
-                        color: buttonsDisable ? "grey" : "#2196F3",
+                        color: buttonsDisable ? "grey" : "#303F9F"
                       }}
                     >
                       Create Account
@@ -146,7 +147,7 @@ export default function SignIn({ navigation }) {
                     <Text
                       style={{
                         fontWeight: "bold",
-                        color: buttonsDisable ? "grey" : "#2196F3",
+                        color: buttonsDisable ? "grey" : "#303F9F"
                       }}
                     >
                       Forgot password ?
@@ -156,7 +157,7 @@ export default function SignIn({ navigation }) {
                 <Button
                   icon="login"
                   mode="contained"
-                  color="red"
+                  color="#FFA000"
                   disabled={buttonsDisable}
                   style={{ marginTop: 10 }}
                   loading={buttonsDisable}
@@ -185,7 +186,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     fontWeight: "bold",
     fontSize: widthPercentageToDP("6%"),
-    color: "#2196F3",
+    color: "#303F9F",
   },
   TextInput: {
     marginBottom: 5,

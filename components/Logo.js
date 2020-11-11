@@ -32,15 +32,18 @@ export default function Logo({ style, textStyle, imageStyle }) {
 
 //styling
 const styles = StyleSheet.create({
+
   imageprop: {
     width: widthPercentageToDP("45%"),
     height: widthPercentageToDP("45%"),
     alignSelf: "center",
   },
   maintitle: {
-    color: "#01579b",
+    color: "#303F9F",
+    // "#01579b",
     fontSize: widthPercentageToDP("7%"),
     textAlign: "center",
     fontWeight: "bold",
+
   },
 });

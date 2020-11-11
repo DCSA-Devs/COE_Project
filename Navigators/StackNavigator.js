@@ -61,7 +61,7 @@ export default function StackNavigator() {
         <Stack.Navigator
           screenOptions={{
             headerStyle: {
-              backgroundColor: "red",
+              backgroundColor: "#FFA000",
             },
             headerTintColor: "#fff",
             headerTitleStyle: {
@@ -81,26 +81,26 @@ export default function StackNavigator() {
               />
             </>
           ) : (
-            <>
-              <Stack.Screen
-                name="SignIn"
-                component={SignIn}
-                options={{
-                  title: "SignIn",
-                }}
-              />
-              <Stack.Screen
-                name="SignUp"
-                component={SignUp}
-                options={{ title: "Registeration form" }}
-              />
-              <Stack.Screen
-                name="Forgotps"
-                component={Forgotps}
-                options={{ title: "Forgot password" }}
-              />
-            </>
-          )}
+              <>
+                <Stack.Screen
+                  name="SignIn"
+                  component={SignIn}
+                  options={{
+                    title: "SignIn",
+                  }}
+                />
+                <Stack.Screen
+                  name="SignUp"
+                  component={SignUp}
+                  options={{ title: "Registeration form" }}
+                />
+                <Stack.Screen
+                  name="Forgotps"
+                  component={Forgotps}
+                  options={{ title: "Forgot password" }}
+                />
+              </>
+            )}
         </Stack.Navigator>
       </NavigationContainer>
     </userContext.Provider>

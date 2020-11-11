@@ -133,7 +133,7 @@ export default function SignUp({ navigation }) {
             <TextInput
               style={styles.input}
               mode="outlined"
-              label="E-mail id"
+              label="E-mail "
               onChangeText={props.handleChange("email")}
               value={props.values.email}
               onBlur={props.handleBlur("email")}
@@ -187,6 +187,8 @@ export default function SignUp({ navigation }) {
               disabled={isDisabled}
               loading={isDisabled}
               onPress={props.handleSubmit}
+              color="#FFA000"
+              fontWeight="bold"
             >
               {isDisabled ? "Creating Account" : "Create Account"}
             </Button>
@@ -204,7 +206,7 @@ const styles = StyleSheet.create({
     padding: widthPercentageToDP("1%"),
   },
   input: {
-    backgroundColor: "#ddd",
+    backgroundColor: "#e5e5e5",
     borderRadius: 10,
     color: "black",
     width: widthPercentageToDP("85%"),
