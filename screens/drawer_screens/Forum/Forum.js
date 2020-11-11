@@ -11,11 +11,7 @@ import {
 import Question from "./QuestionCard";
 import { userContext } from "../../userContext";
 import AsyncStorage from "@react-native-community/async-storage";
-import {
-  heightPercentageToDP,
-  widthPercentageToDP,
-} from "react-native-responsive-screen";
-//? Toast when post fails or succeed
+
 let array = [];
 export default function Forum({ navigation }) {
   const { state } = useContext(userContext);
@@ -48,27 +44,25 @@ export default function Forum({ navigation }) {
         .then((data) => {
           console.log(data);
         })
-        .catch((err) => console.log("AsyncStorage Error"));
+        .catch(() => console.log("AsyncStorage Error"));
     }
   }, [questionsList]);
 
   const fetchNewQuestions = useCallback(async () => {
     const lastDate = array[0].dateAsked;
     console.log("Last Date", lastDate);
-    const url = "http://localhost:3000/test/getQuestions/" + lastDate;
-    const url2 =
+    const url =
       "https://coeproject.herokuapp.com/test/getQuestions/" + lastDate;
-    const res = await fetch(url2);
+    const res = await fetch(url);
     const data = await res.json();
     console.log(data);
     if (data.length !== 0) {
       array = data.concat(array);
       setQuestionList(array);
     } else {
-      const url = "http://localhost:3000/countQuestions/" + array.length;
-      const url2 =
+      const url =
         "https://coeproject.herokuapp.com/countQuestions/" + array.length;
-      const res = await fetch(url2);
+      const res = await fetch(url);
       const data = await res.json();
       console.log(data);
       if (array.length != data) {
@@ -92,9 +86,8 @@ export default function Forum({ navigation }) {
 
   const postQuestion = useCallback(async (title, body, id) => {
     setButtonLoading(true);
-    const url = "http://localhost:3000/question-submit";
-    const url2 = "https://coeproject.herokuapp.com/question-submit";
-    const res = await fetch(url2, {
+    const url = "https://coeproject.herokuapp.com/question-submit";
+    const res = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -112,30 +105,27 @@ export default function Forum({ navigation }) {
       array.unshift(data);
       setQuestionList(array);
       setModalVisibility(false);
-      //TOAST
     }
     setButtonLoading(false);
   }, []);
 
-  const fetchQuestionsOffline = useCallback(async () => {
-    const questionsString = await AsyncStorage.getItem("questions");
-    console.log("QuestionString : ", questionsString);
-    if (questionsString === null || questionsString === "[]") {
-      return false;
-    }
-
-    const fetchedQuestions = JSON.parse(questionsString);
-    array = fetchedQuestions;
-    setQuestionList(fetchedQuestions);
-    return true;
-  }, []);
   React.useEffect(() => {
+    // function to fetch question saved on device(offline)
+    const fetchQuestionsOffline = async () => {
+      const questionsString = await AsyncStorage.getItem("questions");
+      const fetchedQuestions = JSON.parse(questionsString);
+      if (!fetchedQuestions) {
+        return false;
+      }
+      array = fetchedQuestions;
+      setQuestionList(fetchedQuestions);
+      return true;
+    };
+    // function to fetch question from database incase offline data is not found
     const fetchQuestion = async () => {
-      const url = "http://localhost:3000/getQuestions";
-      const url2 = "https://coeproject.herokuapp.com/getQuestions";
-      const res = await fetch(url2);
+      const url = "https://coeproject.herokuapp.com/getQuestions";
+      const res = await fetch(url);
       const data = await res.json();
-      console.log(data);
       array = data;
       setQuestionList(data);
     };
@@ -146,7 +136,6 @@ export default function Forum({ navigation }) {
         fetchNewQuestions();
       }
     });
-    // await AsyncStorage.removeItem('questions')
   }, []);
 
   return (

@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { StyleSheet, Image, View, Text, Platform } from "react-native";
+import React, { useState, useCallback } from "react";
+import { StyleSheet, Image, View, Text } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
-import { Menu, Provider, Portal, FAB } from "react-native-paper";
+import { Provider, Portal, FAB } from "react-native-paper";
 import { userContext } from "../userContext";
 import { Initials } from "../../shared/functions";
 import {
@@ -12,67 +12,56 @@ import {
 import AsyncStorage from "@react-native-community/async-storage";
 export default function UploadAvatar({ navigation }) {
   const { dispatch, state } = React.useContext(userContext);
+  const [open, setOpen] = useState(false);
   const user = state.user;
-  const [image, setImage] = useState(null);
-  const [open, setOpen] = React.useState(false);
-
-  const uploadImageToServer = async () => {
-    const data = new FormData();
-    data.append("image", {
-      uri: image,
+  //function to upload image and update profilePic in our database
+  // image is being uploaded to imgbb.com
+  const uploadImageToServer = useCallback(async (imageURI) => {
+    const formdata = new FormData();
+    formdata.append("image", {
+      uri: imageURI,
       name: "uplad.jpg",
       type: "image/jpeg",
     });
     try {
-      const test = await fetch(
+      const res = await fetch(
         "https://api.imgbb.com/1/upload?key=38be174235c027271a826e60334002a0",
         {
           method: "POST",
           headers: {
             "Content-Type": "multipart/form-data",
           },
-          body: data,
+          body: formdata,
         }
       );
-      let body = await test.json();
+      let body = await res.json();
       console.log(body);
       const imageURI = body.data.medium.url;
-      const server = await fetch(
-        "https://coeproject.herokuapp.com/upload-avatar",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: user.email,
-            avatar: imageURI,
-          }),
-        }
-      );
-      body = await server.json();
-      user.profilePic = imageURI;
-      AsyncStorage.setItem("user", JSON.stringify(user));
-      console.log(body);
-      // Alert.alert("URI", JSON.stringify(body), [{ text: "Okk" }], {
-      //   cancelable: true,
-      // });
+      //only update profilePic link if imageURI is found
+      if (imageURI) {
+        const server = await fetch(
+          "https://coeproject.herokuapp.com/upload-avatar",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              email: user.email,
+              avatar: imageURI,
+            }),
+          }
+        );
+        body = await server.json();
+        user.profilePic = imageURI;
+        AsyncStorage.setItem("user", JSON.stringify(user));
+      }
     } catch (e) {
       console.log("Error", e);
     }
-  };
-
-  useEffect(() => {
-    async () => {
-      if (Platform.OS !== "web") {
-        const permisson = await ImagePicker.requestCameraPermissionsAsync();
-        if (permisson !== "granted") {
-          alert("Cant work without permission");
-        }
-      }
-    };
   }, []);
 
+  //function to profilePic field from database
   const removeImage = React.useCallback(async () => {
     const res = await fetch(
       "https://coeproject.herokuapp.com/deleteAvatar/" + user._id
@@ -84,13 +73,8 @@ export default function UploadAvatar({ navigation }) {
       dispatch({ type: "AVATAR", avatar: null });
     }
   }, []);
-  useEffect(() => {
-    if (image != null) {
-      uploadImageToServer();
-    }
-  }, [image]);
-
-  const pickImage = async () => {
+  //function to puck image from gallery
+  const pickImage = useCallback(async () => {
     const imag = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
@@ -100,10 +84,10 @@ export default function UploadAvatar({ navigation }) {
     console.log(imag);
     if (!imag.cancelled) {
       dispatch({ type: "AVATAR", avatar: imag.uri });
-      setImage(imag.uri);
+      uploadImageToServer(imag.uri);
       setOpen(false);
     }
-  };
+  }, []);
   return (
     <Provider>
       <Portal>
@@ -134,7 +118,7 @@ export default function UploadAvatar({ navigation }) {
             ) : (
               <Text
                 style={{
-                  fontSize: widthPercentageToDP("30%"),
+                  fontSize: widthPercentageToDP("50%"),
                   fontWeight: "bold",
                   color: "#563D74",
                 }}

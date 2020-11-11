@@ -6,7 +6,7 @@ import {
   FlatList,
   TouchableOpacity,
 } from "react-native";
-import Card from "../shared/card";
+import Card from "../../shared/card";
 
 export default function Contact({ navigation }) {
   const [contacts, setContacts] = useState([
@@ -121,14 +121,12 @@ export default function Contact({ navigation }) {
                 letterSpacing: 1,
               }}
             >
-              {" "}
-              Important Contacts{" "}
+              Important Contacts
             </Text>
           </View>
           <View style={styles.designation}>
             <Text style={{ fontWeight: "bold", fontSize: 18, color: "blue" }}>
-              {" "}
-              Designation{" "}
+              Designation
             </Text>
           </View>
         </>

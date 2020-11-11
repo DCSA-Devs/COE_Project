@@ -6,18 +6,22 @@ export default function Syllabus({ navigation }) {
   //? Implement Toast for error messages
   //? Find fix for scrollview Hint:flex
   const [syllabus, setSyllabus] = React.useState(null);
-  React.useEffect(() => {
-    const url = "http://localhost:3000/syllabus";
-    const url2 = "https://coeproject.herokuapp.com/syllabus";
 
+  React.useEffect(() => {
+    const url = "https://coeproject.herokuapp.com/syllabus";
+
+    // function to fetch syllabus from database
     const fetchSyllabus = async () => {
       try {
-        const res = await fetch(url2);
-        const data = await res.json();
+        const res = await fetch(url);
+        const syllabusFetched = await res.json();
         if (res.status === 200) {
-          console.log(data);
-          await AsyncStorage.setItem("syllabus", JSON.stringify(data));
-          setSyllabus(data);
+          //persist syllabus
+          await AsyncStorage.setItem(
+            "syllabus",
+            JSON.stringify(syllabusFetched)
+          );
+          setSyllabus(syllabusFetched);
         } else {
           alert("Sylabus not found");
           // ToastAndroid.show(JSON.stringify(data.message),ToastAndroid.SHORT)
@@ -27,12 +31,14 @@ export default function Syllabus({ navigation }) {
         // ToastAndroid.show("Error: Check Internet Connection",ToastAndroid.SHORT)
       }
     };
+
+    // Function to fetch syllabus saved offline
     const fetchSyllabusOffline = async () => {
-      let syllabus = await AsyncStorage.getItem("syllabus");
-      console.log("syllabus", syllabus);
-      if (syllabus) {
-        syllabus = JSON.parse(syllabus);
-        setSyllabus(syllabus);
+      const data = await AsyncStorage.getItem("syllabus");
+      const syllabusOffline = JSON.parse(data);
+      if (syllabusOffline) {
+        setSyllabus(syllabusOffline);
+        // if syllabus not available offline fetch from database
       } else {
         fetchSyllabus();
       }

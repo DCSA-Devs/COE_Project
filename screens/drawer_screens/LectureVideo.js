@@ -2,10 +2,8 @@ import React from "react";
 import {
   View,
   Text,
-  StatusBar,
   FlatList,
   TouchableOpacity,
-  Button,
   StyleSheet,
 } from "react-native";
 import { ActivityIndicator } from "react-native-paper";
@@ -13,10 +11,11 @@ import { ActivityIndicator } from "react-native-paper";
 export default function LectureVideo({ navigation }) {
   const [videos, setVideos] = React.useState(null);
   React.useEffect(() => {
+    const url = "https://coeproject.herokuapp.com/video";
+    //function to fetch videos list from database
     const fetchVideos = async () => {
-      const res = await fetch("https://coeproject.herokuapp.com/video");
+      const res = await fetch(url);
       const data = await res.json();
-      console.log(data);
       setVideos(data);
     };
     fetchVideos();
@@ -59,7 +58,7 @@ const styles = StyleSheet.create({
   touchStyles: {
     padding: 10,
     margin: 5,
-    backgroundColor: "rgb(142, 173, 255 )",
+    backgroundColor: "#BB86FC",
     borderRadius: 5,
   },
 });

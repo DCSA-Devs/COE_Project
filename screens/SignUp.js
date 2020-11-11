@@ -1,45 +1,57 @@
-import React, { useState } from "react";
-import {
-  Alert,
-  ToastAndroid,
-  StyleSheet,
-  View,
-  Text,
-  ScrollView,
-} from "react-native";
+import React, { useState, useCallback } from "react";
+import { Alert, StyleSheet, View, Text, ScrollView } from "react-native";
 import { ErrorMessage, Formik } from "formik";
 import {
   heightPercentageToDP,
   widthPercentageToDP,
 } from "react-native-responsive-screen";
 import Logo from "../components/Logo";
-import {
-  RadioButton,
-  TextInput,
-  Button,
-  Chip,
-  Avatar,
-} from "react-native-paper";
+import { TextInput, Button, Chip } from "react-native-paper";
 import * as yup from "yup";
 
 export default function SignUp({ navigation }) {
   const [isDisabled, setDisabled] = useState(false);
-  const [chipValue, setChipValue] = useState("");
-  const Toast = (message) => {
-    ToastAndroid.show(message, ToastAndroid.SHORT);
-  };
-  const failAlert = (errorMessage) => {
-    Alert.alert(
-      "Error!",
-      errorMessage,
-      [
-        {
-          text: "Ok",
+  const [chipValue, setChipValue] = useState("Student");
+
+  const registerUser = useCallback(async (formData) => {
+    const failAlert = (errorMessage) => {
+      Alert.alert(
+        "Error!",
+        errorMessage,
+        [
+          {
+            text: "Ok",
+          },
+        ],
+        { cancelable: true }
+      );
+    };
+    setDisabled(true);
+    delete formData.confirm_password;
+    const url = "https://coeproject.herokuapp.com/register";
+    try {
+      const req = await fetch(url, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
         },
-      ],
-      { cancelable: true }
-    );
-  };
+        body: JSON.stringify(formData),
+      });
+
+      if (req.status != 200) {
+        const error = await req.json();
+        failAlert(JSON.stringify(error.message));
+      } else {
+        // Toast("Account created");
+        navigation.navigate("SignIn");
+      }
+    } catch (err) {
+      setDisabled(false);
+      // Toast("Unable to connect to server");
+    }
+  }, []);
+
   //validations
   const reviewformschema = yup.object({
     name: yup.string().required().min(4),
@@ -57,9 +69,11 @@ export default function SignUp({ navigation }) {
 
   return (
     //Sign Up form
-    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-      <Logo style={{ padding: 20 }} />
+
+    <ScrollView>
+      <Logo style={{ padding: 20 }} text />
       <Formik
+        sty
         initialValues={{
           name: "",
           email: "",
@@ -68,41 +82,23 @@ export default function SignUp({ navigation }) {
           confirm_password: "",
         }}
         validationSchema={reviewformschema}
-        onSubmit={async (values) => {
-          setDisabled(true);
+        onSubmit={(values) => {
           if (chipValue === "Teacher") {
             values.isTeacher = true;
           }
-          console.log(values.profession);
-          const url = "http://localhost:3000/register";
-          const url2 = "https://coeproject.herokuapp.com/register";
-          try {
-            const req = await fetch(url2, {
-              method: "POST",
-              headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(values),
-            });
-
-            if (req.status != 200) {
-              const error = await req.json();
-              failAlert(JSON.stringify(error.message));
-            } else {
-              // Toast("Account created");
-              navigation.navigate("SignIn");
-            }
-          } catch (err) {
-            setDisabled(false);
-            // Toast("Unable to connect to server");
-          }
+          registerUser(values);
         }}
       >
         {(props) => (
           <View style={styles.container}>
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <Chip 
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                marginBottom: 10,
+              }}
+            >
+              <Chip
                 selected={chipValue === "Student" ? true : false}
                 onPress={() => {
                   setChipValue("Student");
@@ -121,27 +117,7 @@ export default function SignUp({ navigation }) {
                 Teacher
               </Chip>
             </View>
-            {1 > 5 ? (
-              <RadioButton.Group
-                onValueChange={(value) => setValue(value)}
-                value={value}
-              >
-                <View style={{ flexDirection: "row" }}>
-                  <RadioButton
-                    value="Student"
-                    onPress={(value) => setValue(value)}
-                  />
-                  <Text style={{ marginTop: 6 }}>I am student</Text>
-                </View>
-                <View style={{ flexDirection: "row" }}>
-                  <RadioButton
-                    value="Teacher"
-                    onPress={(value) => setValue(value)}
-                  />
-                  <Text style={{ marginTop: 6 }}>I am Teacher</Text>
-                </View>
-              </RadioButton.Group>
-            ) : null}
+
             <TextInput
               mode="outlined"
               style={styles.input}
@@ -224,9 +200,6 @@ export default function SignUp({ navigation }) {
 //styling
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    height: heightPercentageToDP("100%"),
-    justifyContent: "space-between",
     alignItems: "center",
     padding: widthPercentageToDP("1%"),
   },
@@ -236,12 +209,6 @@ const styles = StyleSheet.create({
     color: "black",
     width: widthPercentageToDP("85%"),
     height: heightPercentageToDP("7%"),
-  },
-  title: {
-    textAlign: "center",
-    fontWeight: "bold",
-    fontSize: 25,
-    color: "#2196F3",
   },
   errorText: {
     color: "crimson",

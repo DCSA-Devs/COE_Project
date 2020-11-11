@@ -10,10 +10,10 @@ export default function Logo({ style, textStyle, imageStyle }) {
     //title and logo for panjab university
     <View
       style={[
-        style,
         {
           alignItems: "center",
         },
+        style,
       ]}
     >
       <View>
@@ -33,10 +33,8 @@ export default function Logo({ style, textStyle, imageStyle }) {
 //styling
 const styles = StyleSheet.create({
   imageprop: {
-    width: widthPercentageToDP("40%"),
-    height: widthPercentageToDP("40%"),
-
-    marginTop: 5,
+    width: widthPercentageToDP("45%"),
+    height: widthPercentageToDP("45%"),
     alignSelf: "center",
   },
   maintitle: {
