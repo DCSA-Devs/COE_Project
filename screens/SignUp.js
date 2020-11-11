@@ -6,7 +6,7 @@ import {
   widthPercentageToDP,
 } from "react-native-responsive-screen";
 import Logo from "../components/Logo";
-import { RadioButton, TextInput, Button, Chip } from "react-native-paper";
+import { TextInput, Button, Chip } from "react-native-paper";
 import * as yup from "yup";
 
 export default function SignUp({ navigation }) {
@@ -69,9 +69,11 @@ export default function SignUp({ navigation }) {
 
   return (
     //Sign Up form
-    <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-      <Logo style={{ padding: 20 }} />
+
+    <ScrollView>
+      <Logo style={{ padding: 20 }} text />
       <Formik
+        sty
         initialValues={{
           name: "",
           email: "",
@@ -89,7 +91,13 @@ export default function SignUp({ navigation }) {
       >
         {(props) => (
           <View style={styles.container}>
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                marginBottom: 10,
+              }}
+            >
               <Chip
                 selected={chipValue === "Student" ? true : false}
                 onPress={() => {
@@ -109,27 +117,7 @@ export default function SignUp({ navigation }) {
                 Teacher
               </Chip>
             </View>
-            {1 > 5 ? (
-              <RadioButton.Group
-                onValueChange={(value) => setValue(value)}
-                value={value}
-              >
-                <View style={{ flexDirection: "row" }}>
-                  <RadioButton
-                    value="Student"
-                    onPress={(value) => setValue(value)}
-                  />
-                  <Text style={{ marginTop: 6 }}>I am student</Text>
-                </View>
-                <View style={{ flexDirection: "row" }}>
-                  <RadioButton
-                    value="Teacher"
-                    onPress={(value) => setValue(value)}
-                  />
-                  <Text style={{ marginTop: 6 }}>I am Teacher</Text>
-                </View>
-              </RadioButton.Group>
-            ) : null}
+
             <TextInput
               mode="outlined"
               style={styles.input}
@@ -212,9 +200,6 @@ export default function SignUp({ navigation }) {
 //styling
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    height: heightPercentageToDP("100%"),
-    justifyContent: "space-between",
     alignItems: "center",
     padding: widthPercentageToDP("1%"),
   },
@@ -224,12 +209,6 @@ const styles = StyleSheet.create({
     color: "black",
     width: widthPercentageToDP("85%"),
     height: heightPercentageToDP("7%"),
-  },
-  title: {
-    textAlign: "center",
-    fontWeight: "bold",
-    fontSize: 25,
-    color: "#2196F3",
   },
   errorText: {
     color: "crimson",

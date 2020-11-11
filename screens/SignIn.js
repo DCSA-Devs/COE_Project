@@ -158,7 +158,7 @@ export default function SignIn({ navigation }) {
                   mode="contained"
                   color="red"
                   disabled={buttonsDisable}
-                  style={{ marginTop: 10, marginBottom: 10 }}
+                  style={{ marginTop: 10 }}
                   loading={buttonsDisable}
                   onPress={props.handleSubmit}
                 >
@@ -177,7 +177,7 @@ export default function SignIn({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "space-evenly",
+    justifyContent: "space-between",
     alignItems: "center",
   },
   title: {

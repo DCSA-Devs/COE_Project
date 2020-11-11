@@ -121,14 +121,12 @@ export default function Contact({ navigation }) {
                 letterSpacing: 1,
               }}
             >
-              {" "}
-              Important Contacts{" "}
+              Important Contacts
             </Text>
           </View>
           <View style={styles.designation}>
             <Text style={{ fontWeight: "bold", fontSize: 18, color: "blue" }}>
-              {" "}
-              Designation{" "}
+              Designation
             </Text>
           </View>
         </>
