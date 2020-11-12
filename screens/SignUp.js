@@ -187,7 +187,7 @@ export default function SignUp({ navigation }) {
               disabled={isDisabled}
               loading={isDisabled}
               onPress={props.handleSubmit}
-              color="#FFA000"
+              color="#d62828"
               fontWeight="bold"
             >
               {isDisabled ? "Creating Account" : "Create Account"}

@@ -68,6 +68,7 @@ const styles = StyleSheet.create({
   homeContainer: {
     flex: 1,
     justifyContent: "center",
+    backgroundColor: "white"
   },
   flatListStyle: {
     flex: 1,

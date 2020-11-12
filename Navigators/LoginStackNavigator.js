@@ -46,7 +46,7 @@ export default function StackNavigator({ navigation }) {
                 color="white"
                 // "#563D74"
                 style={{
-                  backgroundColor: "#55a630",
+                  backgroundColor: "#ee6c4d",
                   // "#BB86FC",
                   marginRight: 5,
                   borderColor: "#563D74",

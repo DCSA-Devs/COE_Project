@@ -100,7 +100,7 @@ export default function UploadAvatar({ navigation }) {
           <View
             style={{
               alignItems: "center",
-              backgroundColor: "#FFA000",
+              backgroundColor: "#3d5a80",
               justifyContent: "center",
               flex: 1,
               overflow: "hidden",
@@ -120,7 +120,7 @@ export default function UploadAvatar({ navigation }) {
                   style={{
                     fontSize: widthPercentageToDP("50%"),
                     fontWeight: "bold",
-                    color: "black"
+                    color: "white"
                     // "#563D74",
                   }}
                 >
@@ -133,7 +133,7 @@ export default function UploadAvatar({ navigation }) {
               style={{
                 fontWeight: "bold",
                 fontSize: 22,
-                borderBottomWidth: 2,
+                borderBottomWidth: 1,
                 marginVertical: 10,
                 paddingBottom: 5,
               }}
@@ -200,9 +200,8 @@ export default function UploadAvatar({ navigation }) {
               setOpen(open);
             }}
             fabStyle={{
-              backgroundColor: "#FFA000"
+              backgroundColor: "#3d5a80",
             }}
-          // "#BB86FC" }}
           />
         </View>
       </Portal>

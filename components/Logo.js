@@ -46,4 +46,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
 
   },
+  imageStyle: {
+    color: "#d62828",
+  }
 });
