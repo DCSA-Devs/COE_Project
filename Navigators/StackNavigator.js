@@ -8,11 +8,15 @@ import AsyncStorage from "@react-native-community/async-storage";
 import { userContext } from "../screens/userContext";
 import LoginStackNavigator from "./LoginStackNavigator";
 import { View, Text } from "react-native";
+import { ActivityIndicator } from "react-native-paper";
 const Stack = createStackNavigator();
 function SplashScreen() {
   return (
-    <View>
-      <Text>Loading...</Text>
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <Text style={{ padding: 20, fontSize: 20, fontWeight: "bold" }}>
+        Loading...
+      </Text>
+      <ActivityIndicator size="large" />
     </View>
   );
 }
@@ -81,7 +85,14 @@ export default function StackNavigator() {
           }}
         >
           {state.isLoading ? (
-            <Stack.Screen name="loading" component={SplashScreen} />
+            <Stack.Screen
+              name="loading"
+              component={SplashScreen}
+              options={{
+                title: "Department of Computer Science",
+                headerShown: false,
+              }}
+            />
           ) : state.user ? (
             <>
               <Stack.Screen
