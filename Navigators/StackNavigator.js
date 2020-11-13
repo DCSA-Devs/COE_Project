@@ -7,9 +7,15 @@ import Forgotps from "../screens/Forgotps";
 import AsyncStorage from "@react-native-community/async-storage";
 import { userContext } from "../screens/userContext";
 import LoginStackNavigator from "./LoginStackNavigator";
-
+import { View, Text } from "react-native";
 const Stack = createStackNavigator();
-
+function SplashScreen() {
+  return (
+    <View>
+      <Text>Loading...</Text>
+    </View>
+  );
+}
 export default function StackNavigator() {
   console.log("StacNavigator Visited");
 
@@ -20,15 +26,17 @@ export default function StackNavigator() {
           return {
             user: action.user,
             avatar: action.user.profilePic,
+            isLoading: false,
           };
         case "SIGNOUT":
           return {
+            isLoading: false,
             user: null,
             avatar: null,
           };
         case "AVATAR":
           return {
-            user: prevState.user,
+            ...prevState,
             avatar: action.avatar,
           };
       }
@@ -36,18 +44,21 @@ export default function StackNavigator() {
     {
       user: null,
       avatar: null,
+      isLoading: true,
     }
   );
   React.useEffect(() => {
     console.log(state);
   }, [state]);
-  React.useLayoutEffect(() => {
+  React.useEffect(() => {
     const fetchdata = async () => {
       try {
         let userFetched = await AsyncStorage.getItem("user");
         if (userFetched) {
           userFetched = JSON.parse(userFetched);
           dispatch({ type: "SIGNIN", user: userFetched });
+        } else {
+          dispatch({ type: "SIGNOUT" });
         }
       } catch (err) {
         console.log("Async Error", err);
@@ -69,7 +80,9 @@ export default function StackNavigator() {
             },
           }}
         >
-          {state.user ? (
+          {state.isLoading ? (
+            <Stack.Screen name="loading" component={SplashScreen} />
+          ) : state.user ? (
             <>
               <Stack.Screen
                 name="loginStacknavigator"
@@ -87,6 +100,7 @@ export default function StackNavigator() {
                 component={SignIn}
                 options={{
                   title: "SignIn",
+                  headerShown: false,
                 }}
               />
               <Stack.Screen

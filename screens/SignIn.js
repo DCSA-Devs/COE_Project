@@ -3,25 +3,31 @@ import {
   Alert,
   StyleSheet,
   View,
+  TextInput,
+  ImageBackground,
   Text,
+  Image,
   KeyboardAvoidingView,
   ScrollView,
   TouchableOpacity,
 } from "react-native";
 import { Formik } from "formik";
-import { Button, TextInput } from "react-native-paper";
+import { Button } from "react-native-paper";
 import {
   heightPercentageToDP,
   widthPercentageToDP,
 } from "react-native-responsive-screen";
-import Logo from "../components/Logo";
 import AsyncStorage from "@react-native-community/async-storage";
+import { Ionicons } from "@expo/vector-icons";
+import Constants from "expo-constants";
+import { StatusBar } from "expo-status-bar";
+
 import { userContext } from "./userContext";
 
 export default function SignIn({ navigation }) {
-  const { dispatch } = React.useContext(userContext);
   console.log("SignIn visited");
 
+  const { dispatch } = React.useContext(userContext);
   const [buttonsDisable, setButtonDisable] = React.useState(false);
 
   const verifyloginCredentials = useCallback(async (formValues) => {
@@ -72,102 +78,122 @@ export default function SignIn({ navigation }) {
     }
   }, []);
   return (
-    <ScrollView
-      contentContainerStyle={{
-        flexGrow: 1,
-      }}
-    >
-      <KeyboardAvoidingView style={{ flex: 1 }}>
-        <Logo
+    <ScrollView>
+      <KeyboardAvoidingView
+        style={{
+          flex: 1,
+          justifyContent: "space-evenly",
+          alignContent: "center",
+        }}
+      >
+        <StatusBar backgroundColor="red" />
+        <View
           style={{
-            flex: 1,
-            justifyContent: "space-evenly",
+            height: heightPercentageToDP("40%"),
           }}
-          textStyle={{ padding: 3 }}
-          imageStyle={{ marginTop: 10 }}
-        />
-        <View style={styles.container}>
-          <Formik
-            initialValues={{ email: "", password: "" }}
-            onSubmit={(values) => {
-              // Trim whitespaces
-              values.email = values.email.trim();
-              values.password = values.password.trim();
-              verifyloginCredentials(values);
-            }}
-          >
-            {(props) => (
-              //Sign In form
-
-              <View style={{ alignSelf: "stretch", padding: "7%" }}>
-                <Text style={styles.title}>Sign In</Text>
+        >
+          <ImageBackground
+            source={require("../assets/images/puheader.jpg")}
+            style={styles.image}
+          />
+        </View>
+        <Formik
+          initialValues={{ email: "", password: "" }}
+          onSubmit={(values) => {
+            // Trim whitespaces
+            console.log(values);
+            values.email = values.email.trim();
+            values.password = values.password.trim();
+            verifyloginCredentials(values);
+          }}
+        >
+          {(props) => (
+            //Sign In form
+            <View
+              style={{
+                height: heightPercentageToDP("60%"),
+                justifyContent: "space-evenly",
+                alignItems: "center",
+                // borderWidth: 2,
+                // borderTopLeftRadius: 30,
+                // borderTopRightRadius: 30,
+              }}
+            >
+              <Text style={styles.title}>Sign In</Text>
+              <View style={styles.TextInputView}>
+                <Image
+                  source={require("../assets/images/email.png")}
+                  style={styles.icon}
+                />
                 <TextInput
-                  style={styles.TextInput}
-                  label="E-Mail"
-                  mode="outlined"
+                  placeholder="Email Address"
                   disabled={buttonsDisable}
+                  style={styles.TextInput}
                   onChangeText={props.handleChange("email")}
                   value={props.values.email}
                 />
+              </View>
+              <View style={styles.TextInputView}>
+                <Image
+                  source={require("../assets/images/key.png")}
+                  style={styles.icon}
+                />
+
                 <TextInput
-                  style={styles.TextInput}
-                  label="Password"
-                  mode="outlined"
+                  placeholder="Password"
                   disabled={buttonsDisable}
+                  style={styles.TextInput}
                   onChangeText={props.handleChange("password")}
                   value={props.values.password}
                   secureTextEntry={true}
                 />
-                <View
+              </View>
+
+              <Button
+                icon="login"
+                mode="contained"
+                color="red"
+                disabled={buttonsDisable}
+                style={styles.button}
+                loading={buttonsDisable}
+                onPress={props.handleSubmit}
+              >
+                {buttonsDisable ? "LOGGING YOU IN" : "LOGIN"}
+              </Button>
+
+              <TouchableOpacity
+                onPress={() => navigation.push("Forgotps")}
+                disabled={buttonsDisable}
+              >
+                <Text
                   style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    padding: 10,
+                    fontWeight: "bold",
+                    color: buttonsDisable ? "grey" : "#2196F3",
                   }}
                 >
-                  <TouchableOpacity
-                    onPress={() => navigation.push("SignUp")}
-                    disabled={buttonsDisable}
-                  >
-                    <Text
-                      style={{
-                        fontWeight: "bold",
-                        color: buttonsDisable ? "grey" : "#2196F3",
-                      }}
-                    >
-                      Create Account
-                    </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    onPress={() => navigation.push("Forgotps")}
-                    disabled={buttonsDisable}
-                  >
-                    <Text
-                      style={{
-                        fontWeight: "bold",
-                        color: buttonsDisable ? "grey" : "#2196F3",
-                      }}
-                    >
-                      Forgot password ?
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-                <Button
-                  icon="login"
-                  mode="contained"
-                  color="red"
+                  Forgot password ?
+                </Text>
+              </TouchableOpacity>
+              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                <Text>Don't have an account?</Text>
+                <TouchableOpacity
+                  onPress={() => navigation.push("SignUp")}
                   disabled={buttonsDisable}
-                  style={{ marginTop: 10 }}
-                  loading={buttonsDisable}
-                  onPress={props.handleSubmit}
                 >
-                  {buttonsDisable ? "LOGGING YOU IN" : "LOGIN"}
-                </Button>
+                  <Text
+                    style={{
+                      marginLeft: 2,
+                      fontWeight: "bold",
+                      color: buttonsDisable ? "grey" : "#2196F3",
+                    }}
+                  >
+                    Sign up
+                  </Text>
+                </TouchableOpacity>
               </View>
-            )}
-          </Formik>
-        </View>
+            </View>
+          )}
+        </Formik>
       </KeyboardAvoidingView>
     </ScrollView>
   );
@@ -176,9 +202,9 @@ export default function SignIn({ navigation }) {
 //styling
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: "space-between",
     alignItems: "center",
+    backgroundColor: "white",
+    justifyContent: "space-between",
   },
   title: {
     textAlign: "center",
@@ -187,7 +213,35 @@ const styles = StyleSheet.create({
     fontSize: widthPercentageToDP("6%"),
     color: "#2196F3",
   },
-  TextInput: {
+  icon: {
+    height: 20,
+    width: 20,
+    marginLeft: 10,
+    alignSelf: "center",
+    tintColor: "#808080",
+  },
+  TextInputView: {
+    flexDirection: "row",
+    alignContent: "center",
     marginBottom: 5,
+    borderRadius: 10,
+    backgroundColor: "#E0E0E0",
+    width: widthPercentageToDP("80%"),
+  },
+  TextInput: {
+    flex: 1,
+    padding: 15,
+    borderRadius: 10,
+  },
+  button: {
+    padding: 10,
+    borderRadius: 10,
+    width: widthPercentageToDP("80%"),
+  },
+  image: {
+    marginTop: 10,
+    flex: 1,
+    resizeMode: "cover",
+    justifyContent: "center",
   },
 });
