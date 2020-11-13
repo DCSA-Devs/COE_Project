@@ -40,23 +40,25 @@ export default function StackNavigator({ navigation }) {
               size={50}
             />
           ) : (
-            <Avatar.Text
-              label={Initials(state.user.name)}
-              size={50}
-              color="#563D74"
-              style={{
-                backgroundColor: "#BB86FC",
-                marginRight: 5,
-                borderColor: "#563D74",
-                shadowColor: "black",
-                shadowOpacity: 0.5,
-                shadowOffset: {
-                  width: 2,
-                  height: 2,
-                },
-              }}
-            />
-          ),
+              <Avatar.Text
+                label={Initials(state.user.name)}
+                size={50}
+                color="white"
+                // "#563D74"
+                style={{
+                  backgroundColor: "#ee6c4d",
+                  // "#BB86FC",
+                  marginRight: 5,
+                  borderColor: "#563D74",
+                  shadowColor: "black",
+                  shadowOpacity: 0.5,
+                  shadowOffset: {
+                    width: 2,
+                    height: 2,
+                  },
+                }}
+              />
+            ),
       }}
     >
       <Stack.Screen

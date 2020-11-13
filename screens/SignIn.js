@@ -18,8 +18,6 @@ import {
   widthPercentageToDP,
 } from "react-native-responsive-screen";
 import AsyncStorage from "@react-native-community/async-storage";
-import { Ionicons } from "@expo/vector-icons";
-import Constants from "expo-constants";
 import { StatusBar } from "expo-status-bar";
 
 import { userContext } from "./userContext";
@@ -86,7 +84,7 @@ export default function SignIn({ navigation }) {
           alignContent: "center",
         }}
       >
-        <StatusBar backgroundColor="red" />
+        <StatusBar backgroundColor="#d62828" style="light" />
         <View
           style={{
             height: heightPercentageToDP("40%"),
@@ -152,7 +150,7 @@ export default function SignIn({ navigation }) {
               <Button
                 icon="login"
                 mode="contained"
-                color="red"
+                color="#d62828"
                 disabled={buttonsDisable}
                 style={styles.button}
                 loading={buttonsDisable}
@@ -168,23 +166,22 @@ export default function SignIn({ navigation }) {
                 <Text
                   style={{
                     fontWeight: "bold",
-                    color: buttonsDisable ? "grey" : "#2196F3",
+                    color: buttonsDisable ? "grey" : "#303F9F",
                   }}
                 >
                   Forgot password ?
                 </Text>
               </TouchableOpacity>
               <View style={{ flexDirection: "row", alignItems: "center" }}>
-                <Text>Don't have an account?</Text>
+                <Text>Don't have an account? </Text>
                 <TouchableOpacity
                   onPress={() => navigation.push("SignUp")}
                   disabled={buttonsDisable}
                 >
                   <Text
                     style={{
-                      marginLeft: 2,
                       fontWeight: "bold",
-                      color: buttonsDisable ? "grey" : "#2196F3",
+                      color: buttonsDisable ? "grey" : "#303F9F",
                     }}
                   >
                     Sign up
@@ -211,7 +208,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     fontWeight: "bold",
     fontSize: widthPercentageToDP("6%"),
-    color: "#2196F3",
+    color: "#303F9F",
   },
   icon: {
     height: 20,

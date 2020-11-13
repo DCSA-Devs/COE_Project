@@ -77,7 +77,7 @@ export default function DocumentCard({ doc }) {
   return (
     <View style={styles.question}>
       <Image
-        source={require("../../../assets/images/Sample" + ext + ".png")}
+        source={require("../../../assets/images/Samplepdf" + ".png")}
         style={{ width: 70, height: 70 }}
       />
       <View

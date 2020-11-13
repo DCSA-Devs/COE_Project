@@ -39,15 +39,15 @@ export default function LectureVideo({ navigation }) {
           )}
         />
       ) : (
-        <View
-          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-        >
-          <Text style={{ padding: 20, fontSize: 20, fontWeight: "bold" }}>
-            Fetching Videos
+          <View
+            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+          >
+            <Text style={{ padding: 20, fontSize: 20, fontWeight: "bold" }}>
+              Fetching Videos
           </Text>
-          <ActivityIndicator size="large" />
-        </View>
-      )}
+            <ActivityIndicator size="large" />
+          </View>
+        )}
     </View>
   );
 }
@@ -56,9 +56,9 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   touchStyles: {
-    padding: 10,
+    padding: 15,
     margin: 5,
-    backgroundColor: "#BB86FC",
+    backgroundColor: "#98c1d9",
     borderRadius: 5,
   },
 });
