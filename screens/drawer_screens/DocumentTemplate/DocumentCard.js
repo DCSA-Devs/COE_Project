@@ -5,10 +5,11 @@ import React, { useCallback } from "react";
 import { IconButton, ActivityIndicator } from "react-native-paper";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 
-import pdf from "../../../assets/images/Samplepdf.png";
-import doc from "../../../assets/images/Sampledoc.png";
-import docx from "../../../assets/images/Sampledocx.png";
-
+const IMAGES = {
+  pdf: require("../../../assets/images/Samplepdf.png"),
+  doc: require("../../../assets/images/Sampledoc.png"),
+  docx: require("../../../assets/images/Sampledocx.png"),
+};
 export default function DocumentCard({ doc }) {
   const [progress, setProgress] = React.useState(0);
   const [downloading, setDownloading] = React.useState(false);
@@ -76,10 +77,7 @@ export default function DocumentCard({ doc }) {
 
   return (
     <View style={styles.question}>
-      <Image
-        source={require("../../../assets/images/Samplepdf" + ".png")}
-        style={{ width: 70, height: 70 }}
-      />
+      <Image source={IMAGES[ext]} style={{ width: 70, height: 70 }} />
       <View
         style={{
           flex: 1,
@@ -129,15 +127,15 @@ export default function DocumentCard({ doc }) {
                   </Text>
                 </View>
               ) : (
-                  <IconButton icon="download" onPress={downloadFile} />
-                )
+                <IconButton icon="download" onPress={downloadFile} />
+              )
             ) : (
-                <>
-                  <IconButton icon="book-open-variant" onPress={viewFile} />
-                  <IconButton icon="share" onPress={shareFile} />
-                  <IconButton icon="delete" onPress={deleteFile} />
-                </>
-              )}
+              <>
+                <IconButton icon="book-open-variant" onPress={viewFile} />
+                <IconButton icon="share" onPress={shareFile} />
+                <IconButton icon="delete" onPress={deleteFile} />
+              </>
+            )}
           </View>
           <Text>{doc.size}</Text>
         </View>
