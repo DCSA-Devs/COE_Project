@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
   touchStyles: {
     padding: 15,
     margin: 5,
-    backgroundColor: "#98c1d9",
+    backgroundColor: "#dee2e6",
     borderRadius: 5,
   },
 });

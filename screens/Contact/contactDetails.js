@@ -16,7 +16,7 @@ export default function ContactDetails(props) {
         <Text style={styles.desig}>{title}</Text>
         <Text style={styles.contactText}>Phone number : {number}</Text>
         <View style={{ flexDirection: "row" }}>
-          <Text style={styles.contactText}>Email Adress :</Text>
+          <Text style={styles.contactText}>Email:</Text>
 
           <Text
             onPress={handleComposeMail}

@@ -4,13 +4,14 @@ const Tab = createBottomTabNavigator();
 import DeaprtmentScreen from "../screens/drawer_screens/DepartmentScreen";
 import Settings from "../screens/Settings";
 import Chat from "../screens/Chat";
+// import DepartmentChoose from "../screens/drawer_screens/DepartmentChoose";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 export default function TabNavigator({ navigation }) {
   return (
     <Tab.Navigator
       initialRouteName="DepartmentScreen"
       tabBarOptions={{
-        activeTintColor: "#3d5a80",
+        activeTintColor: "#0077b6",
         // "#BB86FC",
         inactiveTintColor: "black"
         // "gray",

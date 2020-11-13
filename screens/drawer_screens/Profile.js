@@ -100,7 +100,8 @@ export default function UploadAvatar({ navigation }) {
           <View
             style={{
               alignItems: "center",
-              backgroundColor: "#3d5a80",
+              backgroundColor: "#fbc02d",
+              // "#3d5a80",
               justifyContent: "center",
               flex: 1,
               overflow: "hidden",
@@ -121,7 +122,7 @@ export default function UploadAvatar({ navigation }) {
                     fontSize: widthPercentageToDP("50%"),
                     fontWeight: "bold",
                     color: "white"
-                    // "#563D74",
+
                   }}
                 >
                   {Initials(user.name)}
@@ -167,7 +168,7 @@ export default function UploadAvatar({ navigation }) {
             <View style={styles.field}>
               <Ionicons
                 name="md-calendar"
-                color="#ffbe0b"
+                color="#81d4fa"
                 size={26}
                 style={styles.iconStyle}
               />
@@ -200,7 +201,7 @@ export default function UploadAvatar({ navigation }) {
               setOpen(open);
             }}
             fabStyle={{
-              backgroundColor: "#3d5a80",
+              backgroundColor: "#0077b6",
             }}
           />
         </View>

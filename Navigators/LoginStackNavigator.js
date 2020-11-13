@@ -13,6 +13,7 @@ import SyllabusRender from "../screens/drawer_screens/Syllabus/SyllabusRender";
 import Question from "../screens/drawer_screens/Forum/Question";
 import Contact from "../screens/Contact/contact";
 import ContactDetails from "../screens/Contact/contactDetails";
+import DepartmentChoose from "../screens/drawer_screens/DepartmentChoose";
 
 import { Initials } from "../shared/functions";
 const Stack = createStackNavigator();
@@ -23,6 +24,14 @@ export default function StackNavigator({ navigation }) {
   return (
     <Stack.Navigator
       screenOptions={{
+        headerStyle: {
+          backgroundColor: "#0077b6",
+          // "#3f51b5",
+        },
+        headerTintColor: "#fff",
+        headerTitleStyle: {
+          fontWeight: "bold",
+        },
         headerRight: () =>
           state.avatar ? (
             <Avatar.Image
@@ -46,7 +55,7 @@ export default function StackNavigator({ navigation }) {
                 color="white"
                 // "#563D74"
                 style={{
-                  backgroundColor: "#ee6c4d",
+                  backgroundColor: "#fbc02d",
                   // "#BB86FC",
                   marginRight: 5,
                   borderColor: "#563D74",
@@ -61,6 +70,15 @@ export default function StackNavigator({ navigation }) {
             ),
       }}
     >
+      {/* <Stack.Screen
+        name="DepartmentChoose"
+        component={TabNavigator}
+        options={({ navigation, route }) => {
+          return {
+            title: "Choose your Department",
+          };
+        }}
+      /> */}
       <Stack.Screen
         name="DepartmentScreen"
         component={TabNavigator}

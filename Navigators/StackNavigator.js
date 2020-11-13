@@ -105,27 +105,27 @@ export default function StackNavigator() {
               />
             </>
           ) : (
-            <>
-              <Stack.Screen
-                name="SignIn"
-                component={SignIn}
-                options={{
-                  title: "SignIn",
-                  headerShown: false,
-                }}
-              />
-              <Stack.Screen
-                name="SignUp"
-                component={SignUp}
-                options={{ title: "Registeration form" }}
-              />
-              <Stack.Screen
-                name="Forgotps"
-                component={Forgotps}
-                options={{ title: "Forgot password" }}
-              />
-            </>
-          )}
+                <>
+                  <Stack.Screen
+                    name="SignIn"
+                    component={SignIn}
+                    options={{
+                      title: "SignIn",
+                      headerShown: false,
+                    }}
+                  />
+                  <Stack.Screen
+                    name="SignUp"
+                    component={SignUp}
+                    options={{ title: "Registeration form" }}
+                  />
+                  <Stack.Screen
+                    name="Forgotps"
+                    component={Forgotps}
+                    options={{ title: "Forgot password" }}
+                  />
+                </>
+              )}
         </Stack.Navigator>
       </NavigationContainer>
     </userContext.Provider>

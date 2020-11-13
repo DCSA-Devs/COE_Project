@@ -169,7 +169,7 @@ export default function SignIn({ navigation }) {
                     color: buttonsDisable ? "grey" : "#303F9F",
                   }}
                 >
-                  Forgot password ?
+                  Forgot Password ?
                 </Text>
               </TouchableOpacity>
               <View style={{ flexDirection: "row", alignItems: "center" }}>

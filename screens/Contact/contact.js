@@ -11,7 +11,7 @@ import Card from "../../shared/card";
 export default function Contact({ navigation }) {
   const [contacts, setContacts] = useState([
     {
-      title: "coe project link (For Technical help!)",
+      title: "coe project link",
       number: "2534813, 2534811",
       email: "a1coeproject@gmail.com",
       key: "1",
@@ -117,7 +117,7 @@ export default function Contact({ navigation }) {
               style={{
                 fontSize: 18,
                 fontWeight: "bold",
-                color: "white",
+                color: "black",
                 letterSpacing: 1,
               }}
             >
@@ -137,7 +137,7 @@ export default function Contact({ navigation }) {
 
 const styles = StyleSheet.create({
   heading: {
-    backgroundColor: "#3d5a80",
+    backgroundColor: "#ced4da",
     justifyContent: "center",
     textAlign: "center",
     padding: 20,
@@ -147,6 +147,7 @@ const styles = StyleSheet.create({
     fontWeight: "800",
     letterSpacing: 1,
     margin: 10,
+    marginTop: 25,
   },
   // designation: {
   //   fontWeight: "bold",

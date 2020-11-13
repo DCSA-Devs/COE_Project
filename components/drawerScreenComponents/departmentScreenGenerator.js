@@ -20,8 +20,6 @@ export default function DepartmentScreenGenerator({
           width: 90,
           height: 90,
           tintColor: "black",
-          // "#6a040f"
-          // "rgba(89,89,89, 1)",
         }}
       />
       <Text style={styles.componentTextStyle}>{screenItems.name}</Text>
@@ -34,14 +32,16 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#98c1d9",
+    backgroundColor: "#e9ecef",
+    // "#98c1d9",
     padding: 20,
     margin: 10,
     borderRadius: 10,
   },
   componentTextStyle: {
     marginTop: 10,
-    color: "#463f3a",
+    color: "#242423",
+    // "#463f3a",
     // "rgba(89,89,89, 1)",
     textAlign: "center",
     fontWeight: "bold",
