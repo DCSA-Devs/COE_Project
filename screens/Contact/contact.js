@@ -3,8 +3,10 @@ import {
   View,
   StyleSheet,
   Text,
+  Image,
   FlatList,
   TouchableOpacity,
+  ImageBackground,
 } from "react-native";
 import Card from "../../shared/card";
 
@@ -95,44 +97,108 @@ export default function Contact({ navigation }) {
     //   key: "14",
     // },
   ]);
-
   return (
-    <FlatList
-      data={contacts}
-      renderItem={({ item }) => (
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate("ContactDetails", { item });
+    <View style={{ backgroundColor: "#FFFFFF" }}>
+      <View
+        style={{
+          padding: 20,
+          flex: 1,
+          justifyContent: "space-evenly",
+        }}
+      >
+        <Text
+          style={{
+            color: "#6894E1",
+            fontSize: 30,
+            fontWeight: "bold",
+            marginVertical: 20,
           }}
         >
-          <Card>
-            <Text>{item.title}</Text>
-          </Card>
-        </TouchableOpacity>
-      )}
-      ListHeaderComponent={
-        <>
-          <View style={styles.heading}>
-            <Text
-              style={{
-                fontSize: 18,
-                fontWeight: "bold",
-                color: "black",
-                letterSpacing: 1,
-              }}
-            >
-              For Technical Help!
-            </Text>
-          </View>
-          {/* <View style={styles.designation}>
-            <Text style={{ fontWeight: "bold", fontSize: 18, color: "blue" }}>
-              Designation
-            </Text>
-          </View> */}
-        </>
-      }
-    />
+          Contact US
+        </Text>
+
+        <View>
+          <Text
+            style={{
+              fontSize: 16,
+              color: "grey",
+              fontWeight: "bold",
+              marginBottom: 2,
+            }}
+          >
+            Email :
+          </Text>
+          <Text style={{ color: "#5A88DA", fontSize: 18, marginBottom: 15 }} CC>
+            a1coeproject@gmail.com
+          </Text>
+        </View>
+        <View>
+          <Text
+            style={{
+              fontSize: 16,
+              color: "grey",
+              fontWeight: "bold",
+              marginBottom: 2,
+            }}
+          >
+            Phone :
+          </Text>
+          <Text style={{ color: "#5A88DA", fontSize: 18 }} CC>
+            (+91)9999999999
+          </Text>
+        </View>
+      </View>
+      <View
+        style={{
+          flex: 1,
+          alignItems: "flex-end",
+          justifyContent: "flex-end",
+        }}
+      >
+        <ImageBackground
+          source={require("../../assets/images/malibox.jpg")}
+          style={{ height: 400, width: 400 }}
+        ></ImageBackground>
+      </View>
+    </View>
   );
+  // return (
+  //   <FlatList
+  //     data={contacts}
+  //     renderItem={({ item }) => (
+  //       <TouchableOpacity
+  //         onPress={() => {
+  //           navigation.navigate("ContactDetails", { item });
+  //         }}
+  //       >
+  //         <Card>
+  //           <Text>{item.title}</Text>
+  //         </Card>
+  //       </TouchableOpacity>
+  //     )}
+  //     ListHeaderComponent={
+  //       <>
+  //         <View style={styles.heading}>
+  //           <Text
+  //             style={{
+  //               fontSize: 18,
+  //               fontWeight: "bold",
+  //               color: "black",
+  //               letterSpacing: 1,
+  //             }}
+  //           >
+  //             For Technical Help!
+  //           </Text>
+  //         </View>
+  //         {/* <View style={styles.designation}>
+  //           <Text style={{ fontWeight: "bold", fontSize: 18, color: "blue" }}>
+  //             Designation
+  //           </Text>
+  //         </View> */}
+  //       </>
+  //     }
+  //   />
+  // );
 }
 
 const styles = StyleSheet.create({

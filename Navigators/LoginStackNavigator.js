@@ -73,21 +73,13 @@ export default function StackNavigator({ navigation }) {
       <Stack.Screen
         name="DepartmentChoose"
         component={DepartmentChoose}
-        options={({ navigation, route }) => {
-          return {
-            title: "Choose your Department",
-          };
-        }}
+        options={{ title: "Choose your Department" }}
       />
 
       <Stack.Screen
         name="DepartmentScreen"
         component={TabNavigator}
-        options={({ navigation, route }) => {
-          return {
-            title: "Department of Computer Science",
-          };
-        }}
+        options={{ title: "Department of Computer Science" }}
       />
       <Stack.Screen
         name="Profile"
@@ -134,7 +126,7 @@ export default function StackNavigator({ navigation }) {
       <Stack.Screen
         name="Contact"
         component={Contact}
-        options={{ title: "Contact" }}
+        options={{ title: "Contact", headerTitle: false }}
       />
       <Stack.Screen
         name="ContactDetails"
