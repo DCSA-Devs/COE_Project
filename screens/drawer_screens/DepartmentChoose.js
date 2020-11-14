@@ -8,7 +8,7 @@ const IMAGE = {
   Arts: require("../../assets/images/subjects/arts.jpg"),
   Chemistry: require("../../assets/images/subjects/chemistry.jpg"),
   MCA: require("../../assets/images/subjects/computer.jpg"),
-  MSC: require("../../assets/images/subjects/computer.jpg"),
+  Msc: require("../../assets/images/subjects/computer.jpg"),
   PGDCA: require("../../assets/images/subjects/computer.jpg"),
   English: require("../../assets/images/subjects/english.jpg"),
   Hindi: require("../../assets/images/subjects/Hindi.jpg"),
