@@ -25,7 +25,7 @@ export default function Contact({ navigation }) {
           justifyContent: "space-evenly",
         }}
       >
-        <Text
+        {/* <Text
           style={{
             color: "#6894E1",
             fontSize: 30,
@@ -33,8 +33,8 @@ export default function Contact({ navigation }) {
             marginVertical: 20,
           }}
         >
-          Contact US
-        </Text>
+          Contact us
+        </Text> */}
 
         <View>
           <Text

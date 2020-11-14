@@ -47,23 +47,23 @@ export default function StackNavigator() {
               size={50}
             />
           ) : (
-            <Avatar.Text
-              label={Initials(state.user.name)}
-              size={50}
-              color="white"
-              style={{
-                backgroundColor: "#fbc02d",
-                marginRight: 5,
-                borderColor: "#563D74",
-                shadowColor: "black",
-                shadowOpacity: 0.5,
-                shadowOffset: {
-                  width: 2,
-                  height: 2,
-                },
-              }}
-            />
-          ),
+              <Avatar.Text
+                label={Initials(state.user.name)}
+                size={50}
+                color="white"
+                style={{
+                  backgroundColor: "#fbc02d",
+                  marginRight: 5,
+                  borderColor: "#563D74",
+                  shadowColor: "black",
+                  shadowOpacity: 0.5,
+                  shadowOffset: {
+                    width: 2,
+                    height: 2,
+                  },
+                }}
+              />
+            ),
       }}
     >
       <Stack.Screen
@@ -122,9 +122,10 @@ export default function StackNavigator() {
       <Stack.Screen
         name="Contact"
         component={Contact}
-        options={{ title: "Contact", headerTitle: false }}
+        options={{
+          title: "Contact us"
+        }}
       />
-
       <Stack.Screen
         name="VideoPlayer"
         component={VideoPlayerScreen}
