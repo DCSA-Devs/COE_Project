@@ -99,25 +99,25 @@
   },
   {
     "name": "Dcsa Department",
-    "class": "MSC",
+    "class": "Msc",
     "semester": "Semester-1",
     "id": 17
   },
   {
     "name": "Dcsa Department",
-    "class": "MSC",
+    "class": "Msc",
     "semester": "Semester-2",
     "id": 18
   },
   {
     "name": "Dcsa Department",
-    "class": "MSC",
+    "class": "Msc",
     "semester": "Semester-3",
     "id": 19
   },
   {
     "name": "Dcsa Department",
-    "class": "MSC",
+    "class": "Msc",
     "semester": "Sem-4",
     "id": 20
   },
@@ -136,19 +136,133 @@
   {
     "name": "English Department",
     "class": "English",
-    "semester": "Sem-2",
-    "id": 22
-  },
-  {
-    "name": "Hindi Department",
-    "class": "PGDCA",
     "semester": "Sem-1",
     "id": 23
   },
   {
-    "name": "Hindi Department",
-    "class": "PGDCA",
+    "name": "English Department",
+    "class": "English",
     "semester": "Sem-2",
     "id": 24
+  },
+  {
+    "name": "English Department",
+    "class": "English",
+    "semester": "Sem-3",
+    "id": 25
+  },
+  {
+    "name": "English Department",
+    "class": "English",
+    "semester": "Sem-4",
+    "id": 26
+  },
+  {
+    "name": "English Department",
+    "class": "English",
+    "semester": "Sem-5",
+    "id": 27
+  },
+  {
+    "name": "English Department",
+    "class": "English",
+    "semester": "Sem-6",
+    "id": 28
+  },
+  {
+    "name": "Hindi Department",
+    "class": "Hindi",
+    "semester": "Sem-1",
+    "id": 29
+  },
+  {
+    "name": "Hindi Department",
+    "class": "Hindi",
+    "semester": "Sem-2",
+    "id": 30
+  },
+  {
+    "name": "Hindi Department",
+    "class": "Hindi",
+    "semester": "Sem-3",
+    "id": 31
+  },
+  {
+    "name": "Hindi Department",
+    "class": "Hindi",
+    "semester": "Sem-4",
+    "id": 32
+  },
+  {
+    "name": "Hindi Department",
+    "class": "Hindi",
+    "semester": "Sem-5",
+    "id": 33
+  },
+  {
+    "name": "Hindi Department",
+    "class": "Hindi",
+    "semester": "Sem-6",
+    "id": 34
+  },
+  {
+    "name": "Maths Department",
+    "class": "Maths",
+    "semester": "Sem-1",
+    "id": 35
+  },
+  {
+    "name": "Maths Department",
+    "class": "Maths",
+    "semester": "Sem-2",
+    "id": 36
+  },
+  {
+    "name": "Maths Department",
+    "class": "Maths",
+    "semester": "Sem-3",
+    "id": 37
+  },
+  {
+    "name": "Maths Department",
+    "class": "Maths",
+    "semester": "Sem-4",
+    "id": 38
+  },
+  {
+    "name": "Panjabi Department",
+    "class": "Panjabi",
+    "semester": "Sem-1",
+    "id": 39
+  },
+  {
+    "name": "Panjabi Department",
+    "class": "Panjabi",
+    "semester": "Sem-2",
+    "id": 40
+  },
+  {
+    "name": "Panjabi Department",
+    "class": "Panjabi",
+    "semester": "Sem-3",
+    "id": 41
+  },
+  {
+    "name": "Panjabi Department",
+    "class": "Panjabi",
+    "semester": "Sem-4",
+    "id": 42
+  },
+  {
+    "name": "Panjabi Department",
+    "class": "Panjabi",
+    "semester": "Sem-5",
+    "id": 43
+  },
+  {
+    "name": "Panjabi Department",
+    "class": "Panjabi",
+    "semester": "Sem-6",
+    "id": 44
   }
 ]

@@ -168,7 +168,7 @@ export default function UploadAvatar({ navigation }) {
             <View style={styles.field}>
               <Ionicons
                 name="md-calendar"
-                color="#81d4fa"
+                color="#660099"
                 size={26}
                 style={styles.iconStyle}
               />
