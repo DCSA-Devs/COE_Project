@@ -264,5 +264,30 @@
     "class": "Panjabi",
     "semester": "Sem-6",
     "id": 44
+  },
+  {
+    "name": "Pharmaceutical Sciences Department",
+    "class": "Pharmaceutical",
+    "semester": "Sem-1",
+    "id": 45
+  },
+  {
+    "name": "Pharmaceutical Sciences Department",
+    "class": "Pharmaceutical",
+    "semester": "Sem-2",
+    "id": 46
+  },
+  {
+    "name": "Pharmaceutical Sciences Department",
+    "class": "Pharmaceutical",
+    "semester": "Sem-3",
+    "id": 47
+  },
+  {
+    "name": "Pharmaceutical Sciences Department",
+    "class": "Pharmaceutical",
+    "semester": "Sem-4",
+    "id": 48
   }
+
 ]
