@@ -16,7 +16,7 @@ export default function VideoPlayerScreen({ navigation, route }) {
         resizeMode="cover"
         shouldPlay
         useNativeControls={true}
-        style={{ width: "100%" }}
+        style={{ width: "100%", height: "50%" }}
       />
       <View style={styles.descriptionView}>
         <Text style={styles.title}>{video.title}</Text>
