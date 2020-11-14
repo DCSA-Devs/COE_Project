@@ -1,5 +1,5 @@
 import React from "react";
-import { Avatar, Searchbar, Divider } from "react-native-paper";
+import { Searchbar, Divider } from "react-native-paper";
 import { TouchableOpacity, Text, View, Image } from "react-native";
 let helperArray = require("../../userList.json");
 import { Ionicons } from "@expo/vector-icons";
@@ -14,7 +14,6 @@ const IMAGE = {
   Hindi: require("../../assets/images/subjects/Hindi.jpg"),
   Maths: require("../../assets/images/subjects/maths.jpg"),
   Panjabi: require("../../assets/images/subjects/panjabi.jpg"),
-
 };
 export default function DepartmentChoose({ navigation }) {
   const [allUsers, setAllUsers] = React.useState(helperArray);
@@ -33,8 +32,8 @@ export default function DepartmentChoose({ navigation }) {
           placeholder="Search"
           onChangeText={(text) => searchUser(text)}
         />
-        {usersFiltered.map((item) => (
-          <>
+        {usersFiltered.map((item, index) => (
+          <View key={index}>
             <TouchableOpacity
               onPress={() => {
                 navigation.navigate(item.navigate ? item.navigate : "");
@@ -66,7 +65,7 @@ export default function DepartmentChoose({ navigation }) {
               </View>
             </TouchableOpacity>
             <Divider />
-          </>
+          </View>
         ))}
       </View>
     </ScrollView>

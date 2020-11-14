@@ -11,13 +11,12 @@ import TabNavigator from "./TabNavigator";
 import Syllabus from "../screens/drawer_screens/Syllabus/Syllabus";
 import SyllabusRender from "../screens/drawer_screens/Syllabus/SyllabusRender";
 import Question from "../screens/drawer_screens/Forum/Question";
-import Contact from "../screens/Contact/contact";
-import ContactDetails from "../screens/Contact/contactDetails";
+import Contact from "../screens/contact";
 import DepartmentChoose from "../screens/drawer_screens/DepartmentChoose";
 
 import { Initials } from "../shared/functions";
 const Stack = createStackNavigator();
-export default function StackNavigator({ navigation }) {
+export default function StackNavigator() {
   const { state } = React.useContext(userContext);
 
   //Minimize the code by generating the stack through map
@@ -26,7 +25,6 @@ export default function StackNavigator({ navigation }) {
       screenOptions={{
         headerStyle: {
           backgroundColor: "#0077b6",
-          // "#3f51b5",
         },
         headerTintColor: "#fff",
         headerTitleStyle: {
@@ -53,10 +51,8 @@ export default function StackNavigator({ navigation }) {
               label={Initials(state.user.name)}
               size={50}
               color="white"
-              // "#563D74"
               style={{
                 backgroundColor: "#fbc02d",
-                // "#BB86FC",
                 marginRight: 5,
                 borderColor: "#563D74",
                 shadowColor: "black",
@@ -128,11 +124,7 @@ export default function StackNavigator({ navigation }) {
         component={Contact}
         options={{ title: "Contact", headerTitle: false }}
       />
-      <Stack.Screen
-        name="ContactDetails"
-        component={ContactDetails}
-        options={{ title: "Contact Details" }}
-      />
+
       <Stack.Screen
         name="VideoPlayer"
         component={VideoPlayerScreen}
