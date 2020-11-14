@@ -1589,21 +1589,6 @@
     sudo-prompt "^9.0.0"
     wcwidth "^1.0.1"
 
-"@react-native-community/masked-view@0.1.10":
-  version "0.1.10"
-  resolved "https://registry.yarnpkg.com/@react-native-community/masked-view/-/masked-view-0.1.10.tgz#5dda643e19e587793bc2034dd9bf7398ad43d401"
-  integrity sha512-rk4sWFsmtOw8oyx8SD3KSvawwaK7gRBSEIy2TAwURyGt+3TizssXP1r8nx3zY+R7v2vYYHXZ+k2/GULAT/bcaQ==
-
-"@react-native-community/netinfo@5.9.6":
-  version "5.9.6"
-  resolved "https://registry.yarnpkg.com/@react-native-community/netinfo/-/netinfo-5.9.6.tgz#fab6cd78fe740f9c674b4a93abd77f6bfb90f655"
-  integrity sha512-cEkA1Apg8+VjnDdeDZRHI+2RqouiPKgYnewouRkvF4ettH9ZS4Cmi/nANQKIpIu2L+czboxM3fCZ44nc7IM9VQ==
-
-"@react-native-community/slider@3.0.3":
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/@react-native-community/slider/-/slider-3.0.3.tgz#830167fd757ba70ac638747ba3169b2dbae60330"
-  integrity sha512-8IeHfDwJ9/CTUwFs6x90VlobV3BfuPgNLjTgC6dRZovfCWigaZwVNIFFJnHBakK3pW2xErAPwhdvNR4JeNoYbw==
-
 "@react-navigation/bottom-tabs@^5.10.0":
   version "5.10.0"
   resolved "https://registry.yarnpkg.com/@react-navigation/bottom-tabs/-/bottom-tabs-5.10.0.tgz#ddfa3d71718c0a1d14e8efecbd784159c62eab13"
@@ -2584,15 +2569,20 @@ csstype@^3.0.2:
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.0.4.tgz#b156d7be03b84ff425c9a0a4b1e5f4da9c5ca888"
   integrity sha512-xc8DUsCLmjvCfoD7LTGE0ou2MIWLx0K9RCZwSHMOdynqRsP4MtUcLeqh1HcQ2dInwDTqn+3CE0/FZh1et+p4jA==
 
-dayjs@*, dayjs@^1.8.26:
-  version "1.9.4"
-  resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.9.4.tgz#fcde984e227f4296f04e7b05720adad2e1071f1b"
-  integrity sha512-ABSF3alrldf7nM9sQ2U+Ln67NRwmzlLOqG7kK03kck0mw3wlSSEKv/XhKGGxUjQcS57QeiCyNdrFgtj9nWlrng==
+dayjs@*:
+  version "1.9.6"
+  resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.9.6.tgz#6f0c77d76ac1ff63720dd1197e5cb87b67943d70"
+  integrity sha512-HngNLtPEBWRo8EFVmHFmSXAjtCX8rGNqeXQI0Gh7wCTSqwaKgPIDqu9m07wABVopNwzvOeCb+2711vQhDlcIXw==
 
 dayjs@^1.8.15:
   version "1.9.1"
   resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.9.1.tgz#201a755f7db5103ed6de63ba93a984141c754541"
   integrity sha512-01NCTBg8cuMJG1OQc6PR7T66+AFYiPwgDvdJmvJBn29NGzIG+DIFxPLNjHzwz3cpFIvG+NcwIjP9hSaPVoOaDg==
+
+dayjs@^1.8.26:
+  version "1.9.4"
+  resolved "https://registry.yarnpkg.com/dayjs/-/dayjs-1.9.4.tgz#fcde984e227f4296f04e7b05720adad2e1071f1b"
+  integrity sha512-ABSF3alrldf7nM9sQ2U+Ln67NRwmzlLOqG7kK03kck0mw3wlSSEKv/XhKGGxUjQcS57QeiCyNdrFgtj9nWlrng==
 
 debug@2.6.9, debug@^2.2.0, debug@^2.3.3:
   version "2.6.9"

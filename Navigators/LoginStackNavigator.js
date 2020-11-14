@@ -49,36 +49,37 @@ export default function StackNavigator({ navigation }) {
               size={50}
             />
           ) : (
-              <Avatar.Text
-                label={Initials(state.user.name)}
-                size={50}
-                color="white"
-                // "#563D74"
-                style={{
-                  backgroundColor: "#fbc02d",
-                  // "#BB86FC",
-                  marginRight: 5,
-                  borderColor: "#563D74",
-                  shadowColor: "black",
-                  shadowOpacity: 0.5,
-                  shadowOffset: {
-                    width: 2,
-                    height: 2,
-                  },
-                }}
-              />
-            ),
+            <Avatar.Text
+              label={Initials(state.user.name)}
+              size={50}
+              color="white"
+              // "#563D74"
+              style={{
+                backgroundColor: "#fbc02d",
+                // "#BB86FC",
+                marginRight: 5,
+                borderColor: "#563D74",
+                shadowColor: "black",
+                shadowOpacity: 0.5,
+                shadowOffset: {
+                  width: 2,
+                  height: 2,
+                },
+              }}
+            />
+          ),
       }}
     >
-      {/* <Stack.Screen
+      <Stack.Screen
         name="DepartmentChoose"
-        component={TabNavigator}
+        component={DepartmentChoose}
         options={({ navigation, route }) => {
           return {
             title: "Choose your Department",
           };
         }}
-      /> */}
+      />
+
       <Stack.Screen
         name="DepartmentScreen"
         component={TabNavigator}

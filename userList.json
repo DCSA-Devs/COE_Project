@@ -1,178 +1,154 @@
 [
   {
-      "name": "Arts Department",
-      "class": "arts",
-      "semester": "Semester-1",
-      "id": 1,
-      "image": "./assets/images/computer.jpg"
-    },
-    {
-      "name": "Arts Department",
-      "class": "arts",
-      "semester": "Semester-2",
-      "id": 2,
-      "image": "./assets/images/computer.jpg"
-    },
-    {
-      "name": "Arts Department",
-      "class": "arts",
-      "semester": "Semester-3",
-      "id": 3,
-      "image": "./assets/images/computer.jpg"
-    },
-    {
-      "name": "Arts Department",
-      "class": "arts",
-      "semester": "Semester-4",
-      "id": 4,
-      "image": "./assets/images/computer.jpg"
-    },
-    {
-      "name": "Chemistry Department",
-      "class": "chemistry",
-      "semester": "Semester-1",
-      "id": 5,
-      "image": "./assets/images/computer.jpg"
-    },
-    {
-      "name": "Chemistry Department",
-      "class": "chemistry",
-      "semester": "Semester-2",
-      "id": 6,
-      "image": "./assets/images/computer.jpg"
-    },
-    {
-      "name": "Chemistry Department",
-      "class": "chemistry",
-      "semester": "Semester-3",
-      "id": 7,
-      "image": "./assets/images/computer.jpg"
-    },
-    {
-      "name": "Chemistry Department",
-      "class": "chemistry",
-      "semester": "Semester-4",
-      "id": 8,
-      "image": "./assets/images/computer.jpg"
-    },
-    {
-      "name": "Chemistry Department",
-      "class": "chemistry",
-      "semester": "Semester-5",
-      "id": 9,
-      "image": "./assets/images/computer.jpg"
-    },
-    {
-      "name": "Chemistry Department",
-      "class": "chemistry",
-      "semester": "Semester-6",
-      "id": 10,
-      "image": "./assets/images/computer.jpg"
-    },
-    {
-      "name": "DCSA Department",
-      "class": "MCA",
-      "semester": "Semester-1",
-      "id": 11,
-      "image": "./assets/images/computer.jpg"
-    },
+    "name": "Arts Department",
+    "class": "Arts",
+    "semester": "Semester-1",
+    "id": 1
+  },
+  {
+    "name": "Arts Department",
+    "class": "Arts",
+    "semester": "Semester-2",
+    "id": 2
+  },
+  {
+    "name": "Arts Department",
+    "class": "Arts",
+    "semester": "Semester-3",
+    "id": 3
+  },
+  {
+    "name": "Arts Department",
+    "class": "Arts",
+    "semester": "Semester-4",
+    "id": 4
+  },
+  {
+    "name": "Chemistry Department",
+    "class": "Chemistry",
+    "semester": "Semester-1",
+    "id": 5
+  },
+  {
+    "name": "Chemistry Department",
+    "class": "Chemistry",
+    "semester": "Semester-2",
+    "id": 6
+  },
+  {
+    "name": "Chemistry Department",
+    "class": "Chemistry",
+    "semester": "Semester-3",
+    "id": 7
+  },
+  {
+    "name": "Chemistry Department",
+    "class": "Chemistry",
+    "semester": "Semester-4",
+    "id": 8
+  },
+  {
+    "name": "Chemistry Department",
+    "class": "Chemistry",
+    "semester": "Semester-5",
+    "id": 9
+  },
+  {
+    "name": "Chemistry Department",
+    "class": "Chemistry",
+    "semester": "Semester-6",
+    "id": 10
+  },
+  {
+    "name": "DCSA Department",
+    "class": "MCA",
+    "semester": "Semester-1",
+    "id": 11
+  },
 
-    {
-      "name": "DCSA Department",
-      "class": "MCA",
-      "semester": "Semester-2",
-      "id": 12,
-      "image": "./assets/images/computer.jpg"
-    },
-    {
-      "name": "DCSA Department",
-      "class": "MCA",
-      "semester": "Semester-3",
-      "id": 13,
-      "image": "./assets/images/computer.jpg"
-    },
-    {
-      "name": "Dcsa Department",
-      "class": "MCA",
-      "semester": "Semester-4",
-      "id": 14,
-      "image": "./assets/images/computer.jpg"
-    },
-    {
-      "name": "Dcsa Department",
-      "class": "MCA",
-      "semester": "Semester-5",
-      "id": 15,
-      "image": "./assets/images/computer.jpg"
-    },
-    {
-      "name": "Dcsa Department",
-      "class": "MCA",
-      "semester": "Semester-6",
-      "id": 16,
-      "image": "./assets/images/computer.jpg"
-    },
-    {
-      "name": "Dcsa Department",
-      "class": "Msc",
-      "semester": "Semester-1",
-      "id": 17,
-      "image": "./assets/images/computer.jpg"
-    },
-    {
-      "name": "Dcsa Department",
-      "class": "Msc",
-      "semester": "Semester-2",
-      "id": 18,
-      "image": "./assets/images/computer.jpg"
-    },
-    {
-      "name": "Dcsa Department",
-      "class": "Msc",
-      "semester": "Semester-3",
-      "id": 19,
-      "image": "./assets/images/computer.jpg"
-    },
-    {
-      "name": "Dcsa Department",
-      "class": "Msc",
-      "semester": "Sem-4",
-      "id": 20,
-      "image": "./assets/images/computer.jpg"
-    },
-    {
-      "name": "Dcsa Department",
-      "class": "PGDCA",
-      "semester": "Sem-1",
-      "id": 21,
-      "image": "./assets/images/computer.jpg"
-    },
-    {
-      "name": "Dcsa Department",
-      "class": "PGDCA",
-      "semester": "Sem-2",
-      "id": 22,
-      "image": "./assets/images/computer.jpg"
-    },
-    {
-      "name": "English Department",
-      "class": "english",
-      "semester": "Sem-2",
-      "id": 22,
-      "image": "./assets/images/computer.jpg"
-    },
-    {
-      "name": "Hindi Department",
-      "class": "PGDCA",
-      "semester": "Sem-1",
-      "id": 23,
-      "image": "./assets/images/computer.jpg"
-    },
-    {
-      "name": "Hindi Department",
-      "class": "PGDCA",
-      "semester": "Sem-2",
-      "id": 24,
-      "image": "./assets/images/computer.jpg"
-    }
-  ]
+  {
+    "name": "DCSA Department",
+    "class": "MCA",
+    "semester": "Semester-2",
+    "id": 12
+  },
+  {
+    "name": "DCSA Department",
+    "class": "MCA",
+    "semester": "Semester-3",
+    "id": 13,
+    "navigate": "DepartmentScreen"
+  },
+  {
+    "name": "Dcsa Department",
+    "class": "MCA",
+    "semester": "Semester-4",
+    "id": 14
+  },
+  {
+    "name": "Dcsa Department",
+    "class": "MCA",
+    "semester": "Semester-5",
+    "id": 15
+  },
+  {
+    "name": "Dcsa Department",
+    "class": "MCA",
+    "semester": "Semester-6",
+    "id": 16
+  },
+  {
+    "name": "Dcsa Department",
+    "class": "MSC",
+    "semester": "Semester-1",
+    "id": 17
+  },
+  {
+    "name": "Dcsa Department",
+    "class": "MSC",
+    "semester": "Semester-2",
+    "id": 18
+  },
+  {
+    "name": "Dcsa Department",
+    "class": "MSC",
+    "semester": "Semester-3",
+    "id": 19
+  },
+  {
+    "name": "Dcsa Department",
+    "class": "MSC",
+    "semester": "Sem-4",
+    "id": 20
+  },
+  {
+    "name": "Dcsa Department",
+    "class": "PGDCA",
+    "semester": "Sem-1",
+    "id": 21
+  },
+  {
+    "name": "Dcsa Department",
+    "class": "PGDCA",
+    "semester": "Sem-2",
+    "id": 22
+  },
+  {
+    "name": "English Department",
+    "class": "English",
+    "semester": "Sem-2",
+    "id": 22
+  },
+  {
+    "name": "Hindi Department",
+    "class": "PGDCA",
+    "semester": "Sem-1",
+    "id": 23
+  },
+  {
+    "name": "Hindi Department",
+    "class": "PGDCA",
+    "semester": "Sem-2",
+    "id": 24
+  }
+]
