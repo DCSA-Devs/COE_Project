@@ -14,6 +14,7 @@ const IMAGE = {
   Hindi: require("../../assets/images/subjects/Hindi.jpg"),
   Maths: require("../../assets/images/subjects/maths.jpg"),
   Panjabi: require("../../assets/images/subjects/panjabi.jpg"),
+  Pharmaceutical: require("../../assets/images/subjects/Pharmaceutical.jpg"),
 };
 export default function DepartmentChoose({ navigation }) {
   const [allUsers, setAllUsers] = React.useState(helperArray);
